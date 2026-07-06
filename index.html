@@ -957,14 +957,20 @@ html{ -webkit-text-size-adjust:100%; text-size-adjust:100% }
 
   /* Sticky submit dentro do form (mobile) */
   .form-submit-wrap{
-    position:sticky;
-    bottom:calc(env(safe-area-inset-bottom, 0px) + 8px);
-    margin-top:18px;
-    background:linear-gradient(to top, var(--off-white) 75%, transparent);
-    padding:16px 0 0;
-    z-index:5;
+    position:fixed;
+    left:0;right:0;bottom:0;
+    background:linear-gradient(to top, var(--off-white) 88%, rgba(255,241,244,0.7) 70%, transparent);
+    padding:14px 18px calc(14px + env(safe-area-inset-bottom, 0px));
+    z-index:40;
+    /* Some se não estiver no form */
+    transform:translateY(100%);
+    transition:transform .25s ease;
   }
+  .form-submit-wrap.in-form{transform:translateY(0)}
   .form-submit-wrap .form-submit-btn{box-shadow:0 12px 28px -8px rgba(255,46,126,.6) !important;margin-top:0}
+
+  /* Adiciona respiro embaixo do form pro submit não cobrir o último campo */
+  .reg-form{padding-bottom:110px}
 
   /* Slogan banner: parar sticky CTA aqui também */
   .slogan-cta .pay-btn{font-size:17px;padding:14px 18px}
@@ -2532,6 +2538,28 @@ if (regFormEl && window.matchMedia('(max-width: 720px)').matches) {
   })
 }
 
+// ============ Submit FIXO no mobile: visível só quando form está em vista ============
+;(function(){
+  const submitWrap = document.querySelector('.form-submit-wrap')
+  const formSection = document.getElementById('formulario')
+  if (!submitWrap || !formSection || !window.matchMedia('(max-width: 720px)').matches) return
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      // Mostra submit quando 40% do form estiver visível
+      if (e.intersectionRatio >= 0.15) {
+        submitWrap.classList.add('in-form')
+        document.body.classList.add('form-in-view')
+      } else {
+        submitWrap.classList.remove('in-form')
+        document.body.classList.remove('form-in-view')
+      }
+    })
+  }, { threshold: [0, 0.15, 0.5, 1] })
+
+  io.observe(formSection)
+})()
+
 // ============ PIX COPIA-E-COLA ============
 (function(){
   const btn = document.getElementById('pixCopyBtn');
@@ -2580,7 +2608,7 @@ if (regFormEl && window.matchMedia('(max-width: 720px)').matches) {
     stopEls = Array.from(document.querySelectorAll(stopSelector));
   }
   function compute(){
-    if(!mqMobile.matches || document.body.classList.contains('admin-mode')){
+    if(!mqMobile.matches || document.body.classList.contains('admin-mode') || document.body.classList.contains('form-in-view')){
       bar.classList.remove('show'); return;
     }
     if(!triggerEl || stopEls.length===0) reinit();
