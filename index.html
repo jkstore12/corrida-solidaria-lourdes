@@ -1653,8 +1653,25 @@ body.admin-mode{background:var(--ink)}
   border:2px solid transparent;
   cursor:pointer;
   transition:all .15s ease;
+  margin-top:6px;
 }
 .success-close:hover{border-color:var(--ink);color:var(--ink)}
+
+.success-wa-link{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;
+  color:var(--verde);text-decoration:none;
+  font-family:var(--mono);font-weight:700;font-size:13px;
+  letter-spacing:.04em;
+  padding:13px 16px;border-radius:14px;
+  border:2px solid var(--verde);
+  margin-bottom:16px;
+  transition:all .15s ease;
+  box-sizing:border-box;
+}
+.success-wa-link:hover{background:var(--verde);color:#fff}
+
+#successPayBtn.copied{background:#15803d !important;border-color:#fff !important;cursor:default}
 
 @media (max-width:480px){
   .success-modal{padding:28px 22px}
@@ -2317,22 +2334,28 @@ body.admin-mode{background:var(--ink)}
     <p class="success-sub">Falta só pagar pra confirmar sua vaga 💚</p>
     <div class="success-amount">R$ 12<span style="font-size:.6em">,00</span></div>
 
-    <a class="success-pay-btn"
-       href="https://wa.me/5586981344803?text=Oi%21%20Acabei%20de%20me%20inscrever%20na%20Corrida%20Solid%C3%A1ria%20Lourdes.%20Quero%20pagar%20o%20Pix%20agora%20%F0%9F%92%9A"
-       target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M5 12h14M13 5l7 7-7 7"/>
+    <button type="button" class="success-pay-btn" id="successPayBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" id="successPayIcon">
+        <rect x="9" y="9" width="13" height="13" rx="2"/>
+        <path d="M5 15V5a2 2 0 0 1 2-2h10"/>
       </svg>
-      Pagar com Pix agora
+      <span id="successPayLabel">Copiar chave Pix</span>
+    </button>
+
+    <p id="copyFeedback" hidden style="background:#dcfce7;border:2px solid var(--verde);color:#166534;padding:12px;border-radius:12px;font-size:14px;margin:0 0 14px;font-weight:600;text-align:center">
+      ✅ Chave <strong>040.351.233-66</strong> copiada! Abra o app do seu banco → Pix → Cola e cola → Pague R$ 12.
+    </p>
+
+    <a class="success-wa-link" id="successWaBtn"
+       href="https://wa.me/5586981344803?text=Oi%21%20Acabei%20de%20me%20inscrever%20na%20Corrida%20Solid%C3%A1ria%20Lourdes.%20Vou%20pagar%20o%20Pix%20agora%20%F0%9F%92%9A"
+       target="_blank" rel="noopener">
+      💬 Enviar comprovante no WhatsApp (86) 98134-4803
     </a>
 
     <div class="success-info">
       <strong>💸 Chave Pix (CPF):</strong><br>
       <span class="pix-key">040.351.233-66</span><br>
       <small style="color:var(--ink-soft)">FRANCISCO DAS CHAGAS CARDOSO SILVA</small>
-      <br><br>
-      <strong>📲 Após pagar:</strong><br>
-      Envie o comprovante + seu <strong>nome completo</strong> para o WhatsApp <strong>(86) 98134-4803</strong> e sua vaga fica garantida.
     </div>
 
     <button type="button" class="success-close" id="successCloseBtn">Pagar depois →</button>
@@ -2572,6 +2595,34 @@ successOverlay?.addEventListener('click', (ev) => {
 })
 document.addEventListener('keydown', (ev) => {
   if (ev.key === 'Escape' && successOverlay?.classList.contains('show')) closeSuccessModal()
+})
+
+// Botão principal do modal: copia a chave Pix pro clipboard
+document.getElementById('successPayBtn')?.addEventListener('click', async () => {
+  const chave = '040.351.233-66'
+  try {
+    await navigator.clipboard.writeText(chave)
+  } catch (e) {
+    // Fallback pra browsers sem Clipboard API
+    const ta = document.createElement('textarea')
+    ta.value = chave
+    ta.style.position = 'fixed'
+    ta.style.opacity = '0'
+    document.body.appendChild(ta)
+    ta.select()
+    try { document.execCommand('copy') } catch(_) {}
+    document.body.removeChild(ta)
+  }
+  // Feedback visual
+  const btn = document.getElementById('successPayBtn')
+  const label = document.getElementById('successPayLabel')
+  const fb = document.getElementById('copyFeedback')
+  if (label) label.textContent = '✓ Chave copiada!'
+  if (btn) {
+    btn.classList.add('copied')
+    btn.disabled = true
+  }
+  if (fb) fb.hidden = false
 })
 
 // =====================================================
