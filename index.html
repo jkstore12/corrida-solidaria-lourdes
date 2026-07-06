@@ -552,6 +552,247 @@ footer{
 @media (min-width: 768px){.sticky-cta{display:none !important}}
 
 /* =====================================================
+   ADMIN: header actions
+   ===================================================== */
+.admin-head-actions{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+}
+.admin-icon-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.08);color:#fff;
+  border:1px solid rgba(255,255,255,.15);
+  font-size:12px;font-weight:600;
+  padding:10px 14px;border-radius:10px;
+  cursor:pointer;
+  transition:all .15s ease;
+  min-height:44px;
+}
+.admin-icon-btn:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3)}
+.admin-icon-btn svg{width:14px;height:14px}
+
+/* =====================================================
+   ADMIN: charts
+   ===================================================== */
+.admin-charts{
+  display:grid;grid-template-columns:1.4fr 1fr;gap:14px;
+  margin-bottom:24px;
+}
+@media (max-width:720px){
+  .admin-charts{grid-template-columns:1fr}
+}
+.chart-card{
+  background:var(--surface);color:var(--ink);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:18px;
+  box-shadow:var(--shadow);
+}
+.chart-card h3{
+  font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.08em;
+  color:var(--ink-soft);
+  margin:0 0 14px;
+}
+.chart-bars{
+  display:flex;align-items:flex-end;gap:4px;
+  height:100px;
+}
+.chart-bar{
+  flex:1;
+  background:linear-gradient(180deg, var(--rosa), var(--rosa-deep));
+  border-radius:4px 4px 0 0;
+  min-height:2px;
+  position:relative;
+  transition:opacity .2s ease;
+}
+.chart-bar:hover{opacity:.8}
+.chart-bar::after{
+  content:attr(data-count);
+  position:absolute;top:-16px;left:50%;transform:translateX(-50%);
+  font-size:9px;font-weight:700;color:var(--ink);
+}
+.chart-labels{
+  display:flex;gap:4px;margin-top:6px;
+  font-size:9px;color:var(--ink-mute);
+  text-align:center;
+}
+.chart-labels span{flex:1}
+.chart-empty{
+  flex:1;display:flex;align-items:center;justify-content:center;
+  color:var(--ink-mute);font-size:13px;
+  font-style:italic;
+}
+.top-cities{display:flex;flex-direction:column;gap:6px}
+.top-city{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 12px;border-radius:8px;
+  background:var(--rosa-soft);
+}
+.top-city-name{
+  flex:1;font-size:13px;font-weight:600;color:var(--ink);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.top-city-count{
+  font-size:11px;font-weight:700;color:var(--rosa-deep);
+  background:#fff;padding:3px 8px;border-radius:999px;
+  border:1px solid var(--rosa-deep);
+  flex-shrink:0;
+}
+
+/* =====================================================
+   ADMIN: bulk actions bar
+   ===================================================== */
+.bulk-bar{
+  position:sticky;top:0;z-index:10;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  background:var(--rosa-deep);color:#fff;
+  padding:12px 16px;border-radius:var(--radius);
+  margin-bottom:12px;
+  box-shadow:0 8px 24px -8px rgba(180,18,78,.5);
+  animation:slideDown .2s ease;
+}
+@keyframes slideDown{from{transform:translateY(-20px);opacity:0}to{transform:none;opacity:1}}
+.bulk-count{font-size:14px;font-weight:700}
+.bulk-actions{display:flex;gap:6px;flex-wrap:wrap}
+.bulk-btn{
+  background:rgba(255,255,255,.15);color:#fff;
+  border:1px solid rgba(255,255,255,.2);
+  font-size:12px;font-weight:600;
+  padding:8px 12px;border-radius:8px;
+  cursor:pointer;
+  min-height:36px;
+  transition:background .15s ease;
+}
+.bulk-btn:hover{background:rgba(255,255,255,.25)}
+.bulk-btn.bulk-paid{background:var(--verde);border-color:var(--verde)}
+.bulk-btn.bulk-paid:hover{background:#15803d}
+.bulk-btn.bulk-manual{background:#3B82F6;border-color:#3B82F6}
+.bulk-btn.bulk-manual:hover{background:#1e40af}
+.bulk-btn.bulk-cancel{background:#DC2626;border-color:#DC2626}
+.bulk-btn.bulk-cancel:hover{background:#991B1B}
+.bulk-btn.bulk-edit{background:var(--dourado);color:var(--ink);border-color:var(--dourado)}
+.bulk-btn.bulk-clear{background:transparent}
+
+/* =====================================================
+   ADMIN: table enhancements
+   ===================================================== */
+.col-check{width:40px;padding-left:16px !important}
+.col-check input{width:18px;height:18px;cursor:pointer;accent-color:var(--rosa)}
+.col-actions{width:1%;white-space:nowrap}
+.admin-table tr.selected{background:var(--rosa-soft)}
+.admin-table tbody tr{cursor:pointer}
+.admin-table tbody tr td:first-child{cursor:default}
+.admin-table-foot{
+  padding:12px 16px;
+  font-size:12px;color:var(--ink-mute);
+  border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:8px;
+}
+
+/* =====================================================
+   ADMIN: drawer (painel lateral)
+   ===================================================== */
+.drawer-overlay{
+  position:fixed;inset:0;background:rgba(26,10,18,.5);
+  opacity:0;pointer-events:none;
+  z-index:200;
+  transition:opacity .25s ease;
+  backdrop-filter:blur(2px);
+}
+.drawer-overlay.show{opacity:1;pointer-events:auto}
+.drawer{
+  position:fixed;top:0;right:0;bottom:0;
+  width:min(420px, 100vw);
+  background:var(--surface);color:var(--ink);
+  z-index:201;
+  transform:translateX(100%);
+  transition:transform .3s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;
+  box-shadow:-16px 0 40px -8px rgba(0,0,0,.3);
+}
+.drawer.show{transform:translateX(0)}
+.drawer-head{
+  display:flex;justify-content:space-between;align-items:start;
+  gap:14px;
+  padding:20px 24px;
+  border-bottom:1px solid var(--line);
+}
+.drawer-head h3{
+  font-family:var(--font-display);font-weight:800;
+  font-size:20px;margin:0 0 4px;color:var(--ink);
+}
+.drawer-sub{
+  margin:0;font-size:13px;color:var(--ink-soft);
+}
+.drawer-close{
+  background:transparent;color:var(--ink);
+  width:36px;height:36px;border-radius:50%;
+  font-size:24px;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid transparent;
+  cursor:pointer;flex-shrink:0;
+}
+.drawer-close:hover{border-color:var(--ink);background:var(--bg)}
+.drawer-body{
+  flex:1;overflow-y:auto;
+  padding:20px 24px;
+}
+.drawer-empty{
+  color:var(--ink-mute);font-size:14px;text-align:center;
+  padding:40px 0;
+}
+.drawer-section{margin-bottom:20px}
+.drawer-section h4{
+  font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.08em;
+  color:var(--ink-soft);
+  margin:0 0 8px;
+}
+.drawer-field{
+  display:flex;justify-content:space-between;align-items:start;gap:14px;
+  padding:10px 0;
+  border-bottom:1px solid var(--line);
+  font-size:14px;
+}
+.drawer-field:last-child{border-bottom:0}
+.drawer-field .k{color:var(--ink-soft);font-weight:600;flex-shrink:0}
+.drawer-field .v{
+  color:var(--ink);text-align:right;word-break:break-word;
+  font-variant-numeric:tabular-nums;
+}
+.drawer-field .v a{color:var(--rosa);text-decoration:underline}
+.drawer-message{
+  background:var(--rosa-soft);
+  border:1px solid var(--rosa);
+  border-radius:var(--radius-sm);
+  padding:14px;
+  font-size:14px;
+  font-style:italic;
+  color:var(--ink);
+  line-height:1.5;
+}
+.drawer-notes{
+  background:#FEF9E7;
+  border:1px solid var(--dourado);
+  border-radius:var(--radius-sm);
+  padding:12px;
+  font-size:13px;
+  color:var(--ink);
+  line-height:1.5;
+}
+.drawer-foot{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;
+  padding:16px 24px;
+  border-top:1px solid var(--line);
+  background:var(--bg);
+}
+.drawer-foot .bulk-btn{font-size:12px;padding:10px 8px}
+@media (max-width:480px){
+  .drawer-foot{grid-template-columns:1fr 1fr}
+}
+
+/* =====================================================
    HONEYPOT
    ===================================================== */
 .hp-field{
@@ -1295,13 +1536,26 @@ body.admin-mode{background:var(--ink)}
     <div id="adminDash" hidden>
       <header class="admin-head">
         <div>
-          <h2>Inscrições</h2>
+          <h2>Painel · Inscrições</h2>
           <span class="who" id="adminWho">—</span>
         </div>
-        <button class="admin-logout" id="adminLogoutBtn">Sair</button>
+        <div class="admin-head-actions">
+          <button class="admin-icon-btn" id="adminRefreshBtn" title="Atualizar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          </button>
+          <button class="admin-icon-btn" id="adminExportBtn" title="Exportar CSV">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            CSV
+          </button>
+          <button class="admin-icon-btn" id="adminExportJsonBtn" title="Exportar JSON">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+            JSON
+          </button>
+          <button class="admin-logout" id="adminLogoutBtn">Sair</button>
+        </div>
       </header>
 
-      <!-- KPIs -->
+      <!-- KPIs principais -->
       <div class="kpi-grid">
         <div class="kpi">
           <span class="kpi-n" id="kpiTotal">—</span>
@@ -1310,7 +1564,7 @@ body.admin-mode{background:var(--ink)}
         </div>
         <div class="kpi accent2">
           <span class="kpi-n" id="kpiPaid">—</span>
-          <span class="kpi-l">Pagos</span>
+          <span class="kpi-l">Confirmados</span>
         </div>
         <div class="kpi accent">
           <span class="kpi-n" id="kpiRaised">R$ 0</span>
@@ -1322,18 +1576,48 @@ body.admin-mode{background:var(--ink)}
         </div>
       </div>
 
-      <!-- Toolbar -->
+      <!-- Gráfico de evolução + Top cidades -->
+      <div class="admin-charts">
+        <div class="chart-card">
+          <h3>Inscrições por dia</h3>
+          <div class="chart-bars" id="chartBars">
+            <div class="chart-empty">Carregando...</div>
+          </div>
+        </div>
+        <div class="chart-card">
+          <h3>Top cidades</h3>
+          <div class="top-cities" id="topCities">
+            <div class="chart-empty">Carregando...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toolbar filtros -->
       <div class="admin-toolbar">
-        <input type="search" id="adminSearch" placeholder="🔍 Buscar por nome, email ou cidade..." />
-        <select id="adminFilter">
+        <input type="search" id="adminSearch" placeholder="🔍 Buscar por nome, email, cidade ou mensagem..." />
+        <select id="adminFilter" title="Status">
           <option value="all">Todos os status</option>
           <option value="pending">Pendentes</option>
           <option value="paid">Pagos</option>
           <option value="manual">Manuais</option>
           <option value="canceled">Cancelados</option>
         </select>
-        <button class="btn outline" id="adminRefreshBtn">↻ Atualizar</button>
-        <button class="btn" id="adminExportBtn">⤓ Exportar CSV</button>
+        <select id="adminCityFilter" title="Cidade">
+          <option value="">Todas as cidades</option>
+        </select>
+        <input type="date" id="adminDateFrom" title="De" />
+        <input type="date" id="adminDateTo" title="Até" />
+      </div>
+
+      <!-- Bulk actions bar (aparece quando há seleção) -->
+      <div class="bulk-bar" id="bulkBar" hidden>
+        <span class="bulk-count" id="bulkCount">0 selecionados</span>
+        <div class="bulk-actions">
+          <button class="bulk-btn bulk-paid" data-bulk="paid">✓ Marcar como pago</button>
+          <button class="bulk-btn bulk-manual" data-bulk="manual">Manual</button>
+          <button class="bulk-btn bulk-cancel" data-bulk="canceled">Cancelar</button>
+          <button class="bulk-btn bulk-clear" data-bulk="clear">Limpar seleção</button>
+        </div>
       </div>
 
       <!-- Tabela -->
@@ -1341,22 +1625,24 @@ body.admin-mode{background:var(--ink)}
         <table class="admin-table">
           <thead>
             <tr>
+              <th class="col-check"><input type="checkbox" id="adminCheckAll" /></th>
               <th>Participante</th>
               <th>Contato</th>
               <th>Status</th>
               <th>Cadastro</th>
-              <th>Ações</th>
+              <th class="col-actions">Ações</th>
             </tr>
           </thead>
           <tbody id="adminTbody">
-            <tr><td colspan="5" class="empty">Carregando...</td></tr>
+            <tr><td colspan="6" class="empty">Carregando...</td></tr>
           </tbody>
         </table>
+        <div class="admin-table-foot" id="adminTableFoot"></div>
       </div>
 
       <!-- Audit log -->
       <div class="audit-list">
-        <h4>📋 Últimas ações do admin</h4>
+        <h4>📋 Últimas ações</h4>
         <div id="auditList"><div class="audit-item"><span class="a-action">—</span><span class="a-when">carregando...</span></div></div>
       </div>
     </div>
@@ -1412,6 +1698,29 @@ body.admin-mode{background:var(--ink)}
     </div>
   </div>
 </div>
+
+<!-- ============================================================
+     DRAWER: detalhes do participante (slide-in lateral)
+     ============================================================ -->
+<div class="drawer-overlay" id="drawerOverlay" aria-hidden="true"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true">
+  <header class="drawer-head">
+    <div>
+      <h3 id="drawerTitle">Detalhes</h3>
+      <p class="drawer-sub" id="drawerSub">—</p>
+    </div>
+    <button class="drawer-close" id="drawerClose" aria-label="Fechar">×</button>
+  </header>
+  <div class="drawer-body" id="drawerBody">
+    <div class="drawer-empty">Selecione um participante</div>
+  </div>
+  <footer class="drawer-foot" id="drawerFoot" hidden>
+    <button class="bulk-btn bulk-paid" data-drawer="paid">✓ Marcar pago</button>
+    <button class="bulk-btn bulk-manual" data-drawer="manual">Manual</button>
+    <button class="bulk-btn bulk-cancel" data-drawer="canceled">Cancelar</button>
+    <button class="bulk-btn bulk-edit" data-drawer="edit">✎ Editar</button>
+  </footer>
+</aside>
 
 <!-- Toast notifications -->
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -1961,7 +2270,25 @@ document.getElementById('adminLogoutBtn')?.addEventListener('click', async () =>
 // =====================================================
 // ADMIN: CARREGAR DADOS
 // =====================================================
+// =====================================================
+// ADMIN: STATE + DATA
+// =====================================================
 let allParticipants = []
+let selectedIds = new Set()
+let currentDrawerId = null
+
+const STATUS_LABELS = {
+  pending: 'Pendente',
+  paid: 'Pago',
+  manual: 'Manual',
+  canceled: 'Cancelado',
+}
+const STATUS_COLORS = {
+  pending: '#92400E',
+  paid: '#166534',
+  manual: '#1E40AF',
+  canceled: '#991B1B',
+}
 
 async function loadAdminData(){
   await Promise.all([loadParticipants(), loadAudit()])
@@ -1969,22 +2296,40 @@ async function loadAdminData(){
 
 async function loadParticipants(){
   const tbody = document.getElementById('adminTbody')
-  tbody.innerHTML = '<tr><td colspan="5" class="empty">Carregando...</td></tr>'
+  tbody.innerHTML = '<tr><td colspan="6" class="empty">Carregando...</td></tr>'
   try {
     const { data, error } = await supabase
       .from('participants')
       .select('id, name, email, phone, city, support_message, status, amount_paid, paid_at, admin_notes, created_at, updated_at')
       .order('created_at', { ascending: false })
-      .limit(500)
+      .limit(1000)
     if (error) throw error
     allParticipants = data || []
+    selectedIds.clear()
+    populateCityFilter()
     renderTable()
     renderKpis()
+    renderChart()
+    renderTopCities()
+    updateBulkBar()
   } catch (err) {
-    tbody.innerHTML = `<tr><td colspan="5" class="empty">Erro: ${err.message}</td></tr>`
+    tbody.innerHTML = `<tr><td colspan="6" class="empty">Erro: ${err.message}</td></tr>`
   }
 }
 
+function populateCityFilter(){
+  const sel = document.getElementById('adminCityFilter')
+  if (!sel) return
+  const current = sel.value
+  const cities = [...new Set(allParticipants.map(p => p.city).filter(Boolean))].sort()
+  sel.innerHTML = '<option value="">Todas as cidades</option>' +
+    cities.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('')
+  if (current) sel.value = current
+}
+
+// =====================================================
+// ADMIN: RENDER KPIs
+// =====================================================
 function renderKpis(){
   const stats = allParticipants.reduce((acc, p) => {
     acc.total++
@@ -1999,34 +2344,112 @@ function renderKpis(){
   document.getElementById('kpiPaid').textContent = stats.paid
   document.getElementById('kpiPending').textContent = stats.pending
   document.getElementById('kpiRaised').textContent = 'R$ ' + stats.raised.toFixed(2).replace('.', ',')
-  const week = document.getElementById('kpiWeek')
-  week.textContent = '+' + stats.week + ' esta semana'
+  document.getElementById('kpiWeek').textContent = '+' + stats.week + ' esta semana'
 }
 
 function isThisWeek(iso){
   const d = new Date(iso)
-  const now = new Date()
-  const diff = (now - d) / 1000 / 60 / 60 / 24
-  return diff <= 7
+  return (Date.now() - d.getTime()) / 1000 / 60 / 60 / 24 <= 7
+}
+
+// =====================================================
+// ADMIN: RENDER CHART (inscrições por dia, últimos 14)
+// =====================================================
+function renderChart(){
+  const container = document.getElementById('chartBars')
+  if (!container) return
+  const days = 14
+  const today = new Date()
+  today.setHours(0,0,0,0)
+  const counts = []
+  const labels = []
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date(today)
+    d.setDate(d.getDate() - i)
+    counts.push(0)
+    labels.push(d.getDate() + '/' + (d.getMonth() + 1))
+  }
+  allParticipants.forEach(p => {
+    const d = new Date(p.created_at)
+    d.setHours(0,0,0,0)
+    const diff = Math.floor((today - d) / (1000 * 60 * 60 * 24))
+    if (diff >= 0 && diff < days) counts[days - 1 - diff]++
+  })
+  const max = Math.max(...counts, 1)
+  container.innerHTML = counts.map((c, i) => {
+    const h = Math.max(2, (c / max) * 100)
+    return `<div class="chart-bar" style="height:${h}%" data-count="${c}" title="${labels[i]}: ${c} inscrição(ões)"></div>`
+  }).join('')
+  let labelsHtml = '<div class="chart-labels">'
+  labels.forEach((l, i) => {
+    if (i === 0 || i === days - 1 || i === Math.floor(days/2)) {
+      labelsHtml += `<span>${l}</span>`
+    } else {
+      labelsHtml += `<span></span>`
+    }
+  })
+  labelsHtml += '</div>'
+  container.insertAdjacentHTML('afterend', labelsHtml)
+}
+
+function renderTopCities(){
+  const container = document.getElementById('topCities')
+  if (!container) return
+  const cityCount = {}
+  allParticipants.forEach(p => {
+    const c = (p.city || 'Não informada').trim()
+    cityCount[c] = (cityCount[c] || 0) + 1
+  })
+  const top = Object.entries(cityCount).sort((a,b) => b[1] - a[1]).slice(0, 5)
+  if (!top.length) {
+    container.innerHTML = '<div class="chart-empty">Sem dados ainda</div>'
+    return
+  }
+  container.innerHTML = top.map(([city, count]) => `
+    <div class="top-city">
+      <span class="top-city-name">${esc(city)}</span>
+      <span class="top-city-count">${count}</span>
+    </div>
+  `).join('')
+}
+
+// =====================================================
+// ADMIN: RENDER TABLE
+// =====================================================
+function getFilteredList(){
+  const q = (document.getElementById('adminSearch')?.value || '').toLowerCase().trim()
+  const filter = document.getElementById('adminFilter')?.value || 'all'
+  const cityF = document.getElementById('adminCityFilter')?.value || ''
+  const from = document.getElementById('adminDateFrom')?.value
+  const to = document.getElementById('adminDateTo')?.value
+  return allParticipants.filter(p => {
+    if (filter !== 'all' && p.status !== filter) return false
+    if (cityF && (p.city || '') !== cityF) return false
+    if (from && new Date(p.created_at) < new Date(from)) return false
+    if (to && new Date(p.created_at) > new Date(to + 'T23:59:59')) return false
+    if (q) {
+      const hay = `${p.name} ${p.email} ${p.phone} ${p.city || ''} ${p.support_message || ''}`.toLowerCase()
+      if (!hay.includes(q)) return false
+    }
+    return true
+  })
 }
 
 function renderTable(){
   const tbody = document.getElementById('adminTbody')
-  const q = (document.getElementById('adminSearch').value || '').toLowerCase().trim()
-  const filter = document.getElementById('adminFilter').value
-  const list = allParticipants.filter(p => {
-    if (filter !== 'all' && p.status !== filter) return false
-    if (q && !((p.name||'').toLowerCase().includes(q) ||
-               (p.email||'').toLowerCase().includes(q) ||
-               (p.city||'').toLowerCase().includes(q))) return false
-    return true
-  })
+  const foot = document.getElementById('adminTableFoot')
+  if (!tbody) return
+  const list = getFilteredList()
   if (!list.length) {
-    tbody.innerHTML = '<tr><td colspan="5" class="empty">Nenhum participante encontrado.</td></tr>'
+    tbody.innerHTML = `<tr><td colspan="6" class="empty">${allParticipants.length === 0 ? 'Nenhum participante ainda.' : 'Nenhum resultado para os filtros aplicados.'}</td></tr>`
+    if (foot) foot.innerHTML = `<span>0 de ${allParticipants.length}</span><span></span>`
     return
   }
-  tbody.innerHTML = list.map(p => `
-    <tr data-id="${p.id}">
+  tbody.innerHTML = list.map(p => {
+    const isSelected = selectedIds.has(p.id)
+    return `
+    <tr data-id="${p.id}" class="${isSelected ? 'selected' : ''}">
+      <td class="col-check"><input type="checkbox" data-check="${p.id}" ${isSelected ? 'checked' : ''} /></td>
       <td>
         <div class="name">${esc(p.name)}</div>
         ${p.city ? `<small style="color:var(--ink-soft);font-size:12px">📍 ${esc(p.city)}</small>` : ''}
@@ -2037,27 +2460,42 @@ function renderTable(){
       </td>
       <td>${statusPill(p.status)}</td>
       <td><span class="date">${fmtDate(p.created_at)}</span></td>
-      <td>
+      <td class="col-actions">
         <div class="actions">
-          <button class="row-btn" data-act="edit">Editar</button>
-          ${p.status !== 'paid' ? `<button class="row-btn pay" data-act="paid">✓ Pago</button>` : ''}
-          ${p.status !== 'manual' ? `<button class="row-btn manual" data-act="manual">Manual</button>` : ''}
-          ${p.status !== 'canceled' ? `<button class="row-btn cancel" data-act="cancel">×</button>` : ''}
+          ${p.status !== 'paid' ? `<button class="row-btn pay" data-act="paid" data-id="${p.id}">✓ Pago</button>` : ''}
+          ${p.status !== 'manual' ? `<button class="row-btn manual" data-act="manual" data-id="${p.id}">Manual</button>` : ''}
+          ${p.status !== 'canceled' ? `<button class="row-btn cancel" data-act="cancel" data-id="${p.id}">×</button>` : ''}
         </div>
       </td>
-    </tr>
-  `).join('')
+    </tr>`
+  }).join('')
+  if (foot) {
+    const showing = list.length
+    const total = allParticipants.length
+    const sumRaised = list.reduce((s,p) => s + (Number(p.amount_paid)||0) * (p.status === 'paid' || p.status === 'manual' ? 1 : 0), 0)
+    foot.innerHTML = `
+      <span>Mostrando <b>${showing}</b> de <b>${total}</b> participantes</span>
+      <span>Total arrecadado (visíveis): <b>R$ ${sumRaised.toFixed(2).replace('.', ',')}</b></span>
+    `
+  }
+  updateBulkBar()
 }
 
 function statusPill(s){
-  const labels = { pending:'pendente', paid:'pago', manual:'manual', canceled:'cancelado' }
-  return `<span class="pill ${s}">${labels[s] || s}</span>`
+  return `<span class="pill ${s}">${STATUS_LABELS[s] || s}</span>`
 }
 
 function fmtDate(iso){
+  if (!iso) return '—'
   const d = new Date(iso)
   return d.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', year:'2-digit' }) +
          ' ' + d.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' })
+}
+
+function fmtDateOnly(iso){
+  if (!iso) return '—'
+  const d = new Date(iso)
+  return d.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric' })
 }
 
 function esc(s){
@@ -2067,27 +2505,148 @@ function esc(s){
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;')
 }
 
-// Busca e filtro
-document.getElementById('adminSearch')?.addEventListener('input', renderTable)
-document.getElementById('adminFilter')?.addEventListener('change', renderTable)
-document.getElementById('adminRefreshBtn')?.addEventListener('click', () => loadAdminData())
+function csvEsc(v){
+  if (v == null) return ''
+  const s = String(v).replace(/"/g, '""')
+  return /[,"\n]/.test(s) ? '"' + s + '"' : s
+}
 
-// Ações na tabela (delegação)
-document.getElementById('adminTbody')?.addEventListener('click', async (ev) => {
-  const btn = ev.target.closest('button[data-act]')
-  if (!btn) return
-  const tr = btn.closest('tr')
-  const id = tr?.dataset.id
-  if (!id) return
+// =====================================================
+// ADMIN: BULK ACTIONS
+// =====================================================
+function updateBulkBar(){
+  const bar = document.getElementById('bulkBar')
+  const cnt = document.getElementById('bulkCount')
+  if (!bar) return
+  if (selectedIds.size > 0) {
+    bar.hidden = false
+    cnt.textContent = selectedIds.size + ' selecionado' + (selectedIds.size > 1 ? 's' : '')
+  } else {
+    bar.hidden = true
+  }
+  // Check all checkbox state
+  const checkAll = document.getElementById('adminCheckAll')
+  if (checkAll) {
+    const visible = getFilteredList()
+    checkAll.checked = visible.length > 0 && visible.every(p => selectedIds.has(p.id))
+    checkAll.indeterminate = !checkAll.checked && visible.some(p => selectedIds.has(p.id))
+  }
+}
+
+async function bulkUpdateStatus(status){
+  const ids = [...selectedIds]
+  if (!ids.length) return
+  if (status === 'canceled' && !confirm(`Cancelar ${ids.length} inscrição(ões)?`)) return
+  try {
+    const { data: { user } } = await supabase.auth.getUser()
+    const now = new Date().toISOString()
+    const updates = { status, updated_at: now }
+    if (status === 'paid') { updates.amount_paid = 12.00; updates.paid_at = now }
+    const { error } = await supabase.from('participants').update(updates).in('id', ids)
+    if (error) throw error
+    // Audit log
+    await supabase.from('audit_log').insert(
+      ids.map(id => ({
+        participant_id: id,
+        action: 'marked_' + status,
+        admin_email: user?.email || null,
+        details: { bulk: true, count: ids.length }
+      }))
+    )
+    toast(`✓ ${ids.length} inscrição(ões) marcada(s) como ${status}`, 'success')
+    await loadAdminData()
+  } catch (err) {
+    toast('Erro: ' + err.message, 'error')
+  }
+}
+
+// =====================================================
+// ADMIN: DRAWER
+// =====================================================
+const drawer = document.getElementById('drawer')
+const drawerOverlay = document.getElementById('drawerOverlay')
+
+function openDrawer(id){
   const p = allParticipants.find(x => x.id === id)
   if (!p) return
-  const act = btn.dataset.act
-  if (act === 'edit') return openModal(p)
-  if (act === 'paid') return quickUpdate(id, 'paid')
-  if (act === 'manual') return quickUpdate(id, 'manual')
-  if (act === 'cancel') return quickUpdate(id, 'canceled')
+  currentDrawerId = id
+  document.getElementById('drawerTitle').textContent = p.name || '—'
+  const pillColor = STATUS_COLORS[p.status] || '#666'
+  document.getElementById('drawerSub').innerHTML = `
+    <span class="pill ${p.status}" style="display:inline-flex;margin-top:4px">${STATUS_LABELS[p.status] || p.status}</span>
+  `
+  const body = document.getElementById('drawerBody')
+  body.innerHTML = `
+    <div class="drawer-section">
+      <h4>Contato</h4>
+      <div class="drawer-field"><span class="k">Email</span><span class="v"><a href="mailto:${esc(p.email)}">${esc(p.email)}</a></span></div>
+      <div class="drawer-field"><span class="k">WhatsApp</span><span class="v"><a href="https://wa.me/55${esc((p.phone||'').replace(/\D/g,''))}" target="_blank" rel="noopener">${esc(p.phone)}</a></span></div>
+      <div class="drawer-field"><span class="k">Cidade</span><span class="v">${esc(p.city || '—')}</span></div>
+    </div>
+    <div class="drawer-section">
+      <h4>Pagamento</h4>
+      <div class="drawer-field"><span class="k">Status</span><span class="v" style="color:${pillColor};font-weight:700">${STATUS_LABELS[p.status] || p.status}</span></div>
+      <div class="drawer-field"><span class="k">Valor</span><span class="v">R$ ${(Number(p.amount_paid) || 0).toFixed(2).replace('.', ',')}</span></div>
+      <div class="drawer-field"><span class="k">Pago em</span><span class="v">${p.paid_at ? fmtDate(p.paid_at) : '—'}</span></div>
+    </div>
+    <div class="drawer-section">
+      <h4>Inscrição</h4>
+      <div class="drawer-field"><span class="k">Cadastrado em</span><span class="v">${fmtDate(p.created_at)}</span></div>
+      <div class="drawer-field"><span class="k">Atualizado em</span><span class="v">${fmtDate(p.updated_at)}</span></div>
+      <div class="drawer-field"><span class="k">ID</span><span class="v" style="font-family:ui-monospace,monospace;font-size:12px">${esc(p.id.slice(0,8))}…</span></div>
+    </div>
+    ${p.support_message ? `
+    <div class="drawer-section">
+      <h4>Mensagem de apoio</h4>
+      <div class="drawer-message">"${esc(p.support_message)}"</div>
+    </div>` : ''}
+    ${p.admin_notes ? `
+    <div class="drawer-section">
+      <h4>Nota interna</h4>
+      <div class="drawer-notes">${esc(p.admin_notes)}</div>
+    </div>` : ''}
+  `
+  document.getElementById('drawerFoot').hidden = false
+  drawer.classList.add('show')
+  drawerOverlay.classList.add('show')
+  drawer.setAttribute('aria-hidden', 'false')
+}
+
+function closeDrawer(){
+  drawer.classList.remove('show')
+  drawerOverlay.classList.remove('show')
+  drawer.setAttribute('aria-hidden', 'true')
+  currentDrawerId = null
+}
+
+document.getElementById('drawerClose')?.addEventListener('click', closeDrawer)
+drawerOverlay?.addEventListener('click', closeDrawer)
+document.addEventListener('keydown', (ev) => {
+  if (ev.key === 'Escape') {
+    if (drawer?.classList.contains('show')) closeDrawer()
+    if (modalOverlay?.classList.contains('show')) closeModal()
+  }
 })
 
+// Drawer footer actions
+document.getElementById('drawerFoot')?.addEventListener('click', async (ev) => {
+  const btn = ev.target.closest('button[data-drawer]')
+  if (!btn) return
+  const act = btn.dataset.drawer
+  if (act === 'edit') { openModal(allParticipants.find(x => x.id === currentDrawerId)); return }
+  if (!currentDrawerId) return
+  await quickUpdate(currentDrawerId, act)
+  closeDrawer()
+})
+
+// =====================================================
+// ADMIN: TOAST (também exporta pro escopo global)
+// =====================================================
+// (toast() já está definido na seção SUCESSO/MODAL)
+
+// =====================================================
+// ADMIN: ACTIONS & LISTENERS
+// =====================================================
 async function quickUpdate(id, status){
   try {
     const updates = { status, updated_at: new Date().toISOString() }
@@ -2103,22 +2662,129 @@ async function quickUpdate(id, status){
       action: 'marked_' + status,
       admin_email: user?.email || null,
     })
-    toast('✓ Status atualizado: ' + status, 'success')
+    toast('✓ ' + STATUS_LABELS[status] || status, 'success')
     await loadAdminData()
+    // Reabre drawer se estava aberto
+    if (currentDrawerId === id) openDrawer(id)
   } catch (err) {
     toast('Erro: ' + err.message, 'error')
   }
 }
 
+// Filtros
+['adminSearch', 'adminFilter', 'adminCityFilter', 'adminDateFrom', 'adminDateTo'].forEach(id => {
+  const el = document.getElementById(id)
+  if (!el) return
+  el.addEventListener('input', renderTable)
+  el.addEventListener('change', renderTable)
+})
+
+document.getElementById('adminRefreshBtn')?.addEventListener('click', () => {
+  loadAdminData()
+  toast('Atualizado!', 'success')
+})
+
+// Check all
+document.getElementById('adminCheckAll')?.addEventListener('change', (ev) => {
+  const checked = ev.target.checked
+  const visible = getFilteredList()
+  visible.forEach(p => {
+    if (checked) selectedIds.add(p.id)
+    else selectedIds.delete(p.id)
+  })
+  renderTable()
+})
+
+// Checkbox individual
+document.getElementById('adminTbody')?.addEventListener('change', (ev) => {
+  const cb = ev.target.closest('input[data-check]')
+  if (!cb) return
+  const id = cb.dataset.check
+  if (cb.checked) selectedIds.add(id)
+  else selectedIds.delete(id)
+  updateBulkBar()
+  // Visual feedback
+  const tr = cb.closest('tr')
+  if (tr) tr.classList.toggle('selected', cb.checked)
+})
+
+// Click na linha (exceto checkbox/botões) abre drawer
+document.getElementById('adminTbody')?.addEventListener('click', (ev) => {
+  if (ev.target.closest('input, button')) return
+  const tr = ev.target.closest('tr[data-id]')
+  if (!tr) return
+  openDrawer(tr.dataset.id)
+})
+
+// Ações da tabela
+document.getElementById('adminTbody')?.addEventListener('click', async (ev) => {
+  const btn = ev.target.closest('button[data-act]')
+  if (!btn) return
+  const id = btn.dataset.id
+  if (!id) return
+  if (btn.dataset.act === 'edit') return openModal(allParticipants.find(x => x.id === id))
+  await quickUpdate(id, btn.dataset.act)
+})
+
+// Bulk bar
+document.getElementById('bulkBar')?.addEventListener('click', async (ev) => {
+  const btn = ev.target.closest('button[data-bulk]')
+  if (!btn) return
+  const act = btn.dataset.bulk
+  if (act === 'clear') {
+    selectedIds.clear()
+    renderTable()
+    return
+  }
+  await bulkUpdateStatus(act)
+})
+
 // =====================================================
-// ADMIN: MODAL DE EDIÇÃO
+// ADMIN: EXPORT CSV / JSON
+// =====================================================
+document.getElementById('adminExportBtn')?.addEventListener('click', () => {
+  const list = getFilteredList().length ? getFilteredList() : allParticipants
+  if (!list.length) { toast('Nada para exportar', 'error'); return }
+  const headers = ['id','name','email','phone','city','status','amount_paid','paid_at','created_at','admin_notes','support_message']
+  const rows = list.map(p => headers.map(h => csvEsc(p[h])).join(','))
+  const csv = headers.join(',') + '\n' + rows.join('\n')
+  downloadFile(csv, 'inscricoes-corrida-lourdes-' + new Date().toISOString().slice(0,10) + '.csv', 'text/csv;charset=utf-8;')
+  toast('✓ CSV exportado (' + list.length + ' linhas)', 'success')
+  supabase.auth.getUser().then(({ data: { user } }) => {
+    supabase.from('audit_log').insert({
+      action: 'exported', admin_email: user?.email || null,
+      details: { format: 'csv', count: list.length }
+    })
+  })
+})
+
+document.getElementById('adminExportJsonBtn')?.addEventListener('click', () => {
+  const list = getFilteredList().length ? getFilteredList() : allParticipants
+  if (!list.length) { toast('Nada para exportar', 'error'); return }
+  const json = JSON.stringify(list, null, 2)
+  downloadFile(json, 'inscricoes-corrida-lourdes-' + new Date().toISOString().slice(0,10) + '.json', 'application/json')
+  toast('✓ JSON exportado (' + list.length + ' registros)', 'success')
+})
+
+function downloadFile(content, filename, mime){
+  const blob = new Blob([content], { type: mime })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url; a.download = filename
+  document.body.appendChild(a); a.click(); a.remove()
+  URL.revokeObjectURL(url)
+}
+
+// =====================================================
+// ADMIN: MODAL DE EDIÇÃO (mantido)
 // =====================================================
 const modalOverlay = document.getElementById('modalOverlay')
 let editingId = null
 
 function openModal(p){
+  if (!p) return
   editingId = p.id
-  document.getElementById('modalSub').textContent = p.email + ' · ' + p.phone
+  document.getElementById('modalSub').textContent = (p.email || '') + ' · ' + (p.phone || '')
   document.getElementById('mName').value   = p.name || ''
   document.getElementById('mEmail').value  = p.email || ''
   document.getElementById('mPhone').value  = p.phone || ''
@@ -2131,6 +2797,12 @@ function openModal(p){
 
 function closeModal(){
   modalOverlay.classList.remove('show')
+  editingId = null
+}
+
+document.getElementById('modalClose')?.addEventListener('click', closeModal)
+document.getElementById('modalCancelBtn')?.addEventListener('click', closeModal)
+modalOverlay?.addEventListener('click', (ev) => { if (ev.target === modalOverlay) closeModal() })  modalOverlay.classList.remove('show')
   editingId = null
 }
 
