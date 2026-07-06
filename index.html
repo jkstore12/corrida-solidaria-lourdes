@@ -332,6 +332,81 @@ h2{
 }
 
 /* =====================================================
+   LOCAL & HORÁRIO
+   ===================================================== */
+.local{
+  background:var(--surface);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.local-inner{
+  max-width:var(--container);
+  margin:0 auto;
+  padding:0 var(--pad-x);
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:32px;align-items:center;
+}
+@media (max-width:720px){
+  .local-inner{grid-template-columns:1fr;gap:24px}
+}
+.local-info h2{margin:0 0 4px}
+.local-cidade{
+  font-size:18px;font-weight:600;color:var(--rosa-deep);
+  margin:0 0 24px;
+  letter-spacing:.01em;
+}
+.local-details{
+  list-style:none;padding:0;margin:0 0 24px;
+  display:flex;flex-direction:column;gap:14px;
+}
+.local-details li{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:14px;
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:var(--radius-sm);
+}
+.local-ico{
+  width:40px;height:40px;flex-shrink:0;
+  background:var(--rosa-soft);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;
+}
+.local-details li > div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.local-details strong{
+  font-size:14px;font-weight:700;color:var(--ink);
+}
+.local-details span{
+  font-size:13px;color:var(--ink-soft);
+  line-height:1.4;
+}
+.local-map-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--ink);color:#fff;
+  font-weight:600;font-size:14px;
+  padding:14px 20px;border-radius:12px;
+  border:0;
+  transition:transform .15s ease, background .2s ease;
+  text-decoration:none;
+  cursor:pointer;
+}
+.local-map-btn:hover{background:var(--rosa-deep);transform:translateY(-1px)}
+.local-map-btn svg{width:18px;height:18px}
+
+.local-map{
+  background:var(--rosa-soft);
+  border:1px solid var(--rosa);
+  border-radius:var(--radius-lg);
+  padding:8px;
+  overflow:hidden;
+}
+.local-map svg{
+  display:block;width:100%;height:auto;
+  border-radius:var(--radius);
+}
+
+/* =====================================================
    HOW (Como funciona)
    ===================================================== */
 .how-list{
@@ -1412,6 +1487,130 @@ body.admin-mode{background:var(--ink)}
         </div>
       </li>
     </ol>
+  </div>
+</section>
+
+<!-- Local & Horário -->
+<section class="local" id="local">
+  <div class="local-inner">
+    <div class="local-info">
+      <span class="sobre-kicker">ONDE & QUANDO</span>
+      <h2>Praça Matriz</h2>
+      <p class="local-cidade">Cocal dos Alves - PI</p>
+
+      <ul class="local-details">
+        <li>
+          <span class="local-ico" aria-hidden="true">📅</span>
+          <div>
+            <strong>Domingo, 26 de julho de 2026</strong>
+            <span>Concentração a partir das 16h30</span>
+          </div>
+        </li>
+        <li>
+          <span class="local-ico" aria-hidden="true">🏁</span>
+          <div>
+            <strong>Largada às 17h</strong>
+            <span>Trajeto de 3 km · corrida ou caminhada</span>
+          </div>
+        </li>
+        <li>
+          <span class="local-ico" aria-hidden="true">📍</span>
+          <div>
+            <strong>Ponto de encontro</strong>
+            <span>Praça Matriz, Centro · Cocal dos Alves - PI</span>
+          </div>
+        </li>
+      </ul>
+
+      <a class="local-map-btn"
+         href="https://www.google.com/maps/search/?api=1&query=Pra%C3%A7a+Matriz+Cocal+dos+Alves+PI"
+         target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        Ver no Google Maps
+      </a>
+    </div>
+
+    <!-- Mapa SVG estilizado -->
+    <div class="local-map" aria-label="Mapa ilustrativo da Praça Matriz">
+      <svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg" role="img">
+        <!-- Fundo -->
+        <rect width="400" height="320" fill="#FFE4EA"/>
+
+        <!-- Ruas -->
+        <rect x="0" y="140" width="400" height="40" fill="#E5E5E5"/>
+        <rect x="180" y="0" width="40" height="320" fill="#E5E5E5"/>
+
+        <!-- Faixa de pedestre -->
+        <rect x="190" y="135" width="20" height="3" fill="#fff"/>
+        <rect x="190" y="143" width="20" height="3" fill="#fff"/>
+        <rect x="190" y="151" width="20" height="3" fill="#fff"/>
+        <rect x="190" y="159" width="20" height="3" fill="#fff"/>
+        <rect x="190" y="167" width="20" height="3" fill="#fff"/>
+        <rect x="190" y="175" width="20" height="3" fill="#fff"/>
+        <rect x="195" y="180" width="3" height="20" fill="#fff"/>
+        <rect x="203" y="180" width="3" height="20" fill="#fff"/>
+        <rect x="211" y="180" width="3" height="20" fill="#fff"/>
+
+        <!-- Rua labels -->
+        <text x="50" y="135" font-family="Inter,sans-serif" font-size="9" fill="#999" font-weight="600">RUA PRINCIPAL</text>
+        <text x="195" y="30" font-family="Inter,sans-serif" font-size="9" fill="#999" font-weight="600" transform="rotate(90 195 30)">AV. CENTRO</text>
+
+        <!-- Praça (parque) -->
+        <rect x="80" y="60" width="80" height="60" rx="6" fill="#16A34A" opacity="0.85"/>
+        <text x="120" y="95" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">PRAÇA</text>
+        <text x="120" y="110" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#fff" text-anchor="middle">MATRIZ</text>
+
+        <!-- Árvores -->
+        <circle cx="90" cy="65" r="6" fill="#15803D"/>
+        <circle cx="150" cy="65" r="6" fill="#15803D"/>
+        <circle cx="90" cy="115" r="6" fill="#15803D"/>
+        <circle cx="150" cy="115" r="6" fill="#15803D"/>
+
+        <!-- Igreja à direita -->
+        <rect x="280" y="80" width="60" height="80" fill="#fff" stroke="#1A0A12" stroke-width="2.5"/>
+        <polygon points="280,80 340,80 310,55" fill="#FF2E7E" stroke="#1A0A12" stroke-width="2.5"/>
+        <rect x="300" y="110" width="20" height="50" fill="#FF2E7E"/>
+        <rect x="290" y="125" width="10" height="15" fill="#FFE4EA"/>
+        <rect x="320" y="125" width="10" height="15" fill="#FFE4EA"/>
+        <text x="310" y="180" font-family="Inter,sans-serif" font-size="8" fill="#1A0A12" font-weight="600" text-anchor="middle">IGREJA</text>
+
+        <!-- Casas -->
+        <rect x="20" y="20" width="40" height="50" fill="#fff" stroke="#1A0A12" stroke-width="2"/>
+        <polygon points="20,20 60,20 40,5" fill="#F5C84B" stroke="#1A0A12" stroke-width="2"/>
+        <rect x="30" y="40" width="8" height="12" fill="#FF2E7E"/>
+        <rect x="42" y="40" width="8" height="12" fill="#FF2E7E"/>
+
+        <rect x="20" y="200" width="40" height="50" fill="#fff" stroke="#1A0A12" stroke-width="2"/>
+        <polygon points="20,200 60,200 40,185" fill="#F5C84B" stroke="#1A0A12" stroke-width="2"/>
+        <rect x="30" y="220" width="8" height="12" fill="#FF2E7E"/>
+        <rect x="42" y="220" width="8" height="12" fill="#FF2E7E"/>
+
+        <!-- Pin de largada -->
+        <g transform="translate(195 130)">
+          <circle r="22" fill="#FF2E7E" opacity="0.25">
+            <animate attributeName="r" from="22" to="35" dur="1.6s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" from="0.4" to="0" dur="1.6s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="10" fill="#FF2E7E" stroke="#1A0A12" stroke-width="2.5"/>
+          <text y="3.5" font-family="Inter,sans-serif" font-size="11" font-weight="800" fill="#fff" text-anchor="middle">🏁</text>
+        </g>
+
+        <!-- Legenda -->
+        <g transform="translate(220 220)">
+          <rect x="0" y="0" width="160" height="76" rx="8" fill="#fff" stroke="#1A0A12" stroke-width="2"/>
+          <text x="10" y="20" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#1A0A12">LEGENDA</text>
+          <circle cx="18" cy="36" r="5" fill="#FF2E7E"/>
+          <text x="30" y="40" font-family="Inter,sans-serif" font-size="9" fill="#1A0A12">Largada / Encontro</text>
+          <rect x="13" y="48" width="10" height="10" fill="#16A34A"/>
+          <text x="30" y="58" font-family="Inter,sans-serif" font-size="9" fill="#1A0A12">Praça Matriz</text>
+          <rect x="13" y="62" width="10" height="6" fill="#E5E5E5"/>
+          <text x="30" y="69" font-family="Inter,sans-serif" font-size="9" fill="#1A0A12">Ruas</text>
+        </g>
+      </svg>
+    </div>
   </div>
 </section>
 
