@@ -9,6 +9,8 @@
 <meta name="apple-mobile-web-app-title" content="Corrida Lourdes" />
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="format-detection" content="telephone=no" />
+<meta name="HandheldFriendly" content="true" />
+<meta name="MobileOptimized" content="320" />
 <title>Corrida Solidária Lourdes · 26 de julho · Para tratamento de câncer de mama</title>
 <meta name="description" content="Corrida Solidária Lourdes · Para tratamento de câncer de mama · 3km · Domingo, 26 de julho · Praça Matriz · Concentração 16h30 · Largada 17h · R$ 12,00 · Pix · Mesa de frutas." />
 
@@ -108,7 +110,7 @@
 
 /* ===== RESET ===== */
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:hidden;max-width:100%;width:100%}
 body{
   margin:0;
   font-family:var(--body);
@@ -118,8 +120,13 @@ body{
   background:var(--papel);
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
-  overflow-x:clip; /* hard-stop any horizontal scroll (modern, no scroll context) */
+  overflow-x:hidden; /* hard-stop any horizontal scroll */
+  max-width:100vw;
+  width:100%;
+  position:relative;
 }
+img,svg,video,canvas{max-width:100%;height:auto}
+main,header,footer,section,article,aside,nav{max-width:100vw;overflow-x:hidden}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
@@ -381,6 +388,9 @@ h1.title .heart{
   border-bottom:2.5px solid var(--ink);
   position:relative;
   z-index:2;
+  max-width:100vw;
+  width:100%;
+  contain:paint;
 }
 .marquee .track{
   display:flex;gap:48px;
@@ -1742,6 +1752,35 @@ body.admin-mode{background:var(--ink)}
   .modal h3{font-size:24px}
   .modal-actions{flex-direction:column-reverse}
   .modal .btn{width:100%}
+
+  /* HARD STOP: nada pode vazar além da viewport */
+  html,body,main,header,footer,section,article,aside,nav,div{
+    max-width:100% !important;
+  }
+  .databar,.marquee,.hero,.details,.price-section,.slogan-banner,footer,.sticky-cta{
+    max-width:100vw !important;
+    overflow:hidden !important;
+  }
+  .databar .row{flex-wrap:wrap;gap:4px;padding:8px 0}
+  .databar .row > span{font-size:10.5px;letter-spacing:.06em}
+  .marquee .track{will-change:transform}
+}
+
+/* XS phones (≤ 360px) — ajustes finos */
+@media (max-width: 360px){
+  .databar{font-size:9px;letter-spacing:.04em}
+  .databar .row{padding:6px 0;gap:2px}
+  .foot-grid h5,.sticky-cta .info .lbl{font-size:9px}
+  .price-box{padding:20px 16px}
+  .price-box .price{font-size:60px}
+  .ticket{padding:18px 14px 20px}
+  .reg-form{padding:18px 14px}
+  .kpi{padding:16px 14px}
+  .kpi .kpi-n{font-size:30px}
+  .modal{padding:20px 16px}
+  .success-modal{padding:20px 16px}
+  .hero{padding:32px 0 40px}
+  .databar .row > span:nth-child(3){display:none}
 }
 
 /* Touch: desabilita hover "sticky" no iOS */
