@@ -1935,18 +1935,16 @@ body.admin-mode{background:var(--ink)}
           <span class="currency">R$</span>
           <span>12</span><span class="cents">,00</span>
         </div>
-        <p class="desc">Pagamento via <b>Pix</b> — QR Code ou copia-e-cola. Cai na hora, sem taxas.</p>
+        <p class="desc">Inscrição rápida + <b>pagamento via Pix</b> na sequência. Leva menos de 1 minuto.</p>
 
-        <!-- BOTÃO DE PAGAMENTO — chama a organização no WhatsApp para receber o Pix -->
-        <a class="pay-btn" href="https://wa.me/5586981344803?text=Oi%21%20Quero%20pagar%20minha%20inscri%C3%A7%C3%A3o%20da%20Corrida%20Solid%C3%A1ria%20Lourdes%20%F0%9F%92%9A" target="_blank" rel="noopener">
+        <!-- CTA: leva pro formulário de inscrição -->
+        <a class="pay-btn" href="#formulario">
           <span class="pay-btn-content">
             <svg class="pix-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-              <rect x="3" y="3" width="11" height="11" rx="2" fill="currentColor" opacity=".95"/>
-              <rect x="18" y="3" width="11" height="11" rx="2" fill="currentColor" opacity=".7"/>
-              <rect x="3" y="18" width="11" height="11" rx="2" fill="currentColor" opacity=".7"/>
-              <rect x="18" y="18" width="11" height="11" rx="2" fill="currentColor" opacity=".95"/>
+              <path d="M16 4 L24 12 L20 16 L16 12 L12 16 L8 12 Z" fill="currentColor"/>
+              <path d="M8 14 L8 22 L24 22 L24 14 L20 18 L16 14 L12 18 Z" fill="currentColor" opacity=".7"/>
             </svg>
-            Pagar com Pix
+            Quero me inscrever
           </span>
           <span class="arrow">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -1955,39 +1953,8 @@ body.admin-mode{background:var(--ink)}
 
         <div class="secure">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 9.3 8 11 4.5-1.7 8-6 8-11V5l-8-3z"/><path d="M9 12l2 2 4-4"/></svg>
-          Confirmação instantânea · Sistema Pix · 24/7
+          Pagamento 100% via Pix · sem taxas · sem cadastro de cartão
         </div>
-
-        <details class="pix-alternatives">
-          <summary>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-            Pagar direto sem sair da página
-          </summary>
-          <div class="pix-grid">
-            <div class="pix-block qr">
-              <span class="pix-block-label">QR Code</span>
-              <div class="pix-qr-frame">
-                <!-- QR Code Pix: gere pelo app do seu banco e troque o src abaixo pela URL da imagem -->
-                <img id="pixQrImg" src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23FFE4EA'/%3E%3Ctext x='50' y='30' font-family='sans-serif' font-size='11' font-weight='700' fill='%23B4124E' text-anchor='middle'%3E%E2%9D%A4%20PIX%3C/text%3E%3Ctext x='50' y='48' font-family='monospace' font-size='9' font-weight='700' fill='%232A0A14' text-anchor='middle'%3ER%24%2012%2C00%3C/text%3E%3Cline x1='15' y1='55' x2='85' y2='55' stroke='%23FF2E7E' stroke-width='1.5' stroke-dasharray='3,2'/%3E%3Ctext x='50' y='68' font-family='monospace' font-size='7' fill='%232A0A14' text-anchor='middle'%3EChave%20Pix%3C/text%3E%3Ctext x='50' y='78' font-family='monospace' font-size='7' font-weight='700' fill='%23B4124E' text-anchor='middle'%3E040.351.233-66%3C/text%3E%3Ctext x='50' y='90' font-family='sans-serif' font-size='6' fill='%236B2A3F' text-anchor='middle'%3EFrancisco%20das%20Chagas%3C/text%3E%3C/svg%3E" alt="QR Code Pix para inscrição da Corrida Solidária Lourdes" loading="lazy" />
-                <div class="pix-qr-fallback">
-                  <strong>📲 QR em construção</strong>
-                  <span>Por enquanto, clique em <b>"Pagar com Pix"</b> ou copie a chave ao lado e pague pelo app do seu banco. O QR oficial é gerado pelo app.</span>
-                </div>
-              </div>
-              <small class="pix-block-hint">Abra o app do seu banco → Pix → Ler QR Code</small>
-            </div>
-
-            <div class="pix-block copy">
-              <span class="pix-block-label">Copia e cola</span>
-              <textarea id="pixCopiaCola" readonly aria-label="Código Pix copia e cola" placeholder="Chave Pix: 040.351.233-66 · Francisco das Chagas Cardoso Silva"></textarea>
-              <button type="button" id="pixCopyBtn" class="pix-copy-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
-                <span id="pixCopyLbl">Copiar código Pix</span>
-              </button>
-              <small class="pix-block-hint">Abra o app do seu banco → Pix → Pagar com código</small>
-            </div>
-          </div>
-        </details>
       </div>
     </div>
   </div>
@@ -2073,15 +2040,13 @@ body.admin-mode{background:var(--ink)}
       <p class="slogan-line">“Correr faz bem.</p>
       <p class="slogan-line">Fazer o bem <em>faz a diferença.</em>”</p>
       <div class="slogan-cta">
-        <a class="pay-btn" href="#inscricao">
+        <a class="pay-btn" href="#formulario">
           <span class="pay-btn-content">
             <svg class="pix-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-              <rect x="3" y="3" width="11" height="11" rx="2" fill="currentColor" opacity=".95"/>
-              <rect x="18" y="3" width="11" height="11" rx="2" fill="currentColor" opacity=".7"/>
-              <rect x="3" y="18" width="11" height="11" rx="2" fill="currentColor" opacity=".7"/>
-              <rect x="18" y="18" width="11" height="11" rx="2" fill="currentColor" opacity=".95"/>
+              <path d="M16 4 L24 12 L20 16 L16 12 L12 16 L8 12 Z" fill="currentColor"/>
+              <path d="M8 14 L8 22 L24 22 L24 14 L20 18 L16 14 L12 18 Z" fill="currentColor" opacity=".7"/>
             </svg>
-            Participe!
+            Quero me inscrever
           </span>
           <span class="arrow">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -2173,21 +2138,18 @@ body.admin-mode{background:var(--ink)}
 </footer>
 
 <!-- ===== STICKY MOBILE CTA BAR ===== -->
-<aside class="sticky-cta" id="stickyCta" aria-label="Acesso rápido à inscrição">
+<aside class="sticky-cta" id="stickyCta" aria-label="Inscrição rápida">
   <div class="row">
     <div class="info">
       <span class="lbl">Inscrição</span>
       <span class="title">Garanta sua vaga</span>
       <span class="price">R$ 12,00 · 100% à causa</span>
     </div>
-    <a class="pay-pill" href="https://wa.me/5586981344803?text=Oi%21%20Quero%20pagar%20minha%20inscri%C3%A7%C3%A3o%20da%20Corrida%20Solid%C3%A1ria%20Lourdes%20%F0%9F%92%9A" target="_blank" rel="noopener" aria-label="Pagar inscrição via WhatsApp">
+    <a class="pay-pill" href="#formulario" aria-label="Ir para o formulário de inscrição">
       <svg class="pix-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-        <rect x="3" y="3" width="11" height="11" rx="2" fill="currentColor" opacity=".95"/>
-        <rect x="18" y="3" width="11" height="11" rx="2" fill="currentColor" opacity=".7"/>
-        <rect x="3" y="18" width="11" height="11" rx="2" fill="currentColor" opacity=".7"/>
-        <rect x="18" y="18" width="11" height="11" rx="2" fill="currentColor" opacity=".95"/>
+        <path d="M12 4 L20 12 L16 16 L12 12 L8 16 L4 12 Z" fill="currentColor"/>
       </svg>
-      Pagar Pix
+      Inscreva-se
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M5 12h14M13 5l7 7-7 7"/>
       </svg>
