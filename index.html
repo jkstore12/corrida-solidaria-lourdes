@@ -2802,14 +2802,7 @@ function closeModal(){
 
 document.getElementById('modalClose')?.addEventListener('click', closeModal)
 document.getElementById('modalCancelBtn')?.addEventListener('click', closeModal)
-modalOverlay?.addEventListener('click', (ev) => { if (ev.target === modalOverlay) closeModal() })  modalOverlay.classList.remove('show')
-  editingId = null
-}
-
-document.getElementById('modalClose')?.addEventListener('click', closeModal)
-document.getElementById('modalCancelBtn')?.addEventListener('click', closeModal)
 modalOverlay?.addEventListener('click', (ev) => { if (ev.target === modalOverlay) closeModal() })
-document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape' && modalOverlay.classList.contains('show')) closeModal() })
 
 document.getElementById('modalSaveBtn')?.addEventListener('click', async () => {
   if (!editingId) return
