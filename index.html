@@ -193,6 +193,26 @@ input,textarea,select{font-family:inherit;font-size:16px;color:inherit}
   max-width:48ch;
   line-height:1.5;
 }
+.hero-cause{
+  font-size:clamp(14px, 1.8vw, 16px);
+  color:var(--rosa-deep);
+  background:var(--rosa-soft);
+  display:inline-block;
+  padding:6px 14px;
+  border-radius:999px;
+  margin:0 0 16px;
+  font-weight:600;
+  letter-spacing:.01em;
+}
+.hero-cause strong{font-weight:800}
+.hero-slogan{
+  font-family:var(--font-display);font-weight:600;
+  font-size:clamp(13px, 1.6vw, 14px);
+  color:var(--ink-mute);
+  margin:0 0 24px;
+  font-style:italic;
+  letter-spacing:.02em;
+}
 .hero-cta{
   display:inline-flex;align-items:center;gap:12px;
   background:var(--rosa);color:#fff;
@@ -1295,7 +1315,9 @@ body.admin-mode{background:var(--ink)}
       CDA Runners · Praça Matriz · 26 de julho · 17h
     </div>
     <h1 class="hero-title">Corrida Solidária <em>Lourdes</em></h1>
-    <p class="hero-sub">3 km pela Lourdes · 100% da renda direto pro tratamento dela</p>
+    <p class="hero-cause">Em prol do tratamento do <strong>câncer de mama</strong></p>
+    <p class="hero-sub">3 km · 100% da renda direto pro tratamento dela</p>
+    <p class="hero-slogan">"Correr faz bem. Fazer o bem faz a diferença."</p>
     <a class="hero-cta" href="#inscricao">
       Quero me inscrever
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -1309,7 +1331,7 @@ body.admin-mode{background:var(--ink)}
   </div>
 </header>
 
-<!-- Info bar (3 números) -->
+<!-- Info bar (4 números) -->
 <section class="info-bar" aria-label="Informações rápidas">
   <div class="info-bar-inner">
     <div class="info-cell">
@@ -1326,6 +1348,11 @@ body.admin-mode{background:var(--ink)}
       <span class="info-n">R$ 12</span>
       <span class="info-u">100%</span>
       <span class="info-l">Direto pro tratamento dela</span>
+    </div>
+    <div class="info-cell">
+      <span class="info-n" style="font-size:clamp(20px,3vw,28px)">🍎</span>
+      <span class="info-u">incluso</span>
+      <span class="info-l">Mesa de frutas para todos</span>
     </div>
   </div>
 </section>
