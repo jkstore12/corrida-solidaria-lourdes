@@ -946,13 +946,28 @@ html{ -webkit-text-size-adjust:100%; text-size-adjust:100% }
   .pay-btn .arrow{width:42px;height:42px}
 
   /* Form */
-  .reg-form{padding:22px 18px;box-shadow:8px 8px 0 var(--dourado),8px 8px 0 2.5px var(--ink)}
+  .reg-form{padding:22px 18px 100px;box-shadow:8px 8px 0 var(--dourado),8px 8px 0 2.5px var(--ink)}
   .reg-form h3{font-size:26px}
   .reg-form p.sub{font-size:13px;margin-bottom:18px}
-  .reg-form .field{margin-bottom:14px}
-  .reg-form .row2{grid-template-columns:1fr;gap:14px}
+  .reg-form .field{margin-bottom:12px}
+  .reg-form .row2{grid-template-columns:1fr;gap:12px}
   .reg-form input, .reg-form select{font-size:16px;padding:13px 14px} /* 16px prevents iOS zoom */
   .reg-form .help{font-size:13px;padding:12px 14px}
+  .reg-form textarea{font-size:16px;padding:13px 14px}
+
+  /* Sticky submit dentro do form (mobile) */
+  .form-submit-wrap{
+    position:sticky;
+    bottom:calc(env(safe-area-inset-bottom, 0px) + 8px);
+    margin-top:18px;
+    background:linear-gradient(to top, var(--off-white) 75%, transparent);
+    padding:16px 0 0;
+    z-index:5;
+  }
+  .form-submit-wrap .form-submit-btn{box-shadow:0 12px 28px -8px rgba(255,46,126,.6) !important;margin-top:0}
+
+  /* Slogan banner: parar sticky CTA aqui também */
+  .slogan-cta .pay-btn{font-size:17px;padding:14px 18px}
 
   /* FAQ */
   .faq-q{font-size:18px;margin-bottom:4px}
@@ -2113,10 +2128,12 @@ body.admin-mode{background:var(--ink)}
         <input id="website_url" name="website_url" type="text" tabindex="-1" autocomplete="off" />
       </div>
 
-      <button type="submit" class="pay-btn form-submit-btn" id="regSubmit" style="margin-top:8px">
-        <span class="submit-label">Quero correr</span>
-        <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
-      </button>
+      <div class="form-submit-wrap">
+        <button type="submit" class="pay-btn form-submit-btn" id="regSubmit" style="margin-top:0">
+          <span class="submit-label">Quero correr</span>
+          <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </button>
+      </div>
 
       <div class="help" style="margin-top:18px">
         ⓘ Após enviar, abre na hora a tela de <b>pagamento via Pix</b>.
@@ -2500,6 +2517,19 @@ if(tel){
     else if(v.length>9) v=`${v.slice(0,9)}-${v.slice(9)}`;
     e.target.value=v;
   });
+}
+
+// ============ AUTO-SCROLL ao focar input (resolve teclado iOS) ============
+const regFormEl = document.getElementById('regForm')
+if (regFormEl && window.matchMedia('(max-width: 720px)').matches) {
+  regFormEl.querySelectorAll('input, textarea, select').forEach(el => {
+    el.addEventListener('focus', () => {
+      // Espera o teclado do iOS abrir (~300ms) antes de scrollar
+      setTimeout(() => {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }, 350)
+    })
+  })
 }
 
 // ============ PIX COPIA-E-COLA ============
