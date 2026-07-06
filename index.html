@@ -1550,6 +1550,31 @@ body.admin-mode{background:var(--ink)}
 .toast.success{border-color:var(--verde)}
 .toast.error{border-color:#dc2626}
 
+/* =====================================================
+   #formulario layout (corrige grid espremido em mobile)
+   ===================================================== */
+.formulario-wrap{
+  display:grid;
+  grid-template-columns:1.1fr 1fr;
+  gap:clamp(28px, 5vw, 72px);
+  align-items:start;
+}
+.formulario-wrap > *{min-width:0}
+
+@media (max-width: 900px){
+  .formulario-wrap{
+    grid-template-columns:1fr !important;
+    gap:32px !important;
+  }
+}
+
+/* Form ocupa largura total confortável */
+.reg-form{
+  max-width:560px;
+  width:100%;
+  margin:0 auto;
+}
+
 /* honeypot field (anti-spam) - invisível */
 .hp-field{
   position:absolute !important;
@@ -2170,7 +2195,7 @@ body.admin-mode{background:var(--ink)}
 
 <!-- ============ REGISTER FORM (LEAD CAPTURE) ============ -->
 <section id="formulario">
-  <div class="wrap" style="display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(28px,5vw,72px);align-items:start">
+  <div class="wrap formulario-wrap">
     <div class="reveal">
       <div class="ribbon-divider" style="color:var(--rosa-profundo);justify-content:flex-start;margin-left:0">
         <style>#formulario .ribbon-divider::before{display:none}</style>
