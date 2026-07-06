@@ -76,1138 +76,492 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://qfuatxhvsyerzvnetlyb.supabase.co" />
 <!-- Weights trimmed for mobile performance -->
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
 <style>
-/* ===== TOKENS ===== */
+/* =====================================================
+   NOVA LANDING PAGE — DESIGN LIMPO E PROFISSIONAL
+   ===================================================== */
+
 :root{
-  --rosa-vivo: #FF2E7E;
-  --rosa-profundo: #B4124E;
-  --rosa-vinho: #56092B;
-  --rosa-claro: #FFE4EA;
-  --papel: #FFF1F4;
-  --off-white: #FFFAFC;
-  --ink: #2A0A14;
+  /* Paleta clean */
+  --bg: #FFF8FA;
+  --surface: #FFFFFF;
+  --ink: #1A0A12;
   --ink-soft: #6B2A3F;
+  --ink-mute: #9B6B7E;
+  --rosa: #FF2E7E;
+  --rosa-deep: #B4124E;
+  --rosa-soft: #FFE4EA;
   --dourado: #F5C84B;
   --verde: #16A34A;
+  --verde-soft: #DCFCE7;
+  --line: #F0D7DF;
 
-  --display: "Anton", "Bebas Neue", Impact, sans-serif;
-  --sub-display: "Bebas Neue", Impact, sans-serif;
-  --body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
+  /* Tipografia — uma só família (Inter) + display system */
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 28px;
+  /* Espaçamento */
+  --container: 640px;
+  --pad-x: clamp(20px, 5vw, 32px);
+  --section-y: clamp(48px, 10vw, 96px);
+  --radius: 16px;
+  --radius-sm: 12px;
+  --radius-lg: 24px;
 
-  --max-w: 1240px;
-  --pad-x: clamp(20px, 5vw, 64px);
-
-  --shadow-soft: 0 12px 40px -16px rgba(180, 18, 78, 0.35);
-  --shadow-cta: 0 18px 40px -12px rgba(255, 46, 126, 0.55);
+  /* Sombra minimalista */
+  --shadow: 0 1px 3px rgba(0,0,0,.04), 0 8px 24px -8px rgba(0,0,0,.08);
 }
 
-/* ===== RESET ===== */
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:hidden;max-width:100%;width:100%}
+html{
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+  font-size:16px;
+}
 body{
   margin:0;
-  font-family:var(--body);
-  font-size:17px;
+  font-family:var(--font);
+  font-size:16px;
   line-height:1.55;
   color:var(--ink);
-  background:var(--papel);
+  background:var(--bg);
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
-  overflow-x:hidden; /* hard-stop any horizontal scroll */
-  max-width:100vw;
+  overflow-x:hidden;
   width:100%;
-  position:relative;
+  max-width:100%;
 }
-img,svg,video,canvas{max-width:100%;height:auto}
-main,header,footer,section,article,aside,nav{max-width:100vw;overflow-x:hidden}
-img{max-width:100%;display:block}
+img,svg{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
-:focus-visible{outline:3px solid var(--rosa-vivo);outline-offset:4px;border-radius:6px}
+input,textarea,select{font-family:inherit;font-size:16px;color:inherit}
+:focus-visible{outline:2px solid var(--rosa);outline-offset:2px;border-radius:6px}
 
-/* ===== AMBIENTE: TEXTURA DE SPRAY/ÁGUA NO FUNDO ===== */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
-  background:
-    radial-gradient(900px 600px at 12% 8%, rgba(255,46,126,0.10), transparent 60%),
-    radial-gradient(700px 500px at 88% 22%, rgba(245,200,75,0.08), transparent 60%),
-    radial-gradient(1000px 700px at 50% 100%, rgba(180,18,78,0.10), transparent 60%);
-  opacity:.9;
-}
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
-  background-image:
-    radial-gradient(rgba(180,18,78,0.07) 1px, transparent 1.5px);
-  background-size: 4px 4px;
-  mix-blend-mode:multiply;
-  opacity:.4;
-}
-
-main, header, footer{position:relative;z-index:1}
-
-.wrap{max-width:var(--max-w);margin:0 auto;padding-left:var(--pad-x);padding-right:var(--pad-x)}
-
-/* ===== TOP STRIP (DATA / DISTÂNCIA / LARGADA) ===== */
-.databar{
-  background:var(--ink);
-  color:#fff;
-  font-family:var(--mono);
-  font-size:13px;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-}
-.databar .row{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:14px 0;
-  gap:24px;
-}
-.databar .row span{display:inline-flex;align-items:center;gap:10px}
-.databar .dot{width:8px;height:8px;background:var(--rosa-vivo);border-radius:50%;display:inline-block;box-shadow:0 0 0 4px rgba(255,46,126,.25);animation:pulse 1.6s ease-in-out infinite}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,46,126,.6)}50%{box-shadow:0 0 0 8px rgba(255,46,126,0)}}
-@media (max-width:720px){
-  .databar .row{flex-direction:column;gap:8px;text-align:center;font-size:12px}
-}
-
-/* ===== HERO ===== */
+/* =====================================================
+   HERO
+   ===================================================== */
 .hero{
-  position:relative;
-  padding: clamp(48px, 9vw, 120px) 0 clamp(64px, 10vw, 140px);
-  overflow:hidden;
+  background:
+    radial-gradient(900px 600px at 80% -10%, rgba(255,46,126,.10), transparent 60%),
+    radial-gradient(700px 500px at 0% 100%, rgba(180,18,78,.08), transparent 60%),
+    var(--bg);
+  padding: clamp(40px, 8vw, 80px) 0 clamp(56px, 10vw, 96px);
+  border-bottom:1px solid var(--line);
 }
-
-.hero-grid{
-  display:grid;
-  grid-template-columns: 1.15fr 1fr;
-  gap: clamp(24px, 5vw, 64px);
-  align-items:end;
+.hero-inner{
+  max-width:var(--container);
+  margin:0 auto;
+  padding:0 var(--pad-x);
+  text-align:center;
 }
-@media (max-width:900px){
-  .hero-grid{grid-template-columns:1fr}
-}
-
-.eyebrow{
-  display:inline-flex;align-items:center;gap:10px;
-  font-family:var(--mono);font-size:12px;font-weight:700;
-  letter-spacing:.18em;text-transform:uppercase;
-  color:var(--rosa-profundo);
-  background:var(--rosa-claro);
+.hero-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:600;color:var(--rosa-deep);
+  background:var(--rosa-soft);
   padding:8px 14px;border-radius:999px;
   margin-bottom:24px;
+  letter-spacing:.01em;
 }
-.eyebrow svg{width:14px;height:14px}
-
-h1.title{
-  font-family:var(--display);
-  font-weight:400;
-  line-height:.85;
-  letter-spacing:-.01em;
-  text-transform:uppercase;
+.hero-tag-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--rosa);
+  animation:pulse 1.8s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{transform:scale(1);opacity:1}
+  50%{transform:scale(1.3);opacity:.6}
+}
+.hero-title{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:clamp(36px, 9vw, 64px);
+  line-height:1.05;
+  letter-spacing:-.02em;
+  margin:0 0 16px;
   color:var(--ink);
-  margin:0 0 28px;
-  font-size: clamp(64px, 12vw, 168px);
 }
-h1.title .l1{display:block;color:var(--ink)}
-h1.title .l2{
-  display:block;
-  color:#fff;
-  -webkit-text-stroke: 2px var(--ink);
-  text-shadow: 6px 6px 0 var(--rosa-vivo);
-  transform:translateX(-4px);
-}
-h1.title .l3{
-  display:inline-block;
-  color:var(--rosa-profundo);
-  background:var(--dourado);
-  padding:0 .25em;
-  transform:rotate(-2deg);
-  margin-left:.05em;
-}
-h1.title .heart{
-  display:inline-block;color:var(--rosa-vivo);
-  transform:translateY(.04em) scale(1);
-  animation:heartbeat 1.4s ease-in-out infinite;
-}
-@keyframes heartbeat{
-  0%,100%{transform:translateY(.04em) scale(1)}
-  20%{transform:translateY(.04em) scale(1.12)}
-  40%{transform:translateY(.04em) scale(1)}
-  60%{transform:translateY(.04em) scale(1.08)}
-}
-
-.lead{
-  font-size: clamp(17px, 2.2vw, 22px);
-  color:var(--ink-soft);
-  max-width:52ch;
-  margin: 8px 0 36px;
-}
-.lead strong{color:var(--rosa-profundo);font-weight:700}
-
-.hero-subtitle{
-  font-family: var(--sub-display);
-  font-size: clamp(22px, 3vw, 32px);
-  text-transform: uppercase;
-  letter-spacing: .04em;
-  color: var(--rosa-profundo);
-  margin: 0 0 18px;
-  line-height: 1.1;
-  border-left: 6px solid var(--rosa-vivo);
-  padding-left: 18px;
-}
-.hero-subtitle strong{color: var(--ink)}
-
-.cta-row{
-  display:flex;flex-wrap:wrap;gap:14px;align-items:center;
-}
-.cta{
-  display:inline-flex;align-items:center;gap:14px;
-  font-family:var(--display);
-  font-size: clamp(22px, 3.2vw, 30px);
-  letter-spacing:.04em;
-  text-transform:uppercase;
-  background:var(--rosa-vivo);
-  color:#fff;
-  padding: 18px 32px;
-  border-radius:999px;
-  box-shadow:var(--shadow-cta);
-  transition:transform .15s ease, box-shadow .15s ease, background .2s ease;
-  position:relative;
-}
-.cta:hover{transform:translateY(-2px) rotate(-0.4deg);background:var(--rosa-profundo);box-shadow:0 22px 50px -10px rgba(180,18,78,.65)}
-.cta .price{
-  background:#fff;color:var(--rosa-profundo);
-  font-family:var(--mono);font-size:14px;font-weight:700;
-  padding:6px 12px;border-radius:999px;
-}
-.cta svg{width:18px;height:18px;stroke-width:3}
-
-.cta-ghost{
-  display:inline-flex;align-items:center;gap:10px;
-  font-family:var(--sub-display);font-size:18px;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--ink);
-  padding: 14px 22px;border-radius:999px;
-  border:2px solid var(--ink);
-  transition:all .2s ease;
-}
-.cta-ghost:hover{background:var(--ink);color:#fff}
-
-/* Card hero (right column) - "ticket" */
-.ticket{
-  position:relative;
-  background:var(--off-white);
-  border:2.5px solid var(--ink);
-  border-radius:var(--radius-lg);
-  padding: 28px clamp(20px, 3vw, 36px) 32px;
-  box-shadow: 14px 14px 0 var(--rosa-vivo), 14px 14px 0 2.5px var(--ink);
-  transform:rotate(1.2deg);
-}
-.ticket::before, .ticket::after{
-  content:"";
-  position:absolute;left:50%;transform:translateX(-50%);
-  width:38px;height:38px;background:var(--papel);
-  border:2.5px solid var(--ink);
-  border-radius:50%;
-  z-index:2;
-}
-.ticket::before{top:-19px}
-.ticket::after{bottom:-19px}
-
-.ticket .label{
-  font-family:var(--mono);font-size:11px;font-weight:700;
-  letter-spacing:.22em;text-transform:uppercase;
-  color:var(--rosa-profundo);text-align:center;
-  display:block;margin-bottom:8px;
-}
-.ticket h3{
-  font-family:var(--display);
-  font-size: clamp(28px, 4vw, 44px);
-  line-height:1;margin:0 0 24px;
-  color:var(--ink);text-align:center;
-  letter-spacing:.02em;
-}
-
-.ticket .grid3{
-  display:grid;grid-template-columns:1fr 1fr 1fr;
-  gap:8px;border-top:2px dashed rgba(42,10,20,.18);border-bottom:2px dashed rgba(42,10,20,.18);
-  padding:18px 0;margin-bottom:18px;
-}
-.ticket .grid3 .cell{text-align:center}
-.ticket .grid3 .k{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--ink-soft);text-transform:uppercase;display:block}
-.ticket .grid3 .v{
-  font-family:var(--display);font-size:clamp(22px,3.4vw,30px);color:var(--ink);
-  letter-spacing:.02em;line-height:1;display:block;margin-top:6px;
-}
-.ticket .grid3 .v small{font-family:var(--body);font-size:11px;font-weight:600;color:var(--rosa-profundo);letter-spacing:.1em}
-
-.ticket .row-info{
-  display:flex;justify-content:space-between;gap:8px;
-  font-family:var(--mono);font-size:12px;color:var(--ink-soft);
-  padding: 4px 0;
-}
-.ticket .row-info b{color:var(--ink)}
-
-.ticket .stamp{
-  position:absolute;top:14px;right:14px;
-  width:84px;height:84px;border-radius:50%;
-  border:2px dashed var(--rosa-profundo);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--display);color:var(--rosa-profundo);
-  text-align:center;line-height:.95;
-  font-size:14px;letter-spacing:.05em;transform:rotate(-14deg);
-  background:rgba(255,46,126,.06);
-  text-transform:uppercase;
-}
-
-/* ribbon wave divider */
-.ribbon{
-  position:absolute;left:0;right:0;bottom:-2px;height:80px;z-index:3;
-  pointer-events:none;
-}
-.ribbon svg{display:block;width:100%;height:100%}
-
-/* ===== MARQUEE STRIP (pulsing) ===== */
-.marquee{
-  background:var(--rosa-vivo);
-  color:#fff;
-  overflow:hidden;
-  border-top:2.5px solid var(--ink);
-  border-bottom:2.5px solid var(--ink);
-  position:relative;
-  z-index:2;
-  max-width:100vw;
-  width:100%;
-  contain:paint;
-}
-.marquee .track{
-  display:flex;gap:48px;
-  white-space:nowrap;
-  padding:18px 0;
-  font-family:var(--display);font-size:28px;letter-spacing:.05em;
-  animation:marquee 22s linear infinite;
-}
-.marquee .track span{display:inline-flex;align-items:center;gap:48px}
-.marquee .heart{color:var(--ink);display:inline-block;animation:heartbeat 1.4s ease-in-out infinite}
-@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-/* ===== SECTION GENERIC ===== */
-section{padding: clamp(64px, 10vw, 120px) 0;position:relative}
-
-h2.section-title{
-  font-family:var(--display);
-  font-size: clamp(40px, 7vw, 92px);
-  line-height:.9;
-  letter-spacing:-.005em;
-  text-transform:uppercase;
-  color:var(--ink);
-  margin:0 0 28px;
-}
-h2.section-title em{
-  font-style:normal;color:var(--rosa-vivo);
-  display:inline-block;position:relative;
-}
-h2.section-title em::after{
-  content:"";position:absolute;left:-2%;right:-2%;bottom:6%;height:18%;
-  background:var(--dourado);z-index:-1;transform:rotate(-1deg);
-}
-
-.lede{
-  font-size:clamp(16px,1.8vw,19px);
-  color:var(--ink-soft);
-  max-width:62ch;margin:0 0 48px;
-}
-
-/* ===== ABOUT / CAUSE ===== */
-.cause{
-  display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(28px,5vw,72px);align-items:center;
-}
-@media (max-width:900px){.cause{grid-template-columns:1fr}}
-
-.cause-art{
-  position:relative;
-  aspect-ratio: 4/5;
-  border-radius:var(--radius-lg);
-  background:
-    radial-gradient(circle at 30% 20%, #fff, var(--rosa-claro) 35%, var(--rosa-vivo) 80%, var(--rosa-profundo) 100%);
-  border:2.5px solid var(--ink);
-  box-shadow: 14px 14px 0 var(--dourado), 14px 14px 0 2.5px var(--ink);
-  overflow:hidden;
-  display:flex;align-items:center;justify-content:center;
-}
-.cause-art .ribbon-big{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-}
-.cause-art .ribbon-big svg{width:78%;height:auto}
-.cause-art .caption{
-  position:absolute;left:24px;bottom:22px;
-  font-family:var(--mono);font-size:12px;letter-spacing:.16em;
-  color:#fff;text-transform:uppercase;
-  background:rgba(0,0,0,.4);padding:6px 12px;border-radius:999px;
-  backdrop-filter:blur(4px);
-}
-
-.cause-body p{font-size:18px;color:var(--ink);margin:0 0 18px}
-.cause-body p strong{color:var(--rosa-profundo)}
-.stat-row{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:14px;margin-top:32px;
-  border-top:2px solid var(--ink);
-  padding-top:24px;
-}
-.stat .n{
-  font-family:var(--display);font-size:clamp(36px,6vw,68px);
-  color:var(--rosa-vivo);line-height:1;letter-spacing:.02em;
+.hero-title em{
+  font-style:normal;color:var(--rosa);
   display:block;
 }
-.stat .l{
-  font-family:var(--mono);font-size:11px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--ink-soft);
+.hero-sub{
+  font-size:clamp(16px, 2vw, 18px);
+  color:var(--ink-soft);
+  margin:0 auto 32px;
+  max-width:48ch;
+  line-height:1.5;
 }
-
-/* ===== DETAILS (3 cards) ===== */
-.details{background:var(--ink);color:#fff}
-.details h2.section-title{color:#fff}
-.details h2.section-title em{color:var(--dourado)}
-.details .lede{color:rgba(255,255,255,.78)}
-
-.cards{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
-}
-@media (max-width:900px){.cards{grid-template-columns:1fr}}
-
-.card{
-  position:relative;
-  background:var(--off-white);
-  color:var(--ink);
-  border-radius:var(--radius-lg);
-  padding: 32px 26px 30px;
-  border:2.5px solid var(--ink);
-  overflow:hidden;
-  min-height: 280px;
-  display:flex;flex-direction:column;
-}
-.card .icon{
-  width:48px;height:48px;border-radius:14px;
-  background:var(--rosa-vivo);
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:18px;border:2px solid var(--ink);
-}
-.card .icon svg{width:22px;height:22px;color:#fff;stroke-width:2.5}
-.card .k{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--rosa-profundo);margin-bottom:8px;display:block}
-.card .v{font-family:var(--display);font-size:clamp(34px,4.6vw,52px);line-height:1;letter-spacing:.01em;margin-bottom:10px}
-.card .v small{font-family:var(--body);font-size:13px;color:var(--ink-soft);display:block;margin-top:8px;letter-spacing:.04em;text-transform:uppercase;font-weight:600}
-.card p{margin:14px 0 0;color:var(--ink-soft);font-size:15px}
-.card.alt{background:var(--dourado)}
-.card.alt .icon{background:var(--ink);border-color:var(--ink)}
-.card.alt .icon svg{color:var(--dourado)}
-
-/* number badge big */
-.big-num{
-  font-family:var(--display);font-size:clamp(80px,16vw,200px);
-  line-height:.85;color:var(--rosa-vivo);letter-spacing:.02em;
-  display:inline-block;
-}
-
-/* ===== INCLUDES / WHAT YOU GET ===== */
-.includes-head{display:grid;grid-template-columns:1.2fr 1fr;gap:32px;align-items:end;margin-bottom:48px}
-@media (max-width:900px){.includes-head{grid-template-columns:1fr}}
-
-.includes-list{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:0;
-  border-top:2px solid var(--ink);
-}
-@media (max-width:720px){.includes-list{grid-template-columns:1fr}}
-
-.incl{
-  padding:28px 24px;
-  border-bottom:2px solid var(--ink);
-  border-right:2px solid var(--ink);
-  display:flex;gap:18px;align-items:flex-start;
-}
-.incl:nth-child(2n){border-right:0}
-.incl:nth-last-child(-n+2){border-bottom:0}
-@media (max-width:720px){
-  .incl{border-right:0 !important}
-}
-.incl .num{
-  font-family:var(--mono);font-weight:700;font-size:13px;
-  color:var(--rosa-vivo);background:var(--rosa-claro);
-  padding:6px 10px;border-radius:8px;letter-spacing:.1em;
-  flex-shrink:0;height:fit-content;
-}
-.incl h4{
-  font-family:var(--display);font-size:24px;letter-spacing:.03em;
-  margin:0 0 6px;color:var(--ink);text-transform:uppercase;
-}
-.incl p{margin:0;color:var(--ink-soft);font-size:15px}
-
-/* ===== PRICE / CTA SECTION ===== */
-.price-section{
-  background:var(--rosa-claro);
-  position:relative;
-  border-top:2.5px solid var(--ink);
-  border-bottom:2.5px solid var(--ink);
-}
-.price-section::before{
-  content:"";position:absolute;inset:0;
-  background:radial-gradient(circle at 80% 0%, rgba(255,46,126,.15), transparent 50%);
-  pointer-events:none;
-}
-.price-grid{
-  display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,72px);align-items:center;
-  position:relative;z-index:1;
-}
-@media (max-width:900px){.price-grid{grid-template-columns:1fr}}
-
-.price-box{
-  background:var(--ink);
-  color:#fff;
-  border-radius:var(--radius-lg);
-  padding: 38px 36px 40px;
-  border:2.5px solid var(--ink);
-  box-shadow: 14px 14px 0 var(--rosa-vivo), 14px 14px 0 2.5px var(--ink);
-  position:relative;
-}
-.price-box .tag{
-  display:inline-block;
-  font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--dourado);
-  border:2px solid var(--dourado);
-  padding:6px 12px;border-radius:999px;margin-bottom:18px;
-}
-.price-box .price{
-  display:flex;align-items:baseline;gap:8px;
-  font-family:var(--display);
-  font-size: clamp(72px, 12vw, 140px);
-  line-height:1;letter-spacing:.02em;
-}
-.price-box .price .currency{color:var(--rosa-vivo);font-size:.6em;align-self:flex-start;margin-top:.5em}
-.price-box .price .cents{color:#fff;font-size:.55em;margin-left:-8px}
-.price-box .desc{color:rgba(255,255,255,.78);font-size:16px;margin:14px 0 28px;max-width:34ch}
-
-.pay-btn{
-  display:flex;align-items:center;justify-content:space-between;gap:14px;
-  width:100%;
-  background:var(--rosa-vivo);
-  color:#fff;
-  font-family:var(--display);
-  font-size: clamp(22px, 3vw, 28px);
-  letter-spacing:.04em;
-  text-transform:uppercase;
-  padding: 22px 28px;
-  border-radius:18px;
-  text-align:left;
-  margin-top:6px;
-  transition: transform .15s ease, background .2s ease;
-  border:2px solid #fff;
-  box-shadow: 0 12px 28px -8px rgba(255,46,126,.6);
-}
-.pay-btn:hover{background:#fff;color:var(--rosa-profundo);border-color:var(--rosa-profundo);transform:translateY(-2px)}
-.pay-btn .arrow{
-  width:48px;height:48px;border-radius:50%;
-  background:var(--ink);color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;transition:transform .2s ease, background .2s ease;
-}
-.pay-btn:hover .arrow{background:var(--rosa-profundo);transform:rotate(-12deg) scale(1.05)}
-.pay-btn svg{width:20px;height:20px}
-.pay-btn .pay-btn-content{
+.hero-cta{
   display:inline-flex;align-items:center;gap:12px;
-}
-.pix-mark{width:22px;height:22px;flex-shrink:0}
-
-.secure{
-  margin-top:18px;display:flex;align-items:center;gap:10px;
-  font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-  color:rgba(255,255,255,.6);
-}
-.secure svg{width:14px;height:14px;color:var(--verde)}
-
-/* ===== PIX ALTERNATIVES (QR + copia-e-cola) ===== */
-.pix-alternatives{
-  margin-top:20px;
-  border-top:1px dashed rgba(255,255,255,.18);
-  padding-top:14px;
-}
-.pix-alternatives > summary{
-  display:inline-flex;align-items:center;gap:10px;
-  list-style:none;
-  font-family:var(--mono);font-size:11px;letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--dourado);
-  cursor:pointer;
-  padding:8px 12px;
-  border:1.5px solid var(--dourado);
+  background:var(--rosa);color:#fff;
+  font-weight:700;font-size:17px;
+  padding:18px 32px;
   border-radius:999px;
-  transition:background .2s ease, color .2s ease;
-  user-select:none;
+  box-shadow:0 10px 30px -8px rgba(255,46,126,.4);
+  transition:transform .15s ease, background .2s ease, box-shadow .2s ease;
 }
-.pix-alternatives > summary::-webkit-details-marker{display:none}
-.pix-alternatives > summary svg{width:14px;height:14px}
-.pix-alternatives > summary:hover{background:var(--dourado);color:var(--ink)}
-.pix-alternatives[open] > summary{margin-bottom:18px}
+.hero-cta:hover{background:var(--rosa-deep);transform:translateY(-2px);box-shadow:0 16px 36px -8px rgba(180,18,78,.5)}
+.hero-cta:active{transform:translateY(0)}
+.hero-cta svg{width:18px;height:18px}
+.hero-meta{
+  display:inline-flex;align-items:center;flex-wrap:wrap;justify-content:center;gap:8px;
+  margin-top:24px;font-size:13px;color:var(--ink-mute);
+  font-variant-numeric:tabular-nums;
+}
+.hero-meta-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--verde);
+}
+.hero-meta b{color:var(--ink);font-weight:700}
+.hero-meta-sep{color:var(--line)}
 
-.pix-grid{
-  display:grid;grid-template-columns:1fr 1fr;gap:14px;
+/* =====================================================
+   INFO BAR (3 números)
+   ===================================================== */
+.info-bar{
+  border-bottom:1px solid var(--line);
+  background:var(--surface);
 }
-@media (max-width:540px){.pix-grid{grid-template-columns:1fr}}
-
-.pix-block{
-  background:#fff;
-  color:var(--ink);
-  border:2px solid #fff;
-  border-radius:14px;
-  padding:14px;
-  display:flex;flex-direction:column;gap:10px;
+.info-bar-inner{
+  max-width:var(--container);
+  margin:0 auto;
+  padding:0 var(--pad-x);
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0;
 }
-.pix-block-label{
-  font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--rosa-profundo);
+.info-cell{
+  padding:32px 16px;
+  text-align:center;
+  border-right:1px solid var(--line);
 }
-.pix-qr-frame{
-  position:relative;
-  background:#fff;
-  border:2px dashed var(--ink);
-  border-radius:10px;
-  aspect-ratio:1/1;
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;
-  padding:8px;
-}
-.pix-qr-frame img{
-  width:100%;height:100%;object-fit:contain;
+.info-cell:last-child{border-right:0}
+.info-cell-accent{background:linear-gradient(180deg, var(--rosa-soft), transparent)}
+.info-n{
   display:block;
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:clamp(28px, 5vw, 40px);
+  line-height:1;color:var(--rosa);
+  letter-spacing:-.02em;
 }
-.pix-qr-fallback{
-  position:absolute;inset:8px;
-  background:#fff;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:14px;text-align:center;gap:6px;
-  color:var(--ink-soft);
-}
-.pix-qr-fallback strong{font-family:var(--display);font-size:14px;color:var(--rosa-profundo);text-transform:uppercase;letter-spacing:.05em}
-.pix-qr-fallback span{font-size:11.5px;line-height:1.4}
-.pix-qr-fallback code{font-family:var(--mono);font-size:10.5px;background:var(--rosa-claro);padding:2px 6px;border-radius:4px;color:var(--ink)}
-.pix-block-hint{
-  font-size:11px;color:var(--ink-soft);
-  font-family:var(--mono);letter-spacing:.04em;
-  display:flex;align-items:center;gap:6px;
-}
-.pix-block-hint::before{content:"↳";color:var(--rosa-vivo);font-weight:700}
-
-.pix-block textarea{
-  width:100%;min-height:80px;
-  font-family:var(--mono);font-size:11.5px;
-  color:var(--ink);
-  background:var(--rosa-claro);
-  border:1.5px solid var(--rosa-claro);
-  border-radius:8px;
-  padding:10px 12px;
-  resize:vertical;
-  word-break:break-all;
-  line-height:1.4;
-}
-.pix-block textarea:focus{outline:none;border-color:var(--rosa-vivo);background:#fff}
-.pix-copy-btn{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--ink);color:#fff;
-  font-family:var(--display);font-size:14px;letter-spacing:.05em;
-  text-transform:uppercase;
-  padding:10px 14px;border-radius:10px;
-  border:1.5px solid var(--ink);
-  transition:transform .15s ease, background .2s ease;
-}
-.pix-copy-btn:hover{background:var(--rosa-vivo);border-color:var(--rosa-vivo)}
-.pix-copy-btn:active{transform:scale(.97)}
-.pix-copy-btn svg{width:14px;height:14px}
-.pix-copy-btn.copied{background:var(--verde);border-color:var(--verde)}
-
-/* ===== REGISTER FORM (mini) ===== */
-.reg-form{
-  background:var(--off-white);
-  border:2.5px solid var(--ink);
-  border-radius:var(--radius-lg);
-  padding: 28px;
-  box-shadow: 14px 14px 0 var(--dourado), 14px 14px 0 2.5px var(--ink);
-}
-.reg-form h3{
-  font-family:var(--display);font-size:34px;letter-spacing:.02em;
-  margin:0 0 6px;text-transform:uppercase;color:var(--ink);
-}
-.reg-form p.sub{font-size:14px;color:var(--ink-soft);margin:0 0 22px}
-.reg-form label{display:block;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);margin-bottom:8px}
-.reg-form .field{margin-bottom:16px}
-.reg-form input, .reg-form select{
-  width:100%;
-  border:2px solid var(--ink);background:#fff;
-  padding: 14px 16px;border-radius:12px;
-  font-family:var(--body);font-size:16px;color:var(--ink);
-  transition:border-color .15s ease, box-shadow .15s ease;
-}
-.reg-form input:focus, .reg-form select:focus{outline:0;border-color:var(--rosa-vivo);box-shadow:0 0 0 4px rgba(255,46,126,.18)}
-.reg-form .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.reg-form .help{font-size:13px;color:var(--ink-soft);background:var(--rosa-claro);border:2px dashed var(--rosa-profundo);border-radius:12px;padding:14px 16px;margin-top:6px}
-.reg-form .help b{color:var(--rosa-profundo)}
-
-/* ===== FAQ ===== */
-.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px 48px;margin-top:8px}
-@media (max-width:720px){.faq-grid{grid-template-columns:1fr}}
-.faq-q{
-  font-family:var(--display);font-size:22px;letter-spacing:.02em;
-  margin:0 0 6px;color:var(--ink);text-transform:uppercase;
-}
-.faq-a{color:var(--ink-soft);margin:0;font-size:15.5px}
-
-/* ===== FOOTER ===== */
-footer{
-  background:var(--ink);color:#fff;
-  padding: 56px 0 36px;
-  border-top:2.5px solid var(--ink);
-  position:relative;
-}
-.foot-grid{
-  display:grid;grid-template-columns: 1.4fr 1fr 1fr;gap:36px;
-  margin-bottom:32px;
-}
-@media (max-width:900px){.foot-grid{grid-template-columns:1fr}}
-.foot-grid h5{
-  font-family:var(--mono);font-size:11px;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--dourado);margin:0 0 14px;
-}
-.foot-grid .brand{font-family:var(--display);font-size:42px;line-height:.95;letter-spacing:.04em;margin:0 0 8px;text-transform:uppercase}
-.foot-grid p{color:rgba(255,255,255,.78);margin:0 0 6px}
-.foot-grid a{color:#fff}
-.foot-grid a:hover{color:var(--rosa-vivo)}
-.foot-bottom{
-  display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;
-  padding-top:24px;border-top:1px solid rgba(255,255,255,.15);
-  font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);
-}
-
-/* ===== MOBILE OPTIMIZATIONS ===== */
-/* Tap highlight brand-colored (Android/Chrome) */
-*{-webkit-tap-highlight-color:rgba(255, 46, 126, .18)}
-html{ -webkit-text-size-adjust:100%; text-size-adjust:100% }
-
-/* Touch-target floor: every interactive element >= 44px on touch devices */
-@media (hover: none) and (pointer: coarse){
-  .cta, .cta-ghost, .pay-btn, .cta-row a, a.btn, button{
-    min-height: 48px;
-  }
-  .reg-form input, .reg-form select{
-    min-height: 50px;
-  }
-}
-
-/* ----- STICKY BOTTOM CTA BAR (mobile only) ----- */
-.sticky-cta{
-  position: fixed;
-  left: 0; right: 0; bottom: 0;
-  z-index: 50;
-  background: var(--ink);
-  color: #fff;
-  border-top: 2.5px solid var(--rosa-vivo);
-  padding: 10px 16px calc(10px + env(safe-area-inset-bottom)) 16px;
-  display: none;
-  transform: translateY(100%);
-  transition: transform .25s ease;
-  box-shadow: 0 -10px 30px -8px rgba(0,0,0,.4);
-}
-.sticky-cta.show{ display: block; transform: none; }
-@media (min-width: 721px){
-  .sticky-cta.show{ display:none; } /* never show on desktop */
-}
-.sticky-cta .row{
-  display:flex;align-items:center;justify-content:space-between;gap:12px;
-  max-width: 720px; margin: 0 auto;
-}
-.sticky-cta .info{
-  display:flex;flex-direction:column;line-height:1.1;
-}
-.sticky-cta .info .lbl{
-  font-family:var(--mono);font-size:10px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--dourado);font-weight:700;
-}
-.sticky-cta .info .title{
-  font-family:var(--display);font-size:18px;letter-spacing:.03em;
-  text-transform:uppercase;
-}
-.sticky-cta .info .price{
-  font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.7);
-}
-.sticky-cta .pay-pill{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--rosa-vivo);color:#fff;
-  font-family:var(--display);font-size:18px;letter-spacing:.04em;
-  text-transform:uppercase;
-  padding: 14px 20px;border-radius:999px;
-  flex-shrink:0;
-  border: 2px solid #fff;
-  box-shadow: 0 8px 24px -6px rgba(255,46,126,.6);
-  transition:transform .15s ease, background .2s ease;
-}
-.sticky-cta .pay-pill:active{transform:scale(.97);background:var(--rosa-profundo)}
-.sticky-cta .pay-pill svg{width:16px;height:16px;stroke-width:3}
-
-/* Show sticky bar only when scrolled past hero (set by JS) */
-
-/* ----- COMPREHENSIVE MOBILE TUNING ----- */
-@media (max-width: 720px){
-  /* Smaller paddings, slightly tighter typography */
-  :root{
-    --pad-x: 18px;
-  }
-  body{font-size:16px;}
-
-  /* Top data bar trimmed */
-  .databar{font-size:10.5px;letter-spacing:.06em}
-  .databar .row{padding:10px 0;gap:4px}
-  .databar .row > span:nth-child(3){display:none} /* hide 3rd pill on tiny screens */
-
-  /* Hero tighter */
-  .hero{padding: 40px 0 56px}
-  .eyebrow{margin-bottom:16px;padding:6px 11px;font-size:10.5px;letter-spacing:.14em}
-  h1.title{font-size: clamp(56px, 16vw, 110px); margin-bottom:18px}
-  h1.title .l2{text-shadow: 4px 4px 0 var(--rosa-vivo)}
-  .lead{font-size:16px;margin-bottom:24px}
-  .hero-subtitle{font-size:18px;border-left-width:5px;padding-left:14px;margin-bottom:14px}
-
-  /* CTA larger touch target */
-  .cta{
-    font-size:22px;
-    padding: 16px 24px;
-    width:100%;
-    justify-content:center;
-  }
-  .cta-row{gap:10px}
-  .cta-row{width:100%}
-  .cta-row .cta{flex:1}
-  .cta-ghost{font-size:15px;padding:12px 18px}
-  .cta-row{flex-direction:column;align-items:stretch}
-
-  /* Ticket card: smaller stamp, no rotation, smaller padding */
-  .ticket{padding:22px 18px 26px;box-shadow:8px 8px 0 var(--rosa-vivo),8px 8px 0 2.5px var(--ink);transform:rotate(.6deg)}
-  .ticket .stamp{width:64px;height:64px;font-size:11px;top:8px;right:8px}
-  .ticket h3{font-size:30px;margin-bottom:18px}
-  .ticket .grid3{padding:14px 0;margin-bottom:14px;gap:4px}
-  .ticket .grid3 .v{font-size:22px}
-  .ticket .grid3 .v small{font-size:9px}
-  .ticket .grid3 .k{font-size:9px}
-  .ticket .row-info{font-size:11px}
-
-  /* Marquee: hide on tiny screens, shrink height on medium */
-  .marquee .track{font-size:18px;padding:12px 0;gap:32px}
-  .marquee .track span{gap:32px}
-
-  /* Section tighter */
-  section{padding: 52px 0}
-  h2.section-title{margin-bottom:18px;font-size: clamp(34px, 9vw, 60px)}
-  .lede{margin-bottom:32px;font-size:15.5px}
-
-  /* Cause section: stack tighter */
-  .cause{gap:32px}
-  .cause-art{aspect-ratio: 5/4;box-shadow:8px 8px 0 var(--dourado),8px 8px 0 2.5px var(--ink)}
-  .cause-art .caption{font-size:10px;left:14px;bottom:14px;padding:4px 9px}
-  .cause-body p{font-size:16px;margin-bottom:14px}
-  .stat-row{grid-template-columns:1fr 1fr;margin-top:24px;padding-top:18px;gap:14px}
-  .stat .n{font-size:42px}
-  .stat .n small{font-size:.5em}
-  .stat .l{font-size:10px}
-
-  /* Big date "26.07" - smaller on mobile */
-  .big-num{font-size: clamp(70px, 22vw, 130px)}
-
-  /* Ribbon dividers thinner on mobile */
-  .ribbon-divider{margin:12px auto 24px;font-size:13px}
-  .ribbon-divider::before, .ribbon-divider::after{max-width:50px}
-
-  /* Details cards: smaller */
-  .card{padding:22px 18px;min-height:0}
-  .card .v{font-size:30px}
-  .card .v small{font-size:11.5px;margin-top:6px}
-  .card p{font-size:14px;margin-top:10px}
-  .card .icon{width:42px;height:42px;margin-bottom:14px;border-radius:12px}
-
-  /* Includes list: more compact */
-  .incl{padding:20px 18px;gap:14px}
-  .incl h4{font-size:18px}
-  .incl p{font-size:14px}
-  .incl .num{padding:5px 8px;font-size:11px}
-
-  /* Price section */
-  .price-box{padding:26px 22px 28px;box-shadow:8px 8px 0 var(--rosa-vivo),8px 8px 0 2.5px var(--ink)}
-  .price-box .tag{margin-bottom:14px;font-size:10px;padding:5px 10px}
-  .price-box .price{font-size:clamp(64px, 22vw, 100px)}
-  .price-box .desc{font-size:14.5px;margin:10px 0 22px}
-  .pay-btn{padding:18px 22px;font-size:20px;border-radius:14px}
-  .pay-btn .arrow{width:42px;height:42px}
-
-  /* Form */
-  .reg-form{padding:22px 18px 100px;box-shadow:8px 8px 0 var(--dourado),8px 8px 0 2.5px var(--ink)}
-  .reg-form h3{font-size:26px}
-  .reg-form p.sub{font-size:13px;margin-bottom:18px}
-  .reg-form .field{margin-bottom:12px}
-  .reg-form .row2{grid-template-columns:1fr;gap:12px}
-  .reg-form input, .reg-form select{font-size:16px;padding:13px 14px} /* 16px prevents iOS zoom */
-  .reg-form .help{font-size:13px;padding:12px 14px}
-  .reg-form textarea{font-size:16px;padding:13px 14px}
-
-  /* Sticky submit dentro do form (mobile) */
-  .form-submit-wrap{
-    position:fixed;
-    left:0;right:0;bottom:0;
-    background:linear-gradient(to top, var(--off-white) 88%, rgba(255,241,244,0.7) 70%, transparent);
-    padding:14px 18px calc(14px + env(safe-area-inset-bottom, 0px));
-    z-index:40;
-    /* Some se não estiver no form */
-    transform:translateY(100%);
-    transition:transform .25s ease;
-  }
-  .form-submit-wrap.in-form{transform:translateY(0)}
-  .form-submit-wrap .form-submit-btn{box-shadow:0 12px 28px -8px rgba(255,46,126,.6) !important;margin-top:0}
-
-  /* Adiciona respiro embaixo do form pro submit não cobrir o último campo */
-  .reg-form{padding-bottom:110px}
-
-  /* Slogan banner: parar sticky CTA aqui também */
-  .slogan-cta .pay-btn{font-size:17px;padding:14px 18px}
-
-  /* FAQ */
-  .faq-q{font-size:18px;margin-bottom:4px}
-  .faq-a{font-size:14.5px}
-  .faq-grid{gap:18px 24px}
-
-  /* Footer */
-  .foot-grid{gap:24px;margin-bottom:24px}
-  .foot-grid .brand{font-size:32px}
-  .foot-grid h5{font-size:10.5px;margin-bottom:10px}
-  .foot-grid p{font-size:14px}
-  .foot-bottom{font-size:10px;padding-top:18px;flex-direction:column;text-align:center;gap:8px}
-
-  /* Reserve space at bottom so sticky bar doesn't cover form submit */
-  body{padding-bottom: 84px}
-
-  /* Form submit button tighter on narrow screens so text + arrow fit one line */
-  .form-submit-btn{font-size:17px;padding:16px 18px;gap:8px;white-space:nowrap}
-  .form-submit-btn .arrow{width:38px;height:38px}
-}
-
-/* Even smaller (320px wide devices) */
-@media (max-width: 360px){
-  h1.title{font-size:48px;letter-spacing:0}
-  h1.title .l2{text-shadow:3px 3px 0 var(--rosa-vivo)}
-  .cta{font-size:18px;padding:14px 18px}
-  .cta .price{font-size:12px;padding:5px 9px}
-  .price-box .price{font-size:70px}
-  .sticky-cta .pay-pill{font-size:14px;padding:12px 16px}
-  .sticky-cta .info .title{font-size:14px}
-}
-
-/* Better focus on touch + keyboard */
-@media (hover: none) and (pointer: coarse){
-  .cta:hover, .pay-btn:hover, .cta-ghost:hover{transform:none}
-  .cta:active{transform:translateY(1px)}
-}
-
-/* prefers-reduced-motion: also disable sticky-cta slide animation */
-@media (prefers-reduced-motion: reduce){
-  .sticky-cta{transition:none}
-}
-
-/* ===== SLOGAN BANNER (poster "Correr faz bem") ===== */
-.slogan-banner{
-  background: var(--rosa-vivo);
-  color: #fff;
-  padding: clamp(48px, 8vw, 96px) 0;
-  border-top: 2.5px solid var(--ink);
-  border-bottom: 2.5px solid var(--ink);
-  position: relative;
-  overflow: hidden;
-}
-.slogan-banner::before{
-  content: "";
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(900px 500px at 90% 10%, rgba(255,255,255,.18), transparent 60%),
-    radial-gradient(700px 400px at 10% 100%, rgba(42,10,20,.25), transparent 60%);
-  pointer-events: none;
-}
-.slogan-banner-inner{
-  position: relative;
-  text-align: center;
-  max-width: 920px;
-  margin: 0 auto;
-}
-.slogan-line{
-  font-family: var(--display);
-  font-size: clamp(40px, 7vw, 88px);
-  text-transform: uppercase;
-  line-height: 1.05;
-  letter-spacing: .01em;
-  margin: 0;
-  color: #fff;
-}
-.slogan-line em{font-style: normal; color: var(--dourado)}
-.slogan-cta{margin-top: 36px;}
-.slogan-cta .pay-btn{
-  background: #fff;
-  color: var(--rosa-profundo);
-  border-color: var(--ink);
-  box-shadow: 0 14px 30px -10px rgba(0,0,0,.35);
-}
-.slogan-cta .pay-btn:hover{background: var(--rosa-profundo); color: #fff; border-color: #fff}
-.slogan-cta .pay-btn .arrow{background: var(--rosa-vivo); color: #fff}
-@media (max-width:720px){
-  .slogan-line{font-size: clamp(34px, 9vw, 56px)}
-  .slogan-cta .pay-btn{font-size: 18px;padding: 14px 18px;gap: 8px}
-  .slogan-cta .pay-btn .arrow{width: 36px;height: 36px}
-}
-
-/* ===== UTIL ===== */
-.ribbon-divider{
-  display:flex;align-items:center;justify-content:center;gap:14px;
-  margin: 16px auto 36px;
-  color:var(--rosa-profundo);font-family:var(--display);letter-spacing:.18em;font-size:18px;text-transform:uppercase;
-}
-.ribbon-divider::before, .ribbon-divider::after{
-  content:"";flex:1;height:2px;background:var(--ink);max-width:120px;
-}
-.heart-svg{color:var(--rosa-vivo);display:inline-block}
-
-/* ===== ORG WORDMARK (CDA RUNNERS) ===== */
-.org-wordmark{
-  display:inline-flex;align-items:center;gap:14px;
-  padding: 14px 18px;
-  background: rgba(255, 46, 126, 0.10);
-  border: 2px solid var(--rosa-vivo);
-  border-radius: 14px;
-  margin-bottom: 14px;
-  position:relative;
-  transition: transform .2s ease, background .2s ease;
-}
-.org-wordmark:hover{transform:translateY(-2px);background:rgba(255,46,126,.18)}
-.org-wordmark .runner-mark{
-  width: 38px; height: 38px; flex-shrink:0;
-  color: var(--rosa-vivo);
-}
-.org-wordmark .runner-mark svg{width:100%;height:100%}
-.org-wordmark .org-text{display:flex;flex-direction:column;line-height:1}
-.org-wordmark .org-acronym{
-  font-family: var(--display);
-  font-size: 32px;
-  color: var(--rosa-vivo);
-  letter-spacing: .04em;
-  line-height: 1;
-}
-.org-wordmark .org-name{
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: .32em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.7);
+.info-cell-accent .info-n{color:var(--rosa-deep)}
+.info-u{
+  display:block;
+  font-size:11px;font-weight:700;color:var(--ink-soft);
+  letter-spacing:.12em;text-transform:uppercase;
   margin-top:4px;
 }
-@media (max-width:720px){
-  .org-wordmark{padding:12px 14px;gap:12px}
-  .org-wordmark .runner-mark{width:32px;height:32px}
-  .org-wordmark .org-acronym{font-size:26px}
+.info-l{
+  display:block;
+  font-size:13px;color:var(--ink-mute);
+  margin-top:8px;
+  line-height:1.4;
 }
-
-/* ===== STORY CARD (Lourdes) ===== */
-.story-card{
-  position:relative;
-  background: var(--off-white);
-  color: var(--ink);
-  border: 2.5px solid var(--ink);
-  border-radius: var(--radius-lg);
-  padding: 36px clamp(22px, 3vw, 40px) 32px;
-  box-shadow: 14px 14px 0 var(--rosa-vivo), 14px 14px 0 2.5px var(--ink);
-  transform: rotate(-0.6deg);
-  overflow:hidden;
-}
-.story-card::before{
-  content:"“";
-  position:absolute;
-  font-family: var(--display);
-  font-size: clamp(120px, 18vw, 200px);
-  color: var(--rosa-claro);
-  top: -50px;
-  left: 12px;
-  line-height:1;
-  pointer-events:none;
-}
-.story-card .story-card-meta{
-  display:flex;align-items:center;gap:10px;
-  font-family:var(--mono);font-size:11px;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--rosa-profundo);font-weight:700;
-  margin-bottom:18px;position:relative;z-index:1;
-}
-.story-card .ribbon-mark{width:22px;height:22px;flex-shrink:0}
-.story-card .story-card-quote{
-  font-family: var(--body);
-  font-size: clamp(17px, 2vw, 20px);
-  line-height: 1.55;
-  color: var(--ink);
-  margin: 0 0 22px;
-  position:relative;z-index:1;
-}
-.story-card .story-card-quote b{color: var(--rosa-profundo);font-weight:600}
-.story-card .story-card-signature{
-  font-family: var(--display);
-  font-size: clamp(22px, 2.4vw, 30px);
-  color: var(--rosa-profundo);
-  margin: 0;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-  line-height: 1;
-  position:relative;z-index:1;
-}
-.story-card .story-card-footer{
-  display:flex;justify-content:space-between;align-items:center;gap:12px;
-  margin-top:18px;padding-top:14px;
-  border-top:2px dashed rgba(42,10,20,.18);
-  font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--ink-soft);
-  position:relative;z-index:1;
-}
-.story-card .story-card-footer .heart{
-  display:inline-block;color:var(--rosa-vivo);
-  animation:heartbeat 1.4s ease-in-out infinite;
-}
-@media (max-width:720px){
-  .story-card{padding:28px 22px 26px;box-shadow:8px 8px 0 var(--rosa-vivo),8px 8px 0 2.5px var(--ink);transform:rotate(-0.4deg)}
-  .story-card .story-card-quote{font-size:16px;margin-bottom:18px}
-  .story-card .story-card-signature{font-size:20px}
-}
-
-/* ===== Reveal animation ===== */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease, transform .8s ease}
-.reveal.in{opacity:1;transform:none}
-.reveal.d1{transition-delay:.1s}
-.reveal.d2{transition-delay:.2s}
-.reveal.d3{transition-delay:.3s}
-
-/* Reduce motion */
-@media (prefers-reduced-motion: reduce){
-  *, *::before, *::after {animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
-  .reveal{opacity:1;transform:none}
+@media (max-width: 560px){
+  .info-bar-inner{grid-template-columns:1fr;gap:0}
+  .info-cell{border-right:0;border-bottom:1px solid var(--line)}
+  .info-cell:last-child{border-bottom:0}
 }
 
 /* =====================================================
-   ADMIN PANEL
+   SECTIONS (genérico)
+   ===================================================== */
+.sobre,.how,.inscricao,.faq{
+  padding:var(--section-y) 0;
+}
+.sobre-inner,.how-inner,.inscricao-inner,.faq-inner{
+  max-width:var(--container);
+  margin:0 auto;
+  padding:0 var(--pad-x);
+}
+.sobre-kicker{
+  display:inline-block;
+  font-size:11px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--rosa);
+  margin-bottom:12px;
+}
+h2{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:clamp(28px, 5vw, 40px);
+  line-height:1.15;
+  letter-spacing:-.02em;
+  margin:0 0 24px;
+  color:var(--ink);
+}
+
+/* =====================================================
+   SOBRE
+   ===================================================== */
+.sobre{background:var(--surface);border-bottom:1px solid var(--line)}
+.sobre-head{margin-bottom:32px}
+.sobre-body p{
+  font-size:16px;line-height:1.7;
+  color:var(--ink-soft);
+  margin:0 0 16px;
+  max-width:60ch;
+}
+.sobre-body p strong{color:var(--ink);font-weight:700}
+.sobre-assinatura{
+  font-style:italic;
+  color:var(--ink-mute) !important;
+  margin-top:24px !important;
+}
+
+/* =====================================================
+   HOW (Como funciona)
+   ===================================================== */
+.how-list{
+  list-style:none;padding:0;margin:0;
+  display:grid;gap:16px;
+  counter-reset:how;
+}
+.how-list li{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:20px;
+  align-items:start;
+  background:var(--surface);
+  padding:20px;
+  border-radius:var(--radius);
+  border:1px solid var(--line);
+}
+.how-num{
+  display:flex;align-items:center;justify-content:center;
+  width:36px;height:36px;border-radius:50%;
+  background:var(--rosa);color:#fff;
+  font-weight:800;font-size:16px;
+  flex-shrink:0;
+}
+.how-list h3{
+  font-family:var(--font-display);
+  font-size:17px;font-weight:700;
+  margin:0 0 4px;
+  color:var(--ink);
+}
+.how-list p{
+  margin:0;font-size:15px;color:var(--ink-soft);
+  line-height:1.5;
+}
+
+/* =====================================================
+   INSCRIÇÃO (form)
+   ===================================================== */
+.inscricao{
+  background:
+    radial-gradient(700px 500px at 100% 0%, rgba(255,46,126,.08), transparent 60%),
+    var(--bg);
+}
+.inscricao-head{margin-bottom:32px;text-align:center}
+.inscricao-head p{
+  font-size:15px;color:var(--ink-soft);
+  margin:0;
+}
+.reg-form{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  padding:32px;
+  box-shadow:var(--shadow);
+  max-width:560px;
+  margin:0 auto;
+  width:100%;
+}
+.reg-row{
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;
+  margin-bottom:14px;
+}
+.reg-field{margin-bottom:14px}
+.reg-field label{
+  display:block;
+  font-size:12px;font-weight:700;
+  letter-spacing:.04em;
+  color:var(--ink-soft);
+  margin-bottom:6px;
+}
+.reg-field input,
+.reg-field textarea{
+  width:100%;
+  padding:14px 16px;
+  border-radius:var(--radius-sm);
+  border:1.5px solid var(--line);
+  background:var(--bg);
+  font-size:16px;
+  transition:border-color .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.reg-field input:focus,
+.reg-field textarea:focus{
+  outline:0;
+  border-color:var(--rosa);
+  background:var(--surface);
+  box-shadow:0 0 0 4px rgba(255,46,126,.12);
+}
+.reg-field textarea{
+  min-height:88px;resize:vertical;line-height:1.5;
+}
+.reg-submit{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;
+  background:var(--rosa);color:#fff;
+  font-weight:700;font-size:16px;
+  padding:16px;
+  border-radius:var(--radius);
+  margin-top:8px;
+  transition:transform .15s ease, background .2s ease;
+  min-height:54px;
+  box-sizing:border-box;
+}
+.reg-submit:hover{background:var(--rosa-deep)}
+.reg-submit:active{transform:translateY(1px)}
+.reg-submit:disabled{opacity:.6;cursor:not-allowed}
+.reg-submit svg{width:18px;height:18px}
+.reg-help{
+  margin:16px 0 0;
+  font-size:13px;
+  color:var(--ink-mute);
+  line-height:1.5;
+  text-align:center;
+}
+.reg-err{
+  margin:14px 0 0;
+  padding:12px 14px;
+  background:#FEE;border:1.5px solid #DC2626;color:#991B1B;
+  border-radius:var(--radius-sm);
+  font-size:14px;
+  text-align:center;
+}
+
+@media (max-width: 560px){
+  .reg-form{padding:20px;border-radius:var(--radius)}
+  .reg-row{grid-template-columns:1fr;gap:0}
+}
+
+/* =====================================================
+   FAQ
+   ===================================================== */
+.faq{background:var(--surface);border-top:1px solid var(--line)}
+.faq-inner{max-width:680px;margin:0 auto;padding:0 var(--pad-x)}
+.faq-item{
+  border-bottom:1px solid var(--line);
+  padding:18px 0;
+}
+.faq-item summary{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:17px;
+  color:var(--ink);
+  cursor:pointer;
+  list-style:none;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{
+  content:'+';
+  font-size:24px;font-weight:300;color:var(--rosa);
+  transition:transform .2s ease;
+  flex-shrink:0;
+  width:24px;text-align:center;
+}
+.faq-item[open] summary::after{transform:rotate(45deg)}
+.faq-item p{
+  margin:12px 0 0;
+  font-size:15px;color:var(--ink-soft);
+  line-height:1.6;
+}
+.faq-item a{color:var(--rosa);text-decoration:underline}
+.faq-item a:hover{color:var(--rosa-deep)}
+
+/* =====================================================
+   FOOTER
+   ===================================================== */
+footer{
+  background:var(--ink);
+  color:#fff;
+  padding:48px 0 24px;
+}
+.footer-inner{
+  max-width:var(--container);
+  margin:0 auto;
+  padding:0 var(--pad-x);
+  display:grid;grid-template-columns:1.4fr 1fr 1.2fr;gap:32px;
+}
+@media (max-width: 640px){
+  .footer-inner{grid-template-columns:1fr;gap:24px}
+}
+.footer-logo{
+  font-family:var(--font-display);
+  font-weight:800;
+  font-size:20px;
+  margin:0 0 8px;
+  color:#fff;
+}
+.footer-brand p{color:rgba(255,255,255,.6);margin:0;font-size:14px}
+.footer-info p,.footer-contact p{margin:0 0 4px;font-size:14px;color:rgba(255,255,255,.85)}
+.footer-info b{color:#fff}
+.footer-contact a{color:rgba(255,255,255,.85);transition:color .15s}
+.footer-contact a:hover{color:#fff}
+.footer-bottom{
+  max-width:var(--container);
+  margin:32px auto 0;
+  padding:16px var(--pad-x) 0;
+  border-top:1px solid rgba(255,255,255,.1);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-size:12px;color:rgba(255,255,255,.5);
+  letter-spacing:.04em;
+}
+
+/* =====================================================
+   STICKY MOBILE CTA
+   ===================================================== */
+.sticky-cta{
+  display:none;
+  position:fixed;left:0;right:0;bottom:0;
+  z-index:50;
+  background:var(--ink);
+  border-top:1px solid rgba(255,255,255,.1);
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+  transform:translateY(100%);
+  transition:transform .25s ease;
+  box-shadow:0 -10px 30px -8px rgba(0,0,0,.3);
+}
+.sticky-cta.show{display:block;transform:translateY(0)}
+.sticky-pill{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  background:var(--rosa);color:#fff;
+  padding:14px 20px;border-radius:14px;
+  max-width:680px;margin:0 auto;
+  font-weight:700;
+  box-sizing:border-box;
+  width:100%;
+}
+.sticky-info{display:flex;flex-direction:column;line-height:1.2}
+.sticky-lbl{
+  font-size:10px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:rgba(255,255,255,.7);
+}
+.sticky-title{font-size:14px;font-weight:700}
+.sticky-action{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:14px;font-weight:700;
+}
+.sticky-action svg{width:14px;height:14px}
+
+@media (min-width: 768px){.sticky-cta{display:none !important}}
+
+/* =====================================================
+   HONEYPOT
+   ===================================================== */
+.hp-field{
+  position:absolute !important;
+  left:-9999px !important;top:-9999px !important;
+  width:1px;height:1px;opacity:0;pointer-events:none;
+}
+
+/* =====================================================
+   ADMIN PANEL (mantido do design anterior)
    ===================================================== */
 .admin-root{
   background:var(--ink);color:#fff;
@@ -1217,33 +571,22 @@ html{ -webkit-text-size-adjust:100%; text-size-adjust:100% }
   display:none;
 }
 .admin-root.show{display:block}
-
-/* quando a rota é /admin, esconde o resto do site */
 body.admin-mode > *:not(.admin-root){display:none !important}
 body.admin-mode{background:var(--ink)}
 
-/* Login card */
 .admin-login{
   max-width:440px;margin:0 auto;
-  background:var(--off-white);color:var(--ink);
-  border:2.5px solid var(--rosa-vivo);
+  background:var(--surface);color:var(--ink);
+  border:1px solid var(--line);
   border-radius:var(--radius-lg);
   padding:36px clamp(24px, 4vw, 36px);
-  box-shadow:14px 14px 0 var(--rosa-profundo);
+  box-shadow:var(--shadow);
   position:relative;
 }
-.admin-login::after{
-  content:"🔒";position:absolute;top:-22px;right:-22px;
-  width:56px;height:56px;border-radius:50%;
-  background:var(--rosa-vivo);color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  border:2.5px solid var(--ink);font-size:24px;
-}
 .admin-login h2{
-  font-family:var(--display);
-  font-size:34px;letter-spacing:.02em;
-  margin:0 0 6px;text-transform:uppercase;
-  color:var(--ink);line-height:1;
+  font-family:var(--font-display);
+  font-size:24px;font-weight:800;letter-spacing:-.01em;
+  margin:0 0 4px;color:var(--ink);
 }
 .admin-login .sub{
   font-size:14px;color:var(--ink-soft);
@@ -1251,283 +594,195 @@ body.admin-mode{background:var(--ink)}
 }
 .admin-login .field{margin-bottom:14px}
 .admin-login label{
-  display:block;font-family:var(--mono);
-  font-size:11px;font-weight:700;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--ink);margin-bottom:8px;
+  display:block;font-size:12px;font-weight:700;
+  letter-spacing:.04em;color:var(--ink);margin-bottom:6px;
 }
 .admin-login input{
-  width:100%;border:2px solid var(--ink);background:#fff;
-  padding:14px 16px;border-radius:12px;
-  font-family:var(--body);font-size:16px;color:var(--ink);
+  width:100%;border:1.5px solid var(--line);background:var(--bg);
+  padding:14px 16px;border-radius:var(--radius-sm);
+  font-size:16px;color:var(--ink);
   transition:border-color .15s ease, box-shadow .15s ease;
 }
-.admin-login input:focus{outline:0;border-color:var(--rosa-vivo);box-shadow:0 0 0 4px rgba(255,46,126,.18)}
+.admin-login input:focus{
+  outline:0;border-color:var(--rosa);
+  box-shadow:0 0 0 4px rgba(255,46,126,.12);
+}
 .admin-login .err{
-  background:#fee;color:#900;
-  border:2px solid #900;border-radius:10px;
+  background:#FEE;color:#991B1B;
+  border:1.5px solid #DC2626;border-radius:var(--radius-sm);
   padding:12px 14px;margin-top:12px;font-size:13px;
-  display:none;font-family:var(--body);
+  display:none;
 }
 .admin-login .err.show{display:block}
 .admin-login .btn{
   width:100%;margin-top:8px;
-  background:var(--rosa-vivo);color:#fff;
-  font-family:var(--display);font-size:22px;letter-spacing:.04em;
-  text-transform:uppercase;
-  padding:16px;border-radius:14px;border:2px solid var(--ink);
-  box-shadow:0 8px 24px -6px rgba(255,46,126,.6);
+  background:var(--rosa);color:#fff;
+  font-weight:700;font-size:15px;
+  padding:14px;border-radius:var(--radius);
   transition:transform .15s ease, background .2s ease;
-  cursor:pointer;
+  min-height:48px;
 }
-.admin-login .btn:hover:not(:disabled){background:var(--rosa-profundo);transform:translateY(-2px)}
-.admin-login .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.admin-login .btn:hover:not(:disabled){background:var(--rosa-deep);transform:translateY(-1px)}
+.admin-login .btn:disabled{opacity:.5;cursor:not-allowed}
 .admin-login .back{
-  display:block;text-align:center;margin-top:18px;
-  font-family:var(--mono);font-size:11px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--ink-soft);
+  display:block;text-align:center;margin-top:16px;
+  font-size:12px;color:var(--ink-soft);
   cursor:pointer;
 }
-.admin-login .back:hover{color:var(--rosa-profundo)}
+.admin-login .back:hover{color:var(--rosa)}
 
-/* Dashboard head */
 .admin-head{
   display:flex;justify-content:space-between;align-items:end;
   gap:18px;margin-bottom:32px;flex-wrap:wrap;
 }
 .admin-head h2{
-  font-family:var(--display);
-  font-size:clamp(34px, 6vw, 64px);
-  letter-spacing:.02em;margin:0;
-  color:#fff;text-transform:uppercase;line-height:1;
+  font-family:var(--font-display);font-weight:800;font-size:28px;
+  margin:0;color:#fff;
 }
 .admin-head .who{
-  font-family:var(--mono);font-size:11px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--dourado);font-weight:700;
-  margin-top:6px;display:block;
+  font-size:11px;letter-spacing:.08em;
+  color:var(--dourado);font-weight:600;
+  margin-top:4px;display:block;
 }
 .admin-logout{
   background:transparent;color:#fff;
-  border:2px solid #fff;
-  font-family:var(--mono);font-size:12px;letter-spacing:.14em;
-  text-transform:uppercase;font-weight:700;
+  border:1px solid rgba(255,255,255,.3);
+  font-size:12px;font-weight:600;
   padding:10px 18px;border-radius:999px;
-  cursor:pointer;
   transition:all .15s ease;
+  min-height:44px;
 }
 .admin-logout:hover{background:#fff;color:var(--ink)}
 
-/* KPI grid */
 .kpi-grid{
   display:grid;grid-template-columns:repeat(4,1fr);
-  gap:14px;margin-bottom:36px;
+  gap:14px;margin-bottom:32px;
 }
 @media (max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:480px){.kpi-grid{grid-template-columns:1fr 1fr;gap:10px}}
 .kpi{
-  background:var(--off-white);color:var(--ink);
-  border:2.5px solid var(--ink);
-  border-radius:var(--radius-md);
-  padding:22px 20px;
-  box-shadow:8px 8px 0 var(--rosa-vivo),8px 8px 0 2.5px var(--ink);
-  position:relative;
+  background:var(--surface);color:var(--ink);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:20px;
+  box-shadow:var(--shadow);
 }
-.kpi.accent{background:var(--dourado);box-shadow:8px 8px 0 var(--rosa-vivo),8px 8px 0 2.5px var(--ink)}
-.kpi.accent2{background:var(--rosa-vivo);color:#fff;box-shadow:8px 8px 0 var(--dourado),8px 8px 0 2.5px var(--ink)}
+.kpi.accent{background:var(--dourado)}
+.kpi.accent2{background:var(--rosa);color:#fff}
 .kpi.accent2 .kpi-l{color:rgba(255,255,255,.85)}
 .kpi .kpi-n{
-  font-family:var(--display);
-  font-size:clamp(34px, 5vw, 54px);
-  line-height:1;letter-spacing:.02em;
-  display:block;color:var(--rosa-profundo);
+  display:block;
+  font-family:var(--font-display);font-weight:800;font-size:32px;
+  line-height:1;color:var(--rosa);
 }
 .kpi.accent2 .kpi-n{color:#fff}
 .kpi .kpi-l{
-  font-family:var(--mono);font-size:11px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--ink-soft);
-  margin-top:8px;display:block;font-weight:700;
+  display:block;font-size:11px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-soft);
+  margin-top:6px;
 }
 .kpi .kpi-delta{
-  position:absolute;top:10px;right:12px;
-  font-family:var(--mono);font-size:10px;letter-spacing:.08em;
+  display:inline-block;font-size:10px;font-weight:600;
   background:var(--ink);color:var(--dourado);
   padding:3px 8px;border-radius:999px;
+  margin-top:8px;
 }
 
-/* Toolbar */
 .admin-toolbar{
-  display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;
-  align-items:center;
+  display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;
 }
 .admin-toolbar input[type="search"]{
   flex:1;min-width:200px;
-  background:#fff;color:var(--ink);
-  border:2px solid #fff;
-  padding:12px 16px;border-radius:10px;
-  font-family:var(--body);font-size:15px;
+  background:var(--surface);color:var(--ink);
+  border:1.5px solid var(--line);
+  padding:12px 16px;border-radius:var(--radius-sm);
+  font-size:16px;
 }
-.admin-toolbar input[type="search"]:focus{outline:0;border-color:var(--dourado)}
+.admin-toolbar input[type="search"]:focus{outline:0;border-color:var(--rosa)}
 .admin-toolbar select{
   background:var(--ink);color:#fff;
-  border:2px solid #fff;
-  padding:12px 16px;border-radius:10px;
-  font-family:var(--mono);font-size:12px;letter-spacing:.12em;
-  text-transform:uppercase;font-weight:700;
-  cursor:pointer;
+  border:1.5px solid var(--line);
+  padding:12px 16px;border-radius:var(--radius-sm);
+  font-size:12px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.04em;
 }
 .admin-toolbar .btn{
   background:var(--dourado);color:var(--ink);
-  font-family:var(--mono);font-weight:700;font-size:12px;
-  letter-spacing:.14em;text-transform:uppercase;
-  padding:12px 18px;border-radius:10px;border:2px solid var(--ink);
-  cursor:pointer;
-  transition:transform .15s ease, background .2s ease;
+  font-size:12px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.06em;
+  padding:12px 18px;border-radius:var(--radius-sm);
+  border:0;transition:transform .15s ease;
+  min-height:44px;
 }
-.admin-toolbar .btn:hover{background:#fff;transform:translateY(-2px)}
-.admin-toolbar .btn.outline{background:transparent;color:#fff;border-color:#fff}
-.admin-toolbar .btn.outline:hover{background:#fff;color:var(--ink)}
+.admin-toolbar .btn:hover{transform:translateY(-1px)}
+.admin-toolbar .btn.outline{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.3)}
 
-/* Table */
 .admin-table-wrap{
   overflow-x:auto;
-  border:2.5px solid var(--ink);
-  border-radius:var(--radius-md);
-  background:var(--off-white);
-  box-shadow:8px 8px 0 rgba(255,46,126,.3);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:var(--surface);
 }
 .admin-table{
   width:100%;border-collapse:collapse;
   font-size:14px;color:var(--ink);
-  min-width:760px;
+  min-width:700px;
 }
-.admin-table th, .admin-table td{
+.admin-table th,.admin-table td{
   padding:14px 16px;text-align:left;
-  border-bottom:1.5px solid rgba(42,10,20,.1);
-  vertical-align:middle;
+  border-bottom:1px solid var(--line);
 }
-.admin-table tbody tr:last-child td{border-bottom:0}
 .admin-table thead th{
   background:var(--ink);color:#fff;
-  font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  font-size:11px;letter-spacing:.06em;
   text-transform:uppercase;font-weight:700;
-  position:sticky;top:0;z-index:1;
-  border-bottom:2.5px solid var(--rosa-vivo);
+  position:sticky;top:0;
 }
-.admin-table tbody tr:hover{background:var(--rosa-claro)}
-.admin-table .name{font-weight:700;color:var(--ink)}
-.admin-table .email,.admin-table .phone{font-family:var(--mono);font-size:13px;color:var(--ink-soft);display:block}
-.admin-table .phone{color:var(--rosa-profundo)}
-.admin-table .date{font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+.admin-table tbody tr:hover{background:var(--rosa-soft)}
+.admin-table .name{font-weight:700}
+.admin-table .email,.admin-table .phone{
+  display:block;font-size:13px;color:var(--ink-soft);
+}
+.admin-table .phone{color:var(--rosa-deep)}
+.admin-table .date{font-size:12px;color:var(--ink-mute)}
 .admin-table .actions{display:flex;gap:6px;flex-wrap:wrap}
 .admin-table .pill{
   display:inline-flex;align-items:center;gap:6px;
-  font-family:var(--mono);font-weight:700;font-size:11px;
-  letter-spacing:.12em;text-transform:uppercase;
-  padding:5px 10px;border-radius:999px;
-  border:1.5px solid currentColor;white-space:nowrap;
+  font-size:11px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  padding:4px 10px;border-radius:999px;
+  border:1.5px solid currentColor;
 }
-.admin-table .pill.paid{background:#dcfce7;color:#166534}
-.admin-table .pill.pending{background:#fef3c7;color:#92400e}
-.admin-table .pill.manual{background:#dbeafe;color:#1e40af}
-.admin-table .pill.canceled{background:#fee2e2;color:#991b1b}
+.admin-table .pill.paid{background:var(--verde-soft);color:#166534}
+.admin-table .pill.pending{background:#FEF3C7;color:#92400E}
+.admin-table .pill.manual{background:#DBEAFE;color:#1E40AF}
+.admin-table .pill.canceled{background:#FEE2E2;color:#991B1B}
 .admin-table .row-btn{
-  font-family:var(--mono);font-size:11px;font-weight:700;
-  letter-spacing:.1em;text-transform:uppercase;
+  font-size:11px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
   padding:6px 10px;border-radius:8px;
   border:1.5px solid var(--ink);background:#fff;color:var(--ink);
-  cursor:pointer;transition:all .15s ease;white-space:nowrap;
+  transition:all .15s ease;
+  min-height:32px;
 }
 .admin-table .row-btn:hover{background:var(--ink);color:#fff}
 .admin-table .row-btn.pay{background:var(--verde);border-color:var(--verde);color:#fff}
-.admin-table .row-btn.pay:hover{background:#15803d;border-color:#15803d}
-.admin-table .row-btn.manual{background:#3b82f6;border-color:#3b82f6;color:#fff}
-.admin-table .row-btn.manual:hover{background:#1e40af;border-color:#1e40af}
-.admin-table .row-btn.cancel{background:#fee;border-color:#dc2626;color:#dc2626}
-.admin-table .row-btn.cancel:hover{background:#dc2626;color:#fff}
+.admin-table .row-btn.manual{background:#3B82F6;border-color:#3B82F6;color:#fff}
+.admin-table .row-btn.cancel{background:#FEE;border-color:#DC2626;color:#DC2626}
 .admin-table .empty{
-  text-align:center;padding:48px 24px;color:var(--ink-soft);
-  font-style:italic;
+  text-align:center;padding:48px 24px;color:var(--ink-mute);
 }
 
-/* Modal */
-.modal-overlay{
-  position:fixed;inset:0;background:rgba(42,10,20,.85);
-  display:none;align-items:center;justify-content:center;
-  z-index:100;padding:20px;
-  backdrop-filter:blur(4px);
-}
-.modal-overlay.show{display:flex}
-.modal{
-  background:var(--off-white);color:var(--ink);
-  border:2.5px solid var(--ink);
-  border-radius:var(--radius-lg);
-  padding:32px clamp(22px, 4vw, 36px);max-width:540px;width:100%;
-  max-height:90vh;overflow:auto;
-  box-shadow:14px 14px 0 var(--rosa-vivo);
-  position:relative;
-}
-.modal h3{
-  font-family:var(--display);font-size:30px;letter-spacing:.02em;
-  margin:0 0 6px;text-transform:uppercase;
-}
-.modal .modal-sub{
-  font-family:var(--mono);font-size:11px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--rosa-profundo);
-  margin:0 0 20px;font-weight:700;
-}
-.modal .field{margin-bottom:14px}
-.modal label{
-  display:block;font-family:var(--mono);font-size:11px;
-  letter-spacing:.16em;text-transform:uppercase;
-  color:var(--ink);margin-bottom:8px;font-weight:700;
-}
-.modal input, .modal select, .modal textarea{
-  width:100%;border:2px solid var(--ink);background:#fff;
-  padding:12px 14px;border-radius:10px;
-  font-family:var(--body);font-size:15px;color:var(--ink);
-}
-.modal textarea{min-height:80px;resize:vertical;font-family:var(--body)}
-.modal input:focus,.modal select:focus,.modal textarea:focus{
-  outline:0;border-color:var(--rosa-vivo);
-  box-shadow:0 0 0 4px rgba(255,46,126,.18);
-}
-.modal .readonly{background:var(--rosa-claro) !important;color:var(--ink-soft)}
-.modal-actions{
-  display:flex;gap:10px;margin-top:20px;justify-content:flex-end;flex-wrap:wrap;
-}
-.modal .btn{
-  font-family:var(--mono);font-weight:700;font-size:12px;
-  letter-spacing:.14em;text-transform:uppercase;
-  padding:12px 18px;border-radius:10px;
-  border:2px solid var(--ink);
-  cursor:pointer;transition:all .15s ease;
-}
-.modal .btn.primary{background:var(--rosa-vivo);color:#fff;border-color:var(--ink)}
-.modal .btn.primary:hover{background:var(--rosa-profundo)}
-.modal .btn.ghost{background:#fff;color:var(--ink)}
-.modal .btn.ghost:hover{background:var(--ink);color:#fff}
-.modal .btn.danger{background:#fee;color:#dc2626;border-color:#dc2626}
-.modal .btn.danger:hover{background:#dc2626;color:#fff}
-.modal .close-x{
-  position:absolute;top:14px;right:14px;
-  background:transparent;color:var(--ink);
-  width:36px;height:36px;border-radius:50%;
-  font-size:22px;line-height:1;
-  display:flex;align-items:center;justify-content:center;
-  border:2px solid transparent;cursor:pointer;
-}
-.modal .close-x:hover{border-color:var(--ink)}
-
-/* Audit log */
 .audit-list{
-  margin-top:32px;
+  margin-top:24px;
   background:rgba(255,255,255,.05);
-  border:2px dashed rgba(255,255,255,.2);
-  border-radius:var(--radius-md);
-  padding:18px;
-  max-height:280px;overflow:auto;
+  border:1px dashed rgba(255,255,255,.2);
+  border-radius:var(--radius);
+  padding:16px;
+  max-height:240px;overflow:auto;
 }
 .audit-list h4{
-  font-family:var(--mono);font-size:11px;letter-spacing:.18em;
+  font-size:11px;letter-spacing:.08em;
   text-transform:uppercase;color:var(--dourado);
   margin:0 0 12px;font-weight:700;
 }
@@ -1538,285 +793,89 @@ body.admin-mode{background:var(--ink)}
 }
 .audit-item:last-child{border-bottom:0}
 .audit-item .a-action{
-  font-family:var(--mono);font-weight:700;font-size:11px;
-  letter-spacing:.1em;text-transform:uppercase;color:var(--rosa-vivo);
+  font-size:11px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--rosa);
 }
 .audit-item .a-when{
-  font-family:var(--mono);font-size:11px;color:rgba(255,255,255,.5);
-}
-
-/* Toast */
-.toast{
-  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120%);
-  background:var(--ink);color:#fff;
-  padding:14px 22px;border-radius:14px;border:2px solid var(--rosa-vivo);
-  font-family:var(--mono);font-size:13px;letter-spacing:.04em;
-  box-shadow:0 12px 28px -8px rgba(0,0,0,.5);
-  z-index:200;
-  transition:transform .3s ease;
-  max-width:90vw;
-}
-.toast.show{transform:translateX(-50%) translateY(0)}
-.toast.success{border-color:var(--verde)}
-.toast.error{border-color:#dc2626}
-
-/* =====================================================
-   #formulario layout (corrige grid espremido em mobile)
-   ===================================================== */
-.formulario-wrap{
-  display:grid;
-  grid-template-columns:1.1fr 1fr;
-  gap:clamp(28px, 5vw, 72px);
-  align-items:start;
-}
-.formulario-wrap > *{min-width:0}
-
-@media (max-width: 900px){
-  .formulario-wrap{
-    grid-template-columns:1fr !important;
-    gap:32px !important;
-  }
-}
-
-/* Form ocupa largura total confortável */
-.reg-form{
-  max-width:560px;
-  width:100%;
-  margin:0 auto;
-}
-
-/* honeypot field (anti-spam) - invisível */
-.hp-field{
-  position:absolute !important;
-  left:-9999px !important;top:-9999px !important;
-  width:1px;height:1px;opacity:0;pointer-events:none;
+  font-size:11px;color:rgba(255,255,255,.5);
 }
 
 /* =====================================================
-   WIZARD (formulário em passos)
+   MODAL (admin edição)
    ===================================================== */
-.wizard-progress{
-  display:flex;align-items:center;justify-content:center;
-  gap:8px;margin:18px 0 22px;
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(26,10,18,.85);
+  display:none;align-items:center;justify-content:center;
+  z-index:100;padding:20px;
+  backdrop-filter:blur(4px);
 }
-.wizard-step-dot{
-  width:32px;height:32px;border-radius:50%;
-  background:#fff;border:2.5px solid var(--ink);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--mono);font-weight:700;font-size:13px;
-  color:var(--ink-soft);transition:all .2s ease;
+.modal-overlay.show{display:flex}
+.modal{
+  background:var(--surface);color:var(--ink);
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  padding:28px;max-width:540px;width:100%;
+  max-height:90vh;overflow:auto;
+  box-shadow:0 24px 60px -12px rgba(0,0,0,.3);
+  position:relative;
 }
-.wizard-step-dot.active{background:var(--rosa-vivo);color:#fff;border-color:var(--ink)}
-.wizard-step-dot.done{background:var(--verde);color:#fff;border-color:var(--ink)}
-.wizard-step-line{
-  flex:0 0 32px;height:3px;
-  background:rgba(42,10,20,.18);border-radius:2px;
-  transition:background .2s ease;
+.modal h3{
+  font-family:var(--font-display);font-weight:800;font-size:22px;
+  margin:0 0 4px;
 }
-.wizard-step-line.done{background:var(--verde)}
-
-.wizard-step{
-  border:0;padding:0;margin:0;min-width:0;
-  display:none;
-  animation:fadeUp .25s ease both;
+.modal .modal-sub{
+  font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--rosa);margin:0 0 16px;font-weight:700;
 }
-.wizard-step.active{display:block}
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(8px)}
-  to{opacity:1;transform:none}
+.modal .field{margin-bottom:12px}
+.modal label{
+  display:block;font-size:12px;font-weight:700;
+  letter-spacing:.04em;color:var(--ink);margin-bottom:6px;
 }
-
-.wizard-step legend.wizard-step-title{
-  font-family:var(--display);
-  font-size:clamp(22px, 4vw, 28px);
-  letter-spacing:.02em;
-  text-transform:uppercase;
-  color:var(--ink);
-  margin:0 0 6px;padding:0;
-  width:100%;
+.modal input,.modal select,.modal textarea{
+  width:100%;border:1.5px solid var(--line);background:var(--bg);
+  padding:12px 14px;border-radius:var(--radius-sm);
+  font-size:16px;
 }
-.wizard-step-hint{
-  font-size:14px;color:var(--ink-soft);
-  margin:0 0 16px;font-family:var(--body);
+.modal textarea{min-height:80px;resize:vertical}
+.modal input:focus,.modal select:focus,.modal textarea:focus{
+  outline:0;border-color:var(--rosa);box-shadow:0 0 0 4px rgba(255,46,126,.12);
 }
-
-.wizard-nav{
-  display:flex;gap:10px;margin-top:18px;
-  align-items:stretch;
-  flex-wrap:wrap;
+.modal .readonly{background:var(--rosa-soft) !important;color:var(--ink-soft)}
+.modal-actions{
+  display:flex;gap:10px;margin-top:20px;justify-content:flex-end;flex-wrap:wrap;
 }
-.wizard-back{
-  flex:0 0 auto;
+.modal .btn{
+  font-size:12px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.06em;
+  padding:12px 18px;border-radius:var(--radius-sm);
+  border:1.5px solid var(--ink);
+  cursor:pointer;transition:all .15s ease;
+  min-height:44px;
+}
+.modal .btn.primary{background:var(--rosa);color:#fff;border-color:var(--ink)}
+.modal .btn.primary:hover{background:var(--rosa-deep)}
+.modal .btn.ghost{background:#fff;color:var(--ink)}
+.modal .btn.ghost:hover{background:var(--ink);color:#fff}
+.modal .btn.danger{background:#FEE;color:#DC2626;border-color:#DC2626}
+.modal .btn.danger:hover{background:#DC2626;color:#fff}
+.modal .close-x{
+  position:absolute;top:14px;right:14px;
   background:transparent;color:var(--ink);
-  font-family:var(--mono);font-weight:700;font-size:13px;
-  letter-spacing:.1em;text-transform:uppercase;
-  padding:16px 18px;border-radius:14px;
-  border:2px solid var(--ink);
-  cursor:pointer;
-  min-height:50px;
-  min-width:0;
-  transition:background .15s ease,color .15s ease;
+  width:36px;height:36px;border-radius:50%;
+  font-size:22px;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid transparent;
 }
-.wizard-back:hover{background:var(--ink);color:#fff}
-.wizard-next,.wizard-finish{
-  flex:1 1 200px;
-  min-width:0;
-  margin-top:0 !important;
-  min-height:54px;
-}
+.modal .close-x:hover{border-color:var(--ink)}
 
-/* Mobile: nav vira sticky bottom bar + botões empilhados */
-@media (max-width: 767px){
-  .wizard-nav{
-    position:sticky;
-    bottom:0;
-    left:0;right:0;
-    margin:24px 0 0;
-    padding:14px 16px calc(14px + env(safe-area-inset-bottom, 0px));
-    background:linear-gradient(to top, var(--off-white) 85%, rgba(255,241,244,0.6) 60%, transparent);
-    z-index:5;
-    flex-direction:column;
-    width:100%;
-    max-width:100%;
-    box-sizing:border-box;
-    gap:10px;
-  }
-  .wizard-nav .wizard-back,
-  .wizard-nav .wizard-next,
-  .wizard-nav .wizard-finish{
-    width:100%;
-    flex:0 0 auto;
-    max-width:100%;
-    box-sizing:border-box;
-  }
-  .reg-form{padding-bottom:24px}
-}
-
-/* Desktop: ajuste fino */
-@media (min-width: 768px){
-  .wizard-nav{padding-top:20px;border-top:2px dashed rgba(42,10,20,.18);margin-top:24px}
-}
-
-/* Admin link discreto no footer */
-.admin-link{
-  cursor:pointer;
-  text-decoration:underline dotted;
-  text-underline-offset:3px;
-}
-.admin-link:hover{color:var(--rosa-vivo) !important}
-
-/* =====================================================
-   MOBILE GLOBAL POLISH (≤ 720px)
-   ===================================================== */
-@media (max-width: 720px){
-  /* Reset font-size mínimo em inputs (evita zoom iOS) */
-  .admin-login input,
-  .admin-toolbar input[type="search"],
-  .admin-toolbar select,
-  .modal input,
-  .modal select,
-  .modal textarea{font-size:16px}
-
-  /* Touch targets ≥ 44px em todo o site (footer, links) */
-  .foot-grid a,
-  .foot-bottom a,
-  .foot-grid p,
-  .foot-bottom span{
-    display:inline-block;
-    min-height:44px;
-    line-height:44px;
-    padding:0 4px;
-  }
-  .foot-grid p{margin:0 0 4px}
-
-  /* Sticky CTA: maior e mais legível */
-  .sticky-cta .pay-pill{
-    min-height:52px;
-    font-size:16px;
-    padding:14px 20px;
-  }
-  .sticky-cta .info .title{font-size:16px}
-  .sticky-cta .info .price{font-size:11px}
-
-  /* Form de inscrição */
-  .reg-form input,
-  .reg-form select{font-size:16px;min-height:50px}
-
-  /* Animações: reduzir (economiza GPU) */
-  .databar .dot{animation-duration:2s}
-  h1.title .heart{animation-duration:2s}
-  .marquee .track{animation-duration:30s}
-
-  /* Background gradients: blend caro em mobile */
-  body::after{display:none}
-  body::before{opacity:.6}
-
-  /* Sombras: reduzir blur (menos pintura) */
-  .ticket,.price-box,.reg-form,.story-card{
-    box-shadow:6px 6px 0 var(--rosa-vivo),6px 6px 0 2.5px var(--ink) !important;
-  }
-  .cause-art{
-    box-shadow:6px 6px 0 var(--dourado),6px 6px 0 2.5px var(--ink) !important;
-  }
-
-  /* Admin */
+@media (max-width:720px){
   .admin-table-wrap{font-size:12px}
-  .admin-table th,.admin-table td{padding:10px 12px}
   .admin-head{align-items:flex-start}
-  .admin-logout{padding:8px 14px;font-size:11px}
+  .admin-logout{padding:8px 14px}
   .modal{padding:24px 20px}
-  .modal h3{font-size:24px}
   .modal-actions{flex-direction:column-reverse}
   .modal .btn{width:100%}
-
-  /* HARD STOP: nada pode vazar além da viewport */
-  html,body,main,header,footer,section,article,aside,nav,div{
-    max-width:100% !important;
-  }
-  .databar,.marquee,.hero,.details,.price-section,.slogan-banner,footer,.sticky-cta{
-    max-width:100vw !important;
-    overflow:hidden !important;
-  }
-  .databar .row{flex-wrap:wrap;gap:4px;padding:8px 0}
-  .databar .row > span{font-size:10.5px;letter-spacing:.06em}
-  .marquee .track{will-change:transform}
-}
-
-/* XS phones (≤ 360px) — ajustes finos */
-@media (max-width: 360px){
-  .databar{font-size:9px;letter-spacing:.04em}
-  .databar .row{padding:6px 0;gap:2px}
-  .foot-grid h5,.sticky-cta .info .lbl{font-size:9px}
-  .price-box{padding:20px 16px}
-  .price-box .price{font-size:60px}
-  .ticket{padding:18px 14px 20px}
-  .reg-form{padding:18px 14px}
-  .kpi{padding:16px 14px}
-  .kpi .kpi-n{font-size:30px}
-  .modal{padding:20px 16px}
-  .success-modal{padding:20px 16px}
-  .hero{padding:32px 0 40px}
-  .databar .row > span:nth-child(3){display:none}
-}
-
-/* Touch: desabilita hover "sticky" no iOS */
-@media (hover: none) and (pointer: coarse){
-  .cta:hover,.pay-btn:hover,.cta-ghost:hover,
-  .success-pay-btn:hover,.success-wa-link:hover,
-  .row-btn:hover,.btn:hover,.admin-logout:hover,
-  .modal .btn:hover,.pix-copy-btn:hover{
-    transform:none !important;
-    background:initial !important;
-    color:initial !important;
-  }
-  .cta:active,.pay-btn:active,.pay-pill:active{
-    transform:translateY(1px) !important;
-  }
-}
-
-/* iOS: previne zoom em inputs sem afetar design */
-@supports (-webkit-touch-callout: none){
-  input,select,textarea{font-size:16px !important}
 }
 
 /* =====================================================
@@ -1824,665 +883,393 @@ body.admin-mode{background:var(--ink)}
    ===================================================== */
 .success-overlay{
   position:fixed;inset:0;
-  background:rgba(42,10,20,.92);
+  background:rgba(26,10,18,.92);
   display:none;align-items:center;justify-content:center;
   z-index:150;padding:20px;
   backdrop-filter:blur(6px);
 }
 .success-overlay.show{display:flex;animation:fadeIn .25s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-
 .success-modal{
-  background:var(--off-white);color:var(--ink);
-  border:3px solid var(--rosa-vivo);
+  background:var(--surface);color:var(--ink);
+  border:1px solid var(--line);
   border-radius:var(--radius-lg);
   padding:36px clamp(24px, 4vw, 40px);
   max-width:480px;width:100%;
-  box-shadow:16px 16px 0 var(--rosa-profundo);
+  box-shadow:0 24px 60px -12px rgba(0,0,0,.4);
   position:relative;
   text-align:center;
   animation:popIn .35s cubic-bezier(.34,1.56,.64,1);
-  /* Mobile: scroll interno + dvh (evita problema com teclado iOS) */
-  max-height:calc(100vh - 40px);
   max-height:calc(100dvh - 40px);
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
 }
 @keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
-
 .success-icon{
-  width:80px;height:80px;border-radius:50%;
+  width:72px;height:72px;border-radius:50%;
   background:var(--verde);color:#fff;
-  border:3px solid var(--ink);
   display:flex;align-items:center;justify-content:center;
-  font-size:42px;font-weight:700;
-  margin:0 auto 18px;
-  box-shadow:0 8px 24px -6px rgba(22,163,74,.5);
-  animation:bounceIn .6s cubic-bezier(.34,1.56,.64,1) .15s both;
+  font-size:36px;font-weight:700;
+  margin:0 auto 16px;
+  box-shadow:0 8px 24px -6px rgba(22,163,74,.4);
 }
-@keyframes bounceIn{0%{transform:scale(0);opacity:0}60%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
-
 .success-modal h2{
-  font-family:var(--display);
-  font-size:clamp(28px, 4vw, 38px);
-  letter-spacing:.02em;
-  margin:0 0 6px;text-transform:uppercase;
-  color:var(--ink);line-height:1;
+  font-family:var(--font-display);font-weight:800;
+  font-size:24px;margin:0 0 6px;color:var(--ink);
 }
 .success-modal .success-sub{
-  font-size:15px;color:var(--ink-soft);
-  margin:0 0 22px;font-family:var(--body);
+  font-size:14px;color:var(--ink-soft);
+  margin:0 0 20px;
 }
 .success-amount{
-  font-family:var(--display);
-  font-size:clamp(48px, 9vw, 72px);
-  line-height:1;color:var(--rosa-profundo);
-  margin:8px 0 18px;letter-spacing:.02em;
+  font-family:var(--font-display);font-weight:800;
+  font-size:48px;line-height:1;color:var(--rosa);
+  margin:0 0 20px;letter-spacing:-.02em;
 }
 .success-pay-btn{
-  display:flex;align-items:center;justify-content:center;gap:12px;
-  background:var(--verde);color:#fff;
-  font-family:var(--display);font-size:clamp(20px, 3vw, 26px);
-  letter-spacing:.04em;text-transform:uppercase;
-  padding:18px 24px;border-radius:16px;
-  border:2.5px solid var(--ink);
-  box-shadow:0 12px 28px -8px rgba(22,163,74,.6);
-  text-decoration:none;
+  display:flex;align-items:center;justify-content:center;gap:10px;
   width:100%;
-  transition:transform .15s ease, background .2s ease;
-  margin-bottom:14px;
+  background:var(--verde);color:#fff;
+  font-weight:700;font-size:16px;
+  padding:16px;border-radius:var(--radius);
+  border:0;
+  margin-bottom:12px;
+  min-height:54px;
+  transition:background .2s ease;
+  cursor:pointer;
+  box-sizing:border-box;
 }
-.success-pay-btn:hover{background:#15803d;transform:translateY(-2px)}
-.success-pay-btn svg{width:22px;height:22px;stroke-width:3}
+.success-pay-btn:hover{background:#15803d}
+.success-pay-btn:disabled{cursor:default}
+.success-pay-btn svg{width:18px;height:18px}
+#successPayBtn.copied{background:#15803d}
 
 .success-info{
-  background:var(--rosa-claro);
-  border:2px dashed var(--rosa-profundo);
-  border-radius:14px;
-  padding:16px;
-  font-size:13.5px;line-height:1.55;
-  color:var(--ink);margin:0 0 18px;
+  background:var(--rosa-soft);
+  border:1px dashed var(--rosa-deep);
+  border-radius:var(--radius);
+  padding:14px;
+  font-size:13px;line-height:1.5;
+  color:var(--ink);
   text-align:left;
+  margin-bottom:14px;
 }
-.success-info strong{color:var(--rosa-profundo)}
+.success-info strong{color:var(--rosa-deep)}
 .success-info .pix-key{
   display:inline-block;
-  font-family:var(--mono);font-size:13px;font-weight:700;
-  background:#fff;padding:3px 8px;border-radius:6px;
-  border:1.5px solid var(--rosa-profundo);
-  margin:2px 0;
-  word-break:break-all;
+  font-family:ui-monospace,monospace;
+  font-size:13px;font-weight:700;
+  background:#fff;padding:4px 8px;border-radius:6px;
+  border:1px solid var(--rosa-deep);
+  margin:4px 0;word-break:break-all;
 }
-
-.success-close{
-  background:transparent;color:var(--ink-soft);
-  font-family:var(--mono);font-size:12px;font-weight:700;
-  letter-spacing:.14em;text-transform:uppercase;
-  padding:10px 18px;border-radius:999px;
-  border:2px solid transparent;
-  cursor:pointer;
-  transition:all .15s ease;
-  margin-top:6px;
-  min-height:44px;
+#copyFeedback{
+  background:var(--verde-soft);
+  border:1px solid var(--verde);
+  color:#166534;
+  padding:12px;border-radius:var(--radius);
+  font-size:13px;font-weight:600;
+  text-align:center;
+  margin:0 0 12px;
 }
-.success-close:hover{border-color:var(--ink);color:var(--ink)}
-
 .success-wa-link{
   display:flex;align-items:center;justify-content:center;gap:8px;
   width:100%;
   color:var(--verde);text-decoration:none;
-  font-family:var(--mono);font-weight:700;font-size:13px;
-  letter-spacing:.04em;
-  padding:13px 16px;border-radius:14px;
-  border:2px solid var(--verde);
-  margin-bottom:16px;
-  transition:all .15s ease;
+  font-size:13px;font-weight:700;
+  padding:12px;border-radius:var(--radius);
+  border:1.5px solid var(--verde);
+  margin-bottom:14px;
+  min-height:44px;
   box-sizing:border-box;
-  min-height:48px;
 }
 .success-wa-link:hover{background:var(--verde);color:#fff}
-
-#successPayBtn.copied{background:#15803d !important;border-color:#fff !important;cursor:default}
+.success-close{
+  background:transparent;color:var(--ink-mute);
+  font-size:12px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.08em;
+  padding:10px;border-radius:999px;
+  border:0;cursor:pointer;
+  min-height:44px;
+}
+.success-close:hover{color:var(--ink)}
 
 @media (max-width:480px){
-  .success-modal{padding:28px 22px}
-  .success-icon{width:68px;height:68px;font-size:36px}
+  .success-modal{padding:24px 20px;border-radius:var(--radius-lg)}
+  .success-icon{width:60px;height:60px;font-size:32px}
+}
+
+/* =====================================================
+   TOAST
+   ===================================================== */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120%);
+  background:var(--ink);color:#fff;
+  padding:14px 22px;border-radius:14px;
+  border:1px solid rgba(255,255,255,.1);
+  font-size:13px;letter-spacing:.04em;
+  box-shadow:0 12px 28px -8px rgba(0,0,0,.5);
+  z-index:200;
+  transition:transform .3s ease;
+  max-width:90vw;
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.success{border-color:var(--verde)}
+.toast.error{border-color:#DC2626}
+
+/* =====================================================
+   MOBILE POLISH
+   ===================================================== */
+@media (max-width: 720px){
+  .databar .row{padding:8px 0}
+  .hero{padding:32px 0 48px}
+  .sticky-cta .info .title{font-size:14px}
+}
+
+@media (max-width: 360px){
+  .hero-title{font-size:34px}
+  .reg-form{padding:16px;border-radius:var(--radius)}
+  .info-n{font-size:24px}
+}
+
+/* Tap highlight rosa (não fica azul no iOS) */
+*{-webkit-tap-highlight-color:rgba(255,46,126,.18)}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
 }
 </style>
 </head>
 <body>
+<!-- ============================================================
+     NOVA LANDING PAGE (clean, profissional, mobile-first)
+     ============================================================ -->
 
-<!-- ============ TOP STRIP ============ -->
-<div class="databar" role="region" aria-label="Aviso principal">
-  <div class="wrap row">
-    <span><span class="dot" aria-hidden="true"></span> Inscrições abertas · vagas limitadas</span>
-    <span>26.07 · domingo · Praça Matriz · 17h</span>
-    <span>100% da renda → tratamento da Lourdes</span>
-  </div>
-</div>
-
-<!-- ============ HERO ============ -->
-<header class="hero">
-  <div class="wrap hero-grid">
-    <div class="hero-copy">
-      <span class="eyebrow">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.7-10-10C.5 7 3 3 6.5 3c2 0 3.7 1.1 4.5 2.7C12 4.1 13.5 3 15.5 3 19 3 21.5 7 20 11c-2.5 5.3-10 10-10 10z"/></svg>
-        CDA Runners · Praça Matriz · 26 de julho
-      </span>
-      <h1 class="title">
-        <span class="l1">Corrida</span>
-        <span class="l2">Solidária</span>
-        <span class="l3">Lourdes<span class="heart" aria-hidden="true">
-          <svg width="0.65em" height="0.65em" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;display:inline-block"><path d="M12 21s-7.5-4.7-10-10C.5 7 3 3 6.5 3c2 0 3.7 1.1 4.5 2.7C12 4.1 13.5 3 15.5 3 19 3 21.5 7 20 11c-2.5 5.3-10 10-10 10z"/></svg>
-        </span></span>
-      </h1>
-
-      <p class="hero-subtitle">Para tratamento de <strong>câncer de mama</strong></p>
-
-      <p class="lead">
-        3km de corrida ou caminhada. Cada inscrição é <strong>R$ 12,00</strong> direto pro tratamento da <strong>Lourdes</strong> — uma guerreira dessa nossa comunidade. Domingo, 26 de julho, na Praça Matriz. <strong>Corra com a gente. Corra por ela.</strong>
-      </p>
-      <div class="cta-row">
-        <a class="cta" href="#inscricao">
-          Quero correr
-          <span class="price">R$ 12</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M5 12h14M13 5l7 7-7 7"/>
-          </svg>
-        </a>
-        <a class="cta-ghost" href="#causa">Conhecer a história</a>
-      </div>
+<!-- Header / Hero -->
+<header class="hero" id="topo">
+  <div class="hero-inner">
+    <div class="hero-tag">
+      <span class="hero-tag-dot" aria-hidden="true"></span>
+      CDA Runners · Praça Matriz · 26 de julho · 17h
     </div>
-
-    <!-- Ticket card -->
-    <aside class="ticket" aria-label="Resumo da prova">
-      <div class="stamp">PELA<br>LOURDES</div>
-      <span class="label">★ Seu ingresso ★</span>
-      <h3>Domingo · 26.07</h3>
-      <div class="grid3">
-        <div class="cell"><span class="k">Distância</span><span class="v">3<small>km</small></span></div>
-        <div class="cell"><span class="k">Largada</span><span class="v">17<small>h</small></span></div>
-        <div class="cell"><span class="k">Idade</span><span class="v">Livre<small>+8</small></span></div>
-      </div>
-      <div class="row-info"><span>Concentração</span><b>16h30 · Praça Matriz</b></div>
-      <div class="row-info"><span>Inscrição</span><b>R$ 12,00</b></div>
-      <div class="row-info"><span>Causa</span><b>100% Lourdes</b></div>
-    </aside>
-  </div>
-
-  <!-- Ribbon wave at bottom of hero -->
-  <div class="ribbon" aria-hidden="true">
-    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
-      <path d="M0,40 C240,80 480,0 720,30 C960,60 1200,20 1440,40 L1440,80 L0,80 Z" fill="#FF2E7E"/>
-      <path d="M0,40 C240,80 480,0 720,30 C960,60 1200,20 1440,40" stroke="#2A0A14" stroke-width="2.5" fill="none"/>
-    </svg>
+    <h1 class="hero-title">Corrida Solidária <em>Lourdes</em></h1>
+    <p class="hero-sub">3 km pela Lourdes · 100% da renda direto pro tratamento dela</p>
+    <a class="hero-cta" href="#inscricao">
+      Quero me inscrever
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </a>
+    <div class="hero-meta" id="counterPill">
+      <span class="hero-meta-dot" aria-hidden="true"></span>
+      <span><b id="counterNum">—</b> corredoras inscritas</span>
+      <span class="hero-meta-sep" aria-hidden="true">·</span>
+      <span>Vagas limitadas</span>
+    </div>
   </div>
 </header>
 
-<!-- ============ MARQUEE ============ -->
-<div class="marquee" aria-hidden="true">
-  <div class="track">
-    <span>3km pela Lourdes <span class="heart-svg">❤</span> &nbsp;&nbsp; Toda renda pro tratamento dela <span class="heart-svg">❤</span> &nbsp;&nbsp; 26 de julho <span class="heart-svg">❤</span> &nbsp;&nbsp; Praça Matriz · 17h <span class="heart-svg">❤</span> &nbsp;&nbsp; Vamos correr por ela <span class="heart-svg">❤</span> &nbsp;&nbsp; R$ 12 que vira cuidado <span class="heart-svg">❤</span> &nbsp;&nbsp; Não tamo sozinho, não <span class="heart-svg">❤</span> &nbsp;&nbsp;</span>
-    <span>3km pela Lourdes <span class="heart-svg">❤</span> &nbsp;&nbsp; Toda renda pro tratamento dela <span class="heart-svg">❤</span> &nbsp;&nbsp; 26 de julho <span class="heart-svg">❤</span> &nbsp;&nbsp; Praça Matriz · 17h <span class="heart-svg">❤</span> &nbsp;&nbsp; Vamos correr por ela <span class="heart-svg">❤</span> &nbsp;&nbsp; R$ 12 que vira cuidado <span class="heart-svg">❤</span> &nbsp;&nbsp; Não tamo sozinho, não <span class="heart-svg">❤</span> &nbsp;&nbsp;</span>
-  </div>
-</div>
-
-<!-- ============ A NOSSA HISTÓRIA · LOURDES ============ -->
-<section id="causa">
-  <div class="wrap">
-    <div class="ribbon-divider">POR ELA</div>
-
-    <div class="cause">
-      <!-- Story card (carta/manisfesto da organização) -->
-      <aside class="story-card reveal">
-        <div class="story-card-meta">
-          <svg class="ribbon-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-            <ellipse cx="11" cy="11" rx="7" ry="8" fill="#FF2E7E" stroke="#2A0A14" stroke-width="2.5" transform="rotate(-25 11 11)"/>
-            <ellipse cx="21" cy="11" rx="7" ry="8" fill="#FF2E7E" stroke="#2A0A14" stroke-width="2.5" transform="rotate(25 21 11)"/>
-            <circle cx="16" cy="14" r="3" fill="#fff" stroke="#2A0A14" stroke-width="2"/>
-          </svg>
-          Carta aberta da organização
-        </div>
-        <p class="story-card-quote">
-          A <b>Lourdes</b> é <b>mãe, esposa e amiga</b> da nossa comunidade. Sempre foi a primeira
-          a se levantar pra ajudar — no mutirão, na escola, no trabalho, na vida dos outros.
-          Mulher guerreira, de um coração que não cabe no peito.
-          <br/><br/>
-          Em <b>2026</b>, ela recebeu o diagnóstico que ninguém quer ouvir: <b>câncer de mama</b>.
-          Desde então, enfrenta o tratamento com a coragem de sempre — mas não sozinha.
-          Porque Lourdes não está sozinha. <b>Nunca esteve.</b>
-          <br/><br/>
-          Esta corrida não é um evento. <b>É um abraço coletivo</b>. Cada passo, cada inscrição,
-          cada real é direto pro tratamento dela — sem intermediários, sem divisão, sem enrolação.
-        </p>
-        <p class="story-card-signature">— Família e amigos da Lourdes</p>
-        <div class="story-card-footer">
-          <span>26.07 · 17h</span>
-          <span><span class="heart">❤</span> Corrida pela Lourdes</span>
-        </div>
-      </aside>
-
-      <!-- Headline + stats -->
-      <div class="cause-body reveal d1">
-        <h2 class="section-title">
-          Tudo isso <em>é por ela</em>.
-        </h2>
-        <p>
-          A <strong>Corrida Solidária Lourdes</strong> é uma vaquinha em forma de corrida.
-          A gente se encontra no domingo, corre 3km, e o dinheiro que sobra vira cuidado direto
-          pro tratamento dela — quimioterapia, exames, deslocamento, o que precisar.
-        </p>
-        <p>
-          Não tem taxa, não tem corte, não tem intermediário. <strong>100% da renda vai pra Lourdes</strong>.
-          Cada R$ 12 de inscrição é um tijolo dessa história. Correr por ela faz diferença.
-        </p>
-
-        <div class="stat-row">
-          <div class="stat">
-            <span class="n">3<small style="font-size:.5em;color:var(--ink-soft);display:inline-block;margin-left:6px">KM</small></span>
-            <span class="l">Trajeto acessível · corrida ou caminhada</span>
-          </div>
-          <div class="stat">
-            <span class="n">100<small style="font-size:.5em;color:var(--ink-soft);display:inline-block;margin-left:6px">%</small></span>
-            <span class="l">Direto pro tratamento da Lourdes</span>
-          </div>
-          <div class="stat">
-            <span class="n">R$12</span>
-            <span class="l">Único valor da inscrição</span>
-          </div>
-        </div>
-      </div>
+<!-- Info bar (3 números) -->
+<section class="info-bar" aria-label="Informações rápidas">
+  <div class="info-bar-inner">
+    <div class="info-cell">
+      <span class="info-n">3</span>
+      <span class="info-u">km</span>
+      <span class="info-l">Corrida ou caminhada</span>
+    </div>
+    <div class="info-cell info-cell-accent">
+      <span class="info-n">17h</span>
+      <span class="info-u">domingo</span>
+      <span class="info-l">26 de julho · concentração 16h30</span>
+    </div>
+    <div class="info-cell">
+      <span class="info-n">R$ 12</span>
+      <span class="info-u">100%</span>
+      <span class="info-l">Direto pro tratamento dela</span>
     </div>
   </div>
 </section>
 
-<!-- ============ DETAILS ============ -->
-<section id="detalhes" class="details">
-  <div class="wrap">
-    <div class="ribbon-divider" style="color:var(--dourado)">
-      <style>.details .ribbon-divider::before,.details .ribbon-divider::after{background:#fff}</style>
-      INFORMAÇÕES DA PROVA
+<!-- Sobre a Lourdes -->
+<section class="sobre" id="causa">
+  <div class="sobre-inner">
+    <div class="sobre-head">
+      <span class="sobre-kicker">POR ELA</span>
+      <h2>Tudo isso é por ela.</h2>
     </div>
-
-    <div class="hero-grid" style="grid-template-columns: 1fr 1fr; gap:48px; align-items:end;">
-      <div class="reveal">
-        <h2 class="section-title">O que você <em>precisa saber</em></h2>
-        <p class="lede">Tudo simples, tudo organizado. Chegue cedo, hidrate-se e venha viver essa tarde de domingo com a gente.</p>
-      </div>
-      <div class="reveal d1" style="text-align:right">
-        <div class="big-num" style="color:var(--dourado); -webkit-text-stroke:2px var(--ink); text-shadow:6px 6px 0 var(--rosa-vivo)">26.07</div>
-      </div>
-    </div>
-
-    <div class="cards" style="margin-top:48px">
-      <div class="card reveal">
-        <div class="icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
-        </div>
-        <span class="k">Data</span>
-        <div class="v">Domingo<small>26 de julho</small></div>
-        <p>Reserve o domingo com a gente. Concentração a partir das 16h30, largada pontualmente às 17h.</p>
-      </div>
-
-      <div class="card alt reveal d1">
-        <div class="icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-7.5 7-13a7 7 0 1 0-14 0c0 5.5 7 13 7 13z"/><circle cx="12" cy="9" r="2.5"/></svg>
-        </div>
-        <span class="k">Local</span>
-        <div class="v">Praça Matriz<small>Centro · concentração 16h30</small></div>
-        <p>Ponto de encontro na Praça Matriz. <b>Número de corrida</b> retirado no local, antes da largada.</p>
-      </div>
-
-      <div class="card reveal d2">
-        <div class="icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V8l4-3 4 3v13"/><path d="M19 21V12l-3-2-3 2v9"/><path d="M9 12h2M9 16h2M15 14h.01M15 18h.01"/></svg>
-        </div>
-        <span class="k">Largada</span>
-        <div class="v">17h<small>horário único · todos juntos</small></div>
-        <p>Largada simbólica, sem cronômetro. O importante é a travessia — corrida, caminhada, na sua pace.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ WHAT YOU GET ============ -->
-<section id="incluso">
-  <div class="wrap">
-    <div class="includes-head">
-      <div class="reveal">
-        <div class="ribbon-divider" style="margin-left:0;justify-content:flex-start">
-          <style>.includes-head .ribbon-divider::before{display:none}</style>
-          VOCÊ + R$ 12 =
-        </div>
-        <h2 class="section-title">Tudo isso <em>junto</em>.</h2>
-      </div>
-      <p class="lede reveal d1">
-        A inscrição é simbólica, mas você sai com energia nova e a consciência leve
-        de que esse R$ 12 virou cuidado direto pro tratamento da Lourdes.
+    <div class="sobre-body">
+      <p>
+        A Lourdes é <strong>mãe, esposa e amiga</strong> da nossa comunidade. Sempre foi a primeira
+        a se levantar pra ajudar — no mutirão, na escola, no trabalho, na vida dos outros.
+        Mulher guerreira, de um coração que não cabe no peito.
       </p>
-    </div>
-
-    <div class="includes-list reveal d2">
-      <div class="incl">
-        <span class="num">01</span>
-        <div>
-          <h4>Número de corrida</h4>
-          <p>Retirado no dia, na concentração, das 16h às 16h45. Personalizado com <b>"Pela Lourdes"</b>.</p>
-        </div>
-      </div>
-      <div class="incl">
-        <span class="num">02</span>
-        <div>
-          <h4>Mesa de frutas</h4>
-          <p>Hidratação e energia natural antes e depois da prova, pra todo mundo.</p>
-        </div>
-      </div>
-      <div class="incl">
-        <span class="num">03</span>
-        <div>
-          <h4>Cobertura fotográfica</h4>
-          <p>Time voluntário registrando a prova. Imagens depois no Instagram @cdarunners.</p>
-        </div>
-      </div>
-      <div class="incl">
-        <span class="num">04</span>
-        <div>
-          <h4>Renda 100% pra Lourdes</h4>
-          <p>Sem intermediário. Todo valor arrecadado vai direto pro tratamento dela.</p>
-        </div>
-      </div>
+      <p>
+        Em <strong>2026</strong>, ela recebeu o diagnóstico que ninguém quer ouvir: <strong>câncer de mama</strong>.
+        Desde então, enfrenta o tratamento com a coragem de sempre — mas não sozinha.
+        Porque Lourdes não está sozinha. <strong>Nunca esteve.</strong>
+      </p>
+      <p>
+        Esta corrida não é um evento. <strong>É um abraço coletivo</strong>. Cada passo, cada inscrição,
+        cada real é direto pro tratamento dela — sem intermediários, sem divisão, sem enrolação.
+      </p>
+      <p class="sobre-assinatura">— Família e amigos da Lourdes</p>
     </div>
   </div>
 </section>
 
-<!-- ============ PRICE / PAY ============ -->
-<section id="inscricao" class="price-section">
-  <div class="wrap price-grid">
-    <div class="reveal">
-      <div class="ribbon-divider" style="color:var(--rosa-profundo);justify-content:flex-start;margin-left:0">
-        <style>.price-section .ribbon-divider::before{display:none}</style>
-        GARANTA SUA VAGA
-      </div>
-      <h2 class="section-title">Só <em>R$ 12</em><br/>e você ajuda a<br/>Lourdes hoje.</h2>
-      <p class="lede">
-        Pague a inscrição por Pix e pronto — domingo a gente se encontra na Praça Matriz
-        e você corre sabendo que cada centavo virou cuidado direto pra ela.
-      </p>
-      <ul style="list-style:none;padding:0;margin:24px 0 0">
-        <li style="display:flex;gap:12px;align-items:center;margin-bottom:12px;font-size:16px"><span style="width:24px;height:24px;border-radius:50%;background:var(--rosa-vivo);color:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700">✓</span> Pagamento 100% online e seguro</li>
-        <li style="display:flex;gap:12px;align-items:center;margin-bottom:12px;font-size:16px"><span style="width:24px;height:24px;border-radius:50%;background:var(--rosa-vivo);color:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700">✓</span> Confirmação no e-mail cadastrado</li>
-        <li style="display:flex;gap:12px;align-items:center;margin-bottom:12px;font-size:16px"><span style="width:24px;height:24px;border-radius:50%;background:var(--rosa-vivo);color:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:700">✓</span> Cancele grátis até 48h antes do evento</li>
-      </ul>
-    </div>
-
-    <div class="reveal d1">
-      <!-- Price card -->
-      <div class="price-box">
-        <span class="tag">Inscrição · 1 pessoa</span>
-        <div class="price">
-          <span class="currency">R$</span>
-          <span>12</span><span class="cents">,00</span>
+<!-- Como funciona -->
+<section class="how">
+  <div class="how-inner">
+    <span class="sobre-kicker">SIMPLES ASSIM</span>
+    <h2>Como funciona</h2>
+    <ol class="how-list">
+      <li>
+        <span class="how-num">1</span>
+        <div>
+          <h3>Preenche o formulário</h3>
+          <p>Leva menos de 1 minuto. Só nome, email e WhatsApp.</p>
         </div>
-        <p class="desc">Inscrição rápida + <b>pagamento via Pix</b> na sequência. Leva menos de 1 minuto.</p>
-
-        <!-- CTA: leva pro formulário de inscrição -->
-        <a class="pay-btn" href="#formulario">
-          <span class="pay-btn-content">
-            <svg class="pix-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-              <path d="M16 4 L24 12 L20 16 L16 12 L12 16 L8 12 Z" fill="currentColor"/>
-              <path d="M8 14 L8 22 L24 22 L24 14 L20 18 L16 14 L12 18 Z" fill="currentColor" opacity=".7"/>
-            </svg>
-            Quero me inscrever
-          </span>
-          <span class="arrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          </span>
-        </a>
-
-        <div class="secure">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 9.3 8 11 4.5-1.7 8-6 8-11V5l-8-3z"/><path d="M9 12l2 2 4-4"/></svg>
-          Pagamento 100% via Pix · sem taxas · sem cadastro de cartão
+      </li>
+      <li>
+        <span class="how-num">2</span>
+        <div>
+          <h3>Copia a chave Pix e paga R$ 12</h3>
+          <p>Após enviar, a chave aparece na tela e é copiada automaticamente.</p>
         </div>
-      </div>
-    </div>
+      </li>
+      <li>
+        <span class="how-num">3</span>
+        <div>
+          <h3>Envia o comprovante no WhatsApp</h3>
+          <p>Pra confirmar sua vaga. Domingo a gente se encontra na Praça Matriz.</p>
+        </div>
+      </li>
+    </ol>
   </div>
 </section>
 
-<!-- ============ REGISTER FORM (LEAD CAPTURE) ============ -->
-<section id="formulario">
-  <div class="wrap formulario-wrap">
-    <div class="reveal">
-      <div class="ribbon-divider" style="color:var(--rosa-profundo);justify-content:flex-start;margin-left:0">
-        <style>#formulario .ribbon-divider::before{display:none}</style>
-        PRÉ-INSCRIÇÃO
-      </div>
-      <h2 class="section-title">Deixa seu nome <em>por ela</em>.</h2>
-      <p class="lede">
-        Preenche aqui pra garantir a vaga — leva 30 segundos. Se quiser,
-        deixa uma mensagem de apoio pra Lourdes (opcional, mas vai fazer o dia dela).
-      </p>
-      <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:24px">
-        <div id="counterPill" style="background:var(--rosa-claro);border:2px solid var(--ink);border-radius:14px;padding:14px 18px;font-size:14px"><b id="counterNum" style="color:var(--rosa-profundo)">—</b> corredoras inscritas</div>
-        <div id="lastBatchPill" style="background:var(--dourado);border:2px solid var(--ink);border-radius:14px;padding:14px 18px;font-size:14px"><b style="color:var(--ink)">último lote</b> encerrando</div>
-      </div>
+<!-- Inscrição -->
+<section class="inscricao" id="inscricao">
+  <div class="inscricao-inner">
+    <div class="inscricao-head">
+      <span class="sobre-kicker">INSCRIÇÃO</span>
+      <h2>Garanta sua vaga</h2>
+      <p>R$ 12,00 via Pix · 100% destinado ao tratamento da Lourdes</p>
     </div>
 
-    <form class="reg-form reveal d1" id="regForm" novalidate>
-      <h3>Quero correr</h3>
-      <p class="sub">3 passos rápidos. Leva menos de 1 minuto.</p>
-
-      <!-- Progress indicator -->
-      <div class="wizard-progress" aria-label="Progresso">
-        <div class="wizard-step-dot active" data-step="1"><span>1</span></div>
-        <div class="wizard-step-line"></div>
-        <div class="wizard-step-dot" data-step="2"><span>2</span></div>
-        <div class="wizard-step-line"></div>
-        <div class="wizard-step-dot" data-step="3"><span>3</span></div>
-      </div>
-
-      <!-- STEP 1: Nome + E-mail -->
-      <fieldset class="wizard-step active" data-step="1">
-        <legend class="wizard-step-title">Quem é você?</legend>
-        <p class="wizard-step-hint">Pra gente personalizar sua inscrição.</p>
-
-        <div class="field">
+    <form class="reg-form" id="regForm" novalidate>
+      <div class="reg-row">
+        <div class="reg-field">
           <label for="nome">Nome completo</label>
           <input id="nome" name="name" type="text" required placeholder="Como aparece no documento" autocomplete="name" autocapitalize="words" minlength="2" maxlength="200" />
         </div>
-
-        <div class="field">
+        <div class="reg-field">
           <label for="email">E-mail</label>
           <input id="email" name="email" type="email" required placeholder="voce@email.com" autocomplete="email" inputmode="email" maxlength="200" />
         </div>
-      </fieldset>
+      </div>
 
-      <!-- STEP 2: WhatsApp + Cidade -->
-      <fieldset class="wizard-step" data-step="2">
-        <legend class="wizard-step-title">Como te achamos?</legend>
-        <p class="wizard-step-hint">Pra confirmar sua vaga no dia.</p>
-
-        <div class="field">
+      <div class="reg-row">
+        <div class="reg-field">
           <label for="tel">WhatsApp</label>
           <input id="tel" name="phone" type="tel" required placeholder="(00) 00000-0000" autocomplete="tel" inputmode="tel" maxlength="30" />
         </div>
-
-        <div class="field">
+        <div class="reg-field">
           <label for="cidade">Cidade</label>
           <input id="cidade" name="city" type="text" placeholder="Cidade - UF" autocomplete="address-level2" maxlength="100" />
         </div>
-      </fieldset>
+      </div>
 
-      <!-- STEP 3: Mensagem + final -->
-      <fieldset class="wizard-step" data-step="3">
-        <legend class="wizard-step-title">Última coisa 💌</legend>
-        <p class="wizard-step-hint">Opcional — uma palavra de força pra Lourdes?</p>
+      <div class="reg-field">
+        <label for="apoio">Mensagem de apoio à Lourdes (opcional)</label>
+        <textarea id="apoio" name="support_message" rows="3" maxlength="1000" placeholder="Uma palavra de força, uma oração, um carinho…"></textarea>
+      </div>
 
-        <div class="field">
-          <label for="apoio">Mensagem de apoio à Lourdes (opcional)</label>
-          <textarea id="apoio" name="support_message" rows="4" maxlength="1000" placeholder="Uma palavra de força, uma história, uma oração… o que quiser deixar pra ela." style="width:100%;border:2px solid var(--ink);background:#fff;padding:14px 16px;border-radius:12px;font-family:var(--body);font-size:16px;color:var(--ink);resize:vertical;line-height:1.5"></textarea>
-        </div>
-      </fieldset>
-
-      <!-- Honeypot anti-spam (invisível) -->
+      <!-- Honeypot anti-spam -->
       <div class="hp-field" aria-hidden="true">
         <label for="website_url">Não preencha</label>
         <input id="website_url" name="website_url" type="text" tabindex="-1" autocomplete="off" />
       </div>
 
-      <!-- Wizard nav buttons (sempre visíveis) -->
-      <div class="wizard-nav" id="wizardNav">
-        <button type="button" class="wizard-back" id="wizardBack" hidden>
-          ← Voltar
-        </button>
-        <button type="button" class="pay-btn form-submit-btn wizard-next" id="wizardNext">
-          <span class="next-label">Próximo</span>
-          <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
-        </button>
-        <button type="submit" class="pay-btn form-submit-btn wizard-finish" id="regSubmit" hidden>
-          <span class="submit-label">Quero correr</span>
-          <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
-        </button>
-      </div>
+      <button type="submit" class="reg-submit" id="regSubmit">
+        <span class="submit-label">Quero correr pela Lourdes</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </button>
 
-      <!-- Help text só aparece no step 3 -->
-      <div class="help" id="wizardHelp" hidden style="margin-top:18px">
-        ⓘ Após enviar, abre na hora a tela de <b>pagamento via Pix</b>.
-        Inscrição confirmada somente após o envio do comprovante pelo WhatsApp.
-      </div>
+      <p class="reg-help">
+        ⓘ Após enviar, a chave Pix aparece na tela e é copiada automaticamente.
+        Inscrição confirmada após o envio do comprovante pelo WhatsApp.
+      </p>
 
-      <p id="regErr" hidden style="background:#fee;color:#900;border:2px solid #900;border-radius:12px;padding:14px 16px;margin-top:14px;text-align:center;font-size:14px"></p>
+      <p id="regErr" hidden class="reg-err"></p>
     </form>
   </div>
 </section>
 
-<!-- ============ SLOGAN BANNER (poster) ============ -->
-<section class="slogan-banner">
-  <div class="wrap">
-    <div class="slogan-banner-inner reveal">
-      <p class="slogan-line">“Correr faz bem.</p>
-      <p class="slogan-line">Fazer o bem <em>faz a diferença.</em>”</p>
-      <div class="slogan-cta">
-        <a class="pay-btn" href="#formulario">
-          <span class="pay-btn-content">
-            <svg class="pix-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-              <path d="M16 4 L24 12 L20 16 L16 12 L12 16 L8 12 Z" fill="currentColor"/>
-              <path d="M8 14 L8 22 L24 22 L24 14 L20 18 L16 14 L12 18 Z" fill="currentColor" opacity=".7"/>
-            </svg>
-            Quero me inscrever
-          </span>
-          <span class="arrow">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          </span>
-        </a>
-      </div>
-    </div>
+<!-- FAQ -->
+<section class="faq">
+  <div class="faq-inner">
+    <span class="sobre-kicker">DÚVIDAS</span>
+    <h2>Perguntas frequentes</h2>
+
+    <details class="faq-item" open>
+      <summary>Posso caminhar em vez de correr?</summary>
+      <p>Pode! A prova é livre — corrida, caminhada, no seu ritmo. Largada única às 17h, sem cronômetro.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Crianças podem participar?</summary>
+      <p>Sim, a partir de 8 anos, acompanhadas de responsável. Menores de 12 não precisam de inscrição se estiverem com adulto inscrito.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>Como recebo o número de corrida?</summary>
+      <p>No dia, na concentração (Praça Matriz, 16h às 16h45). Leva documento com foto e o comprovante de pagamento (digital serve).</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>A renda vai mesmo pro tratamento dela?</summary>
+      <p>Sim. 100% da renda é destinada ao tratamento da Lourdes — sem divisão, sem taxa administrativa. Prestamos contas no Instagram <a href="https://instagram.com/cdarunners" target="_blank" rel="noopener">@cdarunners</a>.</p>
+    </details>
   </div>
 </section>
 
-<!-- ============ FAQ ============ -->
-<section style="padding-top:24px">
-  <div class="wrap">
-    <div class="ribbon-divider">DÚVIDAS RÁPIDAS</div>
-    <h2 class="section-title" style="text-align:center;margin:0 auto 16px">A gente <em>responde</em>.</h2>
-    <p class="lede" style="text-align:center;margin:0 auto 48px">As perguntas mais comuns sobre a prova, pagamento e forma de participar.</p>
-
-    <div class="faq-grid reveal">
-      <div>
-        <h4 class="faq-q">Posso caminhar em vez de correr?</h4>
-        <p class="faq-a">Pode! A prova é livre — corrida, caminhada, o que sua condição permitir. Largada única e sem cronômetro.</p>
-      </div>
-      <div>
-        <h4 class="faq-q">Crianças podem participar?</h4>
-        <p class="faq-a">Sim, a partir de 8 anos, acompanhadas de responsável. Menores de 12 não precisam de inscrição, só estar com o adulto inscrito.</p>
-      </div>
-      <div>
-        <h4 class="faq-q">Posso parcelar o pagamento?</h4>
-        <p class="faq-a">O valor é único (R$ 12). Aceitamos somente <b>Pix</b> (QR Code ou copia-e-cola). A confirmação chega em segundos. Em caso de dúvidas, fale com a organização pelo WhatsApp.</p>
-      </div>
-      <div>
-        <h4 class="faq-q">Como recebo o número de corrida?</h4>
-        <p class="faq-a">No dia, na concentração, das 16h às 16h45. Leva o documento com foto e o comprovante de pagamento (digital mesmo serve).</p>
-      </div>
-      <div>
-        <h4 class="faq-q">Onde fica a Praça Matriz?</h4>
-        <p class="faq-a">A Praça Matriz fica no centro da cidade. O ponto exato de concentração sai em mapa liberado para os inscritos 5 dias antes da prova.</p>
-      </div>
-      <div>
-        <h4 class="faq-q">A renda vai mesmo pro tratamento da Lourdes?</h4>
-        <p class="faq-a"><b>Sim.</b> 100% da renda é destinada exclusivamente ao tratamento da Lourdes — sem divisão com outras causas, sem taxa administrativa. Prestamos contas por transparência no Instagram @cdarunners e com a família. Quem quiser pode pedir comprovante quando quiser.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ FOOTER ============ -->
+<!-- Footer -->
 <footer>
-  <div class="wrap">
-    <div class="foot-grid">
-      <div>
-        <p class="brand">Corrida<br/>Solidária<br/>Lourdes.</p>
-        <p>Correr faz bem. Fazer o bem faz a diferença.</p>
-      </div>
-      <div>
-        <h5>Evento</h5>
-        <p><b>26 de julho · domingo</b></p>
-        <p>Concentração 16h30</p>
-        <p>Largada 17h</p>
-        <p>Praça Matriz · Centro</p>
-      </div>
-      <div>
-        <h5>Organização</h5>
-        <div class="org-wordmark">
-          <div class="runner-mark" aria-hidden="true">
-            <svg viewBox="0 0 64 64" fill="none">
-              <!-- CDA Runners style runner silhouette -->
-              <circle cx="34" cy="11" r="5" fill="currentColor"/>
-              <path d="M30 18 L26 32 L18 38 L24 46" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-              <path d="M26 32 L38 30 L46 22" stroke="currentColor" stroke-width="4" stroke-linecap="round" fill="none"/>
-              <path d="M30 18 L38 30 L42 50 L52 56" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            </svg>
-          </div>
-          <div class="org-text">
-            <span class="org-acronym">CDA</span>
-            <span class="org-name">Runners</span>
-          </div>
-        </div>
-        <p><a href="https://instagram.com/cdarunners" target="_blank" rel="noopener">@cdarunners</a> · instagram</p>
-        <p><a href="mailto:contato@cdarunners.com.br">contato@cdarunners.com.br</a></p>
-        <p><a href="https://wa.me/5586981344803?text=Oi%21%20Tenho%20uma%20d%C3%BAvida%20sobre%20a%20Corrida%20Solid%C3%A1ria%20Lourdes" target="_blank" rel="noopener">📲 WhatsApp da organização · (86) 98134-4803</a></p>
-      </div>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <p class="footer-logo">Corrida Solidária Lourdes</p>
+      <p>Correr faz bem. Fazer o bem faz a diferença.</p>
     </div>
-    <div class="foot-bottom">
-      <span>© 2025 · Corrida Solidária Lourdes · Todos os direitos reservados</span>
-      <span>Feito com ❤ pela CDA Runners</span>
+    <div class="footer-info">
+      <p><b>26 de julho · domingo</b></p>
+      <p>Concentração 16h30 · Largada 17h</p>
+      <p>Praça Matriz · Centro</p>
     </div>
+    <div class="footer-contact">
+      <p>📲 <a href="https://wa.me/5586981344803?text=Oi%21%20Tenho%20uma%20d%C3%BAvida%20sobre%20a%20Corrida%20Solid%C3%A1ria%20Lourdes" target="_blank" rel="noopener">WhatsApp (86) 98134-4803</a></p>
+      <p>📷 <a href="https://instagram.com/cdarunners" target="_blank" rel="noopener">@cdarunners</a></p>
+      <p>✉ <a href="mailto:contato@cdarunners.com.br">contato@cdarunners.com.br</a></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 · Corrida Solidária Lourdes</span>
+    <span>Feito com ❤ pela CDA Runners</span>
   </div>
 </footer>
 
-<!-- ===== STICKY MOBILE CTA BAR ===== -->
+<!-- Sticky mobile CTA -->
 <aside class="sticky-cta" id="stickyCta" aria-label="Inscrição rápida">
-  <div class="row">
-    <div class="info">
-      <span class="lbl">Inscrição</span>
-      <span class="title">Garanta sua vaga</span>
-      <span class="price">R$ 12,00 · 100% à causa</span>
-    </div>
-    <a class="pay-pill" href="#formulario" aria-label="Ir para o formulário de inscrição">
-      <svg class="pix-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-        <path d="M12 4 L20 12 L16 16 L12 12 L8 16 L4 12 Z" fill="currentColor"/>
-      </svg>
+  <a class="sticky-pill" href="#inscricao">
+    <span class="sticky-info">
+      <span class="sticky-lbl">Inscrição</span>
+      <span class="sticky-title">R$ 12 · 100% à causa</span>
+    </span>
+    <span class="sticky-action">
       Inscreva-se
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M5 12h14M13 5l7 7-7 7"/>
-      </svg>
-    </a>
-  </div>
-</aside>
-
-<!-- ============================================================
-     ADMIN PANEL (rota: #/admin)
-     ============================================================ -->
-<section class="admin-root" id="adminRoot" aria-label="Painel administrativo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </span>
+  </a>
+</aside><section class="admin-root" id="adminRoot" aria-label="Painel administrativo">
   <div class="wrap">
 
     <!-- LOGIN -->
