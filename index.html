@@ -2584,7 +2584,7 @@ if (regFormEl && window.matchMedia('(max-width: 720px)').matches) {
       await navigator.clipboard.writeText(code);
     }catch(e){
       ta.focus(); ta.select();
-      try { document.execCommand && document.execCommand('copy'); } catch(_) {}
+      try { if (document.execCommand) document.execCommand('copy'); } catch (e2) {}
     }
     btn.classList.add('copied');
     if(lbl) lbl.textContent = '✓ Código copiado!';
