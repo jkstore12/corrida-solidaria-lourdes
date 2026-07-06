@@ -2804,6 +2804,7 @@ document.getElementById('modalClose')?.addEventListener('click', closeModal)
 document.getElementById('modalCancelBtn')?.addEventListener('click', closeModal)
 modalOverlay?.addEventListener('click', (ev) => { if (ev.target === modalOverlay) closeModal() })
 
+// Modal de edição: salvar
 document.getElementById('modalSaveBtn')?.addEventListener('click', async () => {
   if (!editingId) return
   const updates = {
@@ -2822,20 +2823,12 @@ document.getElementById('modalSaveBtn')?.addEventListener('click', async () => {
     const { error } = await supabase.from('participants').update(updates).eq('id', editingId)
     if (error) throw error
     const previous = allParticipants.find(p => p.id === editingId)
-    if (previous && previous.status !== updates.status) {
-      await supabase.from('audit_log').insert({
-        participant_id: editingId,
-        action: 'marked_' + updates.status,
-        admin_email: user?.email || null,
-        details: { from: previous.status, to: updates.status },
-      })
-    } else {
-      await supabase.from('audit_log').insert({
-        participant_id: editingId,
-        action: 'updated_notes',
-        admin_email: user?.email || null,
-      })
-    }
+    await supabase.from('audit_log').insert({
+      participant_id: editingId,
+      action: previous && previous.status !== updates.status ? 'marked_' + updates.status : 'updated_notes',
+      admin_email: user?.email || null,
+      details: previous && previous.status !== updates.status ? { from: previous.status, to: updates.status } : null,
+    })
     toast('✓ Participante atualizado', 'success')
     closeModal()
     await loadAdminData()
@@ -2844,6 +2837,7 @@ document.getElementById('modalSaveBtn')?.addEventListener('click', async () => {
   }
 })
 
+// Modal de edição: excluir
 document.getElementById('modalDeleteBtn')?.addEventListener('click', async () => {
   if (!editingId) return
   if (!confirm('Excluir este participante? Ação não pode ser desfeita.')) return
@@ -2863,40 +2857,6 @@ document.getElementById('modalDeleteBtn')?.addEventListener('click', async () =>
     toast('Erro: ' + err.message, 'error')
   }
 })
-
-// =====================================================
-// ADMIN: EXPORT CSV
-// =====================================================
-document.getElementById('adminExportBtn')?.addEventListener('click', () => {
-  if (!allParticipants.length) { toast('Nada para exportar', 'error'); return }
-  const headers = ['id','name','email','phone','city','status','amount_paid','paid_at','created_at','admin_notes','support_message']
-  const rows = allParticipants.map(p => headers.map(h => csvEsc(p[h])).join(','))
-  const csv = headers.join(',') + '\n' + rows.join('\n')
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = 'inscricoes-corrida-lourdes-' + new Date().toISOString().slice(0,10) + '.csv'
-  document.body.appendChild(a)
-  a.click()
-  a.remove()
-  URL.revokeObjectURL(url)
-  toast('✓ CSV exportado', 'success')
-  // Audit log
-  supabase.auth.getUser().then(({ data: { user } }) => {
-    supabase.from('audit_log').insert({
-      action: 'exported',
-      admin_email: user?.email || null,
-      details: { count: allParticipants.length },
-    })
-  })
-})
-
-function csvEsc(v){
-  if (v == null) return ''
-  const s = String(v).replace(/"/g, '""')
-  return /[,"\n]/.test(s) ? '"' + s + '"' : s
-}
 
 // =====================================================
 // ADMIN: AUDIT LOG
