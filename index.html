@@ -1650,14 +1650,18 @@ body.admin-mode{background:var(--ink)}
           Carta aberta da organização
         </div>
         <p class="story-card-quote">
-          A <b>Lourdes</b> é <b>[esposa/mãe/avó/amiga/irmã]</b> de <b>[XX]</b> anos, mora em <b>[cidade]</b>
-          e, em <b>[mês/ano]</b>, recebeu o diagnóstico que ninguém quer ouvir: <b>câncer de mama</b>.
-          Hoje ela enfrenta o tratamento com a coragem de sempre — mas não sozinha.
+          A <b>Lourdes</b> é <b>mãe, esposa e amiga</b> da nossa comunidade. Sempre foi a primeira
+          a se levantar pra ajudar — no mutirão, na escola, no trabalho, na vida dos outros.
+          Mulher guerreira, de um coração que não cabe no peito.
+          <br/><br/>
+          Em <b>2025</b>, ela recebeu o diagnóstico que ninguém quer ouvir: <b>câncer de mama</b>.
+          Desde então, enfrenta o tratamento com a coragem de sempre — mas não sozinha.
+          Porque Lourdes não está sozinha. <b>Nunca esteve.</b>
           <br/><br/>
           Esta corrida não é um evento. <b>É um abraço coletivo</b>. Cada passo, cada inscrição,
           cada real é direto pro tratamento dela — sem intermediários, sem divisão, sem enrolação.
         </p>
-        <p class="story-card-signature">— [Família da Lourdes]</p>
+        <p class="story-card-signature">— Família e amigos da Lourdes</p>
         <div class="story-card-footer">
           <span>26.07 · 17h</span>
           <span><span class="heart">❤</span> Corrida pela Lourdes</span>
@@ -1827,8 +1831,8 @@ body.admin-mode{background:var(--ink)}
         </div>
         <p class="desc">Pagamento via <b>Pix</b> — QR Code ou copia-e-cola. Cai na hora, sem taxas.</p>
 
-        <!-- BOTÃO DE PAGAMENTO — TROQUE O HREF ABAIXO PELO LINK REAL DO GATEWAY -->
-        <a class="pay-btn" href="#LINK-PAGAMENTO" target="_blank" rel="noopener">
+        <!-- BOTÃO DE PAGAMENTO — chama a organização no WhatsApp para receber o Pix -->
+        <a class="pay-btn" href="https://wa.me/?text=Oi!%20Quero%20pagar%20minha%20inscri%C3%A7%C3%A3o%20da%20Corrida%20Solid%C3%A1ria%20Lourdes%20%E2%9D%A4%EF%B8%8F" target="_blank" rel="noopener">
           <span class="pay-btn-content">
             <svg class="pix-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
               <rect x="3" y="3" width="11" height="11" rx="2" fill="currentColor" opacity=".95"/>
@@ -1857,11 +1861,11 @@ body.admin-mode{background:var(--ink)}
             <div class="pix-block qr">
               <span class="pix-block-label">QR Code</span>
               <div class="pix-qr-frame">
-                <!-- TROQUE O src ABAIXO PELA IMAGEM DO SEU QR CODE PIX -->
-                <img id="pixQrImg" src="#LINK-QR-CODE-IMG" alt="QR Code Pix para inscrição da Corrida Solidária Lourdes" loading="lazy" />
+                <!-- QR Code Pix: hospede a imagem em algum lugar e troque o src abaixo -->
+                <img id="pixQrImg" src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23fff'/%3E%3Ctext x='50' y='52' font-family='monospace' font-size='9' font-weight='700' fill='%23FF2E7E' text-anchor='middle'%3EPix%20a%20configurar%3C/text%3E%3Ctext x='50' y='64' font-family='monospace' font-size='6' fill='%232A0A14' text-anchor='middle'%3ESubstitua%20no%20HTML%3C/text%3E%3C/svg%3E" alt="QR Code Pix para inscrição da Corrida Solidária Lourdes" loading="lazy" />
                 <div class="pix-qr-fallback">
-                  <strong>Sem QR cadastrado ainda</strong>
-                  <span>Hospede a imagem do QR e troque o <code>#LINK-QR-CODE-IMG</code> no HTML pela URL dela.</span>
+                  <strong>QR Code em configuração</strong>
+                  <span>A organização vai compartilhar o QR definitivo pelo WhatsApp após sua inscrição.</span>
                 </div>
               </div>
               <small class="pix-block-hint">Abra o app do seu banco → Pix → Ler QR Code</small>
