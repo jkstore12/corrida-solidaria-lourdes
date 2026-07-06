@@ -1557,6 +1557,95 @@ body.admin-mode{background:var(--ink)}
   width:1px;height:1px;opacity:0;pointer-events:none;
 }
 
+/* =====================================================
+   WIZARD (formulário em passos)
+   ===================================================== */
+.wizard-progress{
+  display:flex;align-items:center;justify-content:center;
+  gap:8px;margin:18px 0 22px;
+}
+.wizard-step-dot{
+  width:32px;height:32px;border-radius:50%;
+  background:#fff;border:2.5px solid var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-weight:700;font-size:13px;
+  color:var(--ink-soft);transition:all .2s ease;
+}
+.wizard-step-dot.active{background:var(--rosa-vivo);color:#fff;border-color:var(--ink)}
+.wizard-step-dot.done{background:var(--verde);color:#fff;border-color:var(--ink)}
+.wizard-step-line{
+  flex:0 0 32px;height:3px;
+  background:rgba(42,10,20,.18);border-radius:2px;
+  transition:background .2s ease;
+}
+.wizard-step-line.done{background:var(--verde)}
+
+.wizard-step{
+  border:0;padding:0;margin:0;min-width:0;
+  display:none;
+  animation:fadeUp .25s ease both;
+}
+.wizard-step.active{display:block}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:none}
+}
+
+.wizard-step legend.wizard-step-title{
+  font-family:var(--display);
+  font-size:clamp(22px, 4vw, 28px);
+  letter-spacing:.02em;
+  text-transform:uppercase;
+  color:var(--ink);
+  margin:0 0 6px;padding:0;
+  width:100%;
+}
+.wizard-step-hint{
+  font-size:14px;color:var(--ink-soft);
+  margin:0 0 16px;font-family:var(--body);
+}
+
+.wizard-nav{
+  display:flex;gap:10px;margin-top:18px;
+  align-items:center;
+}
+.wizard-back{
+  flex:0 0 auto;
+  background:transparent;color:var(--ink);
+  font-family:var(--mono);font-weight:700;font-size:13px;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:16px 18px;border-radius:14px;
+  border:2px solid var(--ink);
+  cursor:pointer;
+  min-height:50px;
+  transition:background .15s ease,color .15s ease;
+}
+.wizard-back:hover{background:var(--ink);color:#fff}
+.wizard-next,.wizard-finish{
+  flex:1;
+  margin-top:0 !important;
+  min-height:54px;
+}
+
+/* Mobile: nav vira sticky bottom bar */
+@media (max-width: 720px){
+  .wizard-nav{
+    position:sticky;
+    bottom:0;
+    margin-left:-22px;margin-right:-22px;
+    padding:14px 22px calc(14px + env(safe-area-inset-bottom, 0px));
+    background:linear-gradient(to top, var(--off-white) 85%, rgba(255,241,244,0.6) 60%, transparent);
+    z-index:5;
+    margin-top:24px;
+  }
+  .reg-form{padding-bottom:24px}
+}
+
+/* Desktop: ajuste fino */
+@media (min-width: 721px){
+  .wizard-nav{padding-top:20px;border-top:2px dashed rgba(42,10,20,.18);margin-top:24px}
+}
+
 /* Admin link discreto no footer */
 .admin-link{
   cursor:pointer;
@@ -2100,33 +2189,59 @@ body.admin-mode{background:var(--ink)}
 
     <form class="reg-form reveal d1" id="regForm" novalidate>
       <h3>Quero correr</h3>
-      <p class="sub">Preenchimento rápido. Depois a gente te manda os dados para pagar via Pix.</p>
+      <p class="sub">3 passos rápidos. Leva menos de 1 minuto.</p>
 
-      <div class="field">
-        <label for="nome">Nome completo</label>
-        <input id="nome" name="name" type="text" required placeholder="Como aparece no documento" autocomplete="name" autocapitalize="words" minlength="2" maxlength="200" />
+      <!-- Progress indicator -->
+      <div class="wizard-progress" aria-label="Progresso">
+        <div class="wizard-step-dot active" data-step="1"><span>1</span></div>
+        <div class="wizard-step-line"></div>
+        <div class="wizard-step-dot" data-step="2"><span>2</span></div>
+        <div class="wizard-step-line"></div>
+        <div class="wizard-step-dot" data-step="3"><span>3</span></div>
       </div>
 
-      <div class="field">
-        <label for="email">E-mail</label>
-        <input id="email" name="email" type="email" required placeholder="voce@email.com" autocomplete="email" inputmode="email" maxlength="200" />
-      </div>
+      <!-- STEP 1: Nome + E-mail -->
+      <fieldset class="wizard-step active" data-step="1">
+        <legend class="wizard-step-title">Quem é você?</legend>
+        <p class="wizard-step-hint">Pra gente personalizar sua inscrição.</p>
 
-      <div class="row2">
+        <div class="field">
+          <label for="nome">Nome completo</label>
+          <input id="nome" name="name" type="text" required placeholder="Como aparece no documento" autocomplete="name" autocapitalize="words" minlength="2" maxlength="200" />
+        </div>
+
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input id="email" name="email" type="email" required placeholder="voce@email.com" autocomplete="email" inputmode="email" maxlength="200" />
+        </div>
+      </fieldset>
+
+      <!-- STEP 2: WhatsApp + Cidade -->
+      <fieldset class="wizard-step" data-step="2">
+        <legend class="wizard-step-title">Como te achamos?</legend>
+        <p class="wizard-step-hint">Pra confirmar sua vaga no dia.</p>
+
         <div class="field">
           <label for="tel">WhatsApp</label>
           <input id="tel" name="phone" type="tel" required placeholder="(00) 00000-0000" autocomplete="tel" inputmode="tel" maxlength="30" />
         </div>
+
         <div class="field">
           <label for="cidade">Cidade</label>
           <input id="cidade" name="city" type="text" placeholder="Cidade - UF" autocomplete="address-level2" maxlength="100" />
         </div>
-      </div>
+      </fieldset>
 
-      <div class="field">
-        <label for="apoio">Mensagem de apoio à Lourdes (opcional)</label>
-        <textarea id="apoio" name="support_message" rows="3" maxlength="1000" placeholder="Uma palavra de força, uma história, uma oração… o que quiser deixar pra ela." style="width:100%;border:2px solid var(--ink);background:#fff;padding:14px 16px;border-radius:12px;font-family:var(--body);font-size:16px;color:var(--ink);resize:vertical;line-height:1.5"></textarea>
-      </div>
+      <!-- STEP 3: Mensagem + final -->
+      <fieldset class="wizard-step" data-step="3">
+        <legend class="wizard-step-title">Última coisa 💌</legend>
+        <p class="wizard-step-hint">Opcional — uma palavra de força pra Lourdes?</p>
+
+        <div class="field">
+          <label for="apoio">Mensagem de apoio à Lourdes (opcional)</label>
+          <textarea id="apoio" name="support_message" rows="4" maxlength="1000" placeholder="Uma palavra de força, uma história, uma oração… o que quiser deixar pra ela." style="width:100%;border:2px solid var(--ink);background:#fff;padding:14px 16px;border-radius:12px;font-family:var(--body);font-size:16px;color:var(--ink);resize:vertical;line-height:1.5"></textarea>
+        </div>
+      </fieldset>
 
       <!-- Honeypot anti-spam (invisível) -->
       <div class="hp-field" aria-hidden="true">
@@ -2134,21 +2249,27 @@ body.admin-mode{background:var(--ink)}
         <input id="website_url" name="website_url" type="text" tabindex="-1" autocomplete="off" />
       </div>
 
-      <div class="form-submit-wrap">
-        <button type="submit" class="pay-btn form-submit-btn" id="regSubmit" style="margin-top:0">
+      <!-- Wizard nav buttons (sempre visíveis) -->
+      <div class="wizard-nav" id="wizardNav">
+        <button type="button" class="wizard-back" id="wizardBack" hidden>
+          ← Voltar
+        </button>
+        <button type="button" class="pay-btn form-submit-btn wizard-next" id="wizardNext">
+          <span class="next-label">Próximo</span>
+          <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
+        </button>
+        <button type="submit" class="pay-btn form-submit-btn wizard-finish" id="regSubmit" hidden>
           <span class="submit-label">Quero correr</span>
           <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></span>
         </button>
       </div>
 
-      <div class="help" style="margin-top:18px">
+      <!-- Help text só aparece no step 3 -->
+      <div class="help" id="wizardHelp" hidden style="margin-top:18px">
         ⓘ Após enviar, abre na hora a tela de <b>pagamento via Pix</b>.
         Inscrição confirmada somente após o envio do comprovante pelo WhatsApp.
       </div>
 
-      <p id="regOk" hidden style="background:var(--verde);color:#fff;border-radius:12px;padding:14px 16px;margin-top:14px;text-align:center;font-weight:600">
-        Recebemos sua pré-inscrição! Em instantes você recebe os dados para pagar via Pix no e-mail. 💌
-      </p>
       <p id="regErr" hidden style="background:#fee;color:#900;border:2px solid #900;border-radius:12px;padding:14px 16px;margin-top:14px;text-align:center;font-size:14px"></p>
     </form>
   </div>
@@ -2538,27 +2659,8 @@ if (regFormEl && window.matchMedia('(max-width: 720px)').matches) {
   })
 }
 
-// ============ Submit FIXO no mobile: visível só quando form está em vista ============
-;(function(){
-  const submitWrap = document.querySelector('.form-submit-wrap')
-  const formSection = document.getElementById('formulario')
-  if (!submitWrap || !formSection || !window.matchMedia('(max-width: 720px)').matches) return
-
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      // Mostra submit quando 40% do form estiver visível
-      if (e.intersectionRatio >= 0.15) {
-        submitWrap.classList.add('in-form')
-        document.body.classList.add('form-in-view')
-      } else {
-        submitWrap.classList.remove('in-form')
-        document.body.classList.remove('form-in-view')
-      }
-    })
-  }, { threshold: [0, 0.15, 0.5, 1] })
-
-  io.observe(formSection)
-})();
+// ============ Submit FIXO removido: agora é wizard com steps ============
+// (lógica legada removida — substituída pelo wizard-nav sticky dentro do form);
 
 // ============ PIX COPIA-E-COLA ============
 (function(){
@@ -2637,26 +2739,130 @@ if (regFormEl && window.matchMedia('(max-width: 720px)').matches) {
 })();
 
 // =====================================================
-// FORM SUBMIT → SUPABASE
+// FORM WIZARD (passo a passo) + submit final
 // =====================================================
 const regForm = document.getElementById('regForm')
 const regSubmit = document.getElementById('regSubmit')
-const regOk = document.getElementById('regOk')
 const regErr = document.getElementById('regErr')
+const wizardBack = document.getElementById('wizardBack')
+const wizardNext = document.getElementById('wizardNext')
+const wizardHelp = document.getElementById('wizardHelp')
+
+let currentStep = 1
+const TOTAL_STEPS = 3
+
+function getStepEl(n) { return regForm?.querySelector(`.wizard-step[data-step="${n}"]`) }
+function getDotEl(n) { return regForm?.querySelector(`.wizard-step-dot[data-step="${n}"]`) }
+function getLineEl(n) { return regForm?.querySelectorAll('.wizard-step-line')[n - 1] }
+
+function goToStep(n) {
+  if (n < 1 || n > TOTAL_STEPS) return
+  // Esconde todos
+  regForm.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active'))
+  // Mostra o novo
+  const target = getStepEl(n)
+  if (target) target.classList.add('active')
+
+  // Atualiza dots
+  for (let i = 1; i <= TOTAL_STEPS; i++) {
+    const dot = getDotEl(i)
+    if (!dot) continue
+    dot.classList.remove('active', 'done')
+    if (i < n) dot.classList.add('done')
+    else if (i === n) dot.classList.add('active')
+    // Troca o número por checkmark nos done
+    const span = dot.querySelector('span')
+    if (span) span.textContent = i < n ? '✓' : String(i)
+  }
+  // Linhas entre steps
+  const lines = regForm.querySelectorAll('.wizard-step-line')
+  lines.forEach((l, idx) => {
+    l.classList.toggle('done', idx + 1 < n)
+  })
+
+  // Mostra/esconde botões
+  if (wizardBack) wizardBack.hidden = (n === 1)
+  if (wizardNext) wizardNext.hidden = (n === TOTAL_STEPS)
+  if (regSubmit)  regSubmit.hidden  = (n !== TOTAL_STEPS)
+  if (wizardHelp) wizardHelp.hidden = (n !== TOTAL_STEPS)
+
+  // Atualiza label do próximo no último step (não vai aparecer, mas por garantia)
+  currentStep = n
+
+  // Auto-focus no primeiro campo visível
+  setTimeout(() => {
+    const firstField = target?.querySelector('input, textarea')
+    if (firstField && n === currentStep) {
+      try { firstField.focus({ preventScroll: true }) } catch(_) { firstField.focus() }
+      // Scroll pro topo do form pra evitar pular
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }, 100)
+}
+
+function validateStep(n) {
+  const step = getStepEl(n)
+  if (!step) return true
+  const fields = step.querySelectorAll('input[required], textarea[required]')
+  for (const f of fields) {
+    if (!f.value.trim()) {
+      f.focus()
+      try { f.scrollIntoView({ behavior: 'smooth', block: 'center' }) } catch(_) {}
+      showErr('Preencha o campo ' + (f.previousElementSibling?.textContent || f.name || '').toLowerCase() + '.')
+      return false
+    }
+    if (f.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value)) {
+      f.focus()
+      showErr('Email inválido.')
+      return false
+    }
+  }
+  return true
+}
 
 if (regForm) {
+  // Inicia no step 1
+  goToStep(1)
+
+  // Botão Próximo
+  wizardNext?.addEventListener('click', () => {
+    if (!validateStep(currentStep)) return
+    regErr.hidden = true
+    goToStep(currentStep + 1)
+  })
+
+  // Botão Voltar
+  wizardBack?.addEventListener('click', () => {
+    regErr.hidden = true
+    goToStep(currentStep - 1)
+  })
+
+  // Submit (apenas no step 3)
   regForm.addEventListener('submit', async (e) => {
     e.preventDefault()
     regErr.hidden = true
-    regOk.hidden = true
 
     // Honeypot
     const hp = regForm.querySelector('[name="website_url"]')
     if (hp && hp.value.trim() !== '') {
-      // Silenciosamente finge sucesso (anti-spam)
-      regOk.hidden = false
       regForm.reset()
+      goToStep(1)
+      openSuccessModal()
+      window.scrollTo({ top: 0, behavior: 'smooth' })
       return
+    }
+
+    // Valida todos os campos required
+    const requiredFields = regForm.querySelectorAll('input[required], textarea[required]')
+    for (const f of requiredFields) {
+      if (!f.value.trim()) {
+        // Pula pro step correspondente
+        const step = f.closest('.wizard-step')
+        if (step) goToStep(parseInt(step.dataset.step))
+        f.focus()
+        showErr('Preencha o campo ' + (f.previousElementSibling?.textContent || f.name || '').toLowerCase() + '.')
+        return
+      }
     }
 
     const data = {
@@ -2667,7 +2873,7 @@ if (regForm) {
       support_message: regForm.support_message.value.trim() || null,
     }
 
-    // Validação client-side
+    // Validação final
     if (data.name.length < 2) return showErr('Nome muito curto.')
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) return showErr('Email inválido.')
     if (data.phone.replace(/\D/g,'').length < 10) return showErr('WhatsApp inválido.')
@@ -2689,9 +2895,8 @@ if (regForm) {
       if (error) throw error
 
       regForm.reset()
+      goToStep(1)
       refreshPublicCounter()
-      if (labelEl) labelEl.textContent = '✔ Inscrição recebida'
-      setTimeout(()=>{ if(labelEl) labelEl.textContent = oldLabel }, 4000)
 
       // Abre modal de sucesso (com CTA Pix)
       openSuccessModal()
@@ -2702,13 +2907,17 @@ if (regForm) {
       if (labelEl) labelEl.textContent = oldLabel
     } finally {
       regSubmit.disabled = false
+      if (labelEl) labelEl.textContent = oldLabel
     }
   })
 }
 
 function showErr(msg){
+  if (!regErr) return
   regErr.textContent = '⚠ ' + msg
   regErr.hidden = false
+  // Em mobile, scroll pro erro
+  try { regErr.scrollIntoView({ behavior: 'smooth', block: 'center' }) } catch(_) {}
 }
 
 // =====================================================
