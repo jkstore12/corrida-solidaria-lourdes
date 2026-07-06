@@ -72,6 +72,7 @@
 <!-- Performance: preconnect early, font-display swap is in URL -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://qfuatxhvsyerzvnetlyb.supabase.co" />
 <!-- Weights trimmed for mobile performance -->
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
 
@@ -1543,8 +1544,61 @@ body.admin-mode{background:var(--ink)}
 }
 .admin-link:hover{color:var(--rosa-vivo) !important}
 
-/* Mobile adjustments for admin */
-@media (max-width:720px){
+/* =====================================================
+   MOBILE GLOBAL POLISH (≤ 720px)
+   ===================================================== */
+@media (max-width: 720px){
+  /* Reset font-size mínimo em inputs (evita zoom iOS) */
+  .admin-login input,
+  .admin-toolbar input[type="search"],
+  .admin-toolbar select,
+  .modal input,
+  .modal select,
+  .modal textarea{font-size:16px}
+
+  /* Touch targets ≥ 44px em todo o site (footer, links) */
+  .foot-grid a,
+  .foot-bottom a,
+  .foot-grid p,
+  .foot-bottom span{
+    display:inline-block;
+    min-height:44px;
+    line-height:44px;
+    padding:0 4px;
+  }
+  .foot-grid p{margin:0 0 4px}
+
+  /* Sticky CTA: maior e mais legível */
+  .sticky-cta .pay-pill{
+    min-height:52px;
+    font-size:16px;
+    padding:14px 20px;
+  }
+  .sticky-cta .info .title{font-size:16px}
+  .sticky-cta .info .price{font-size:11px}
+
+  /* Form de inscrição */
+  .reg-form input,
+  .reg-form select{font-size:16px;min-height:50px}
+
+  /* Animações: reduzir (economiza GPU) */
+  .databar .dot{animation-duration:2s}
+  h1.title .heart{animation-duration:2s}
+  .marquee .track{animation-duration:30s}
+
+  /* Background gradients: blend caro em mobile */
+  body::after{display:none}
+  body::before{opacity:.6}
+
+  /* Sombras: reduzir blur (menos pintura) */
+  .ticket,.price-box,.reg-form,.story-card{
+    box-shadow:6px 6px 0 var(--rosa-vivo),6px 6px 0 2.5px var(--ink) !important;
+  }
+  .cause-art{
+    box-shadow:6px 6px 0 var(--dourado),6px 6px 0 2.5px var(--ink) !important;
+  }
+
+  /* Admin */
   .admin-table-wrap{font-size:12px}
   .admin-table th,.admin-table td{padding:10px 12px}
   .admin-head{align-items:flex-start}
@@ -1553,6 +1607,26 @@ body.admin-mode{background:var(--ink)}
   .modal h3{font-size:24px}
   .modal-actions{flex-direction:column-reverse}
   .modal .btn{width:100%}
+}
+
+/* Touch: desabilita hover "sticky" no iOS */
+@media (hover: none) and (pointer: coarse){
+  .cta:hover,.pay-btn:hover,.cta-ghost:hover,
+  .success-pay-btn:hover,.success-wa-link:hover,
+  .row-btn:hover,.btn:hover,.admin-logout:hover,
+  .modal .btn:hover,.pix-copy-btn:hover{
+    transform:none !important;
+    background:initial !important;
+    color:initial !important;
+  }
+  .cta:active,.pay-btn:active,.pay-pill:active{
+    transform:translateY(1px) !important;
+  }
+}
+
+/* iOS: previne zoom em inputs sem afetar design */
+@supports (-webkit-touch-callout: none){
+  input,select,textarea{font-size:16px !important}
 }
 
 /* =====================================================
@@ -1578,6 +1652,11 @@ body.admin-mode{background:var(--ink)}
   position:relative;
   text-align:center;
   animation:popIn .35s cubic-bezier(.34,1.56,.64,1);
+  /* Mobile: scroll interno + dvh (evita problema com teclado iOS) */
+  max-height:calc(100vh - 40px);
+  max-height:calc(100dvh - 40px);
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
 }
 @keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
 
@@ -1654,6 +1733,7 @@ body.admin-mode{background:var(--ink)}
   cursor:pointer;
   transition:all .15s ease;
   margin-top:6px;
+  min-height:44px;
 }
 .success-close:hover{border-color:var(--ink);color:var(--ink)}
 
@@ -1668,6 +1748,7 @@ body.admin-mode{background:var(--ink)}
   margin-bottom:16px;
   transition:all .15s ease;
   box-sizing:border-box;
+  min-height:48px;
 }
 .success-wa-link:hover{background:var(--verde);color:#fff}
 
